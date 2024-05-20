@@ -15,16 +15,20 @@
           <dd>
             <span>{{ resume()!.id }}</span>
           </dd>
-          <dt><span jhiTranslate="hrSolutionApp.resume.name">Name</span></dt>
+          <dt><span jhiTranslate="hrSolutionApp.resume.cv">Cv</span></dt>
           <dd>
-            <span>{{ resume()!.name }}</span>
-          </dd>
-          <dt><span jhiTranslate="hrSolutionApp.resume.document">Document</span></dt>
-          <dd>
-            @if (resume()!.document) {
+            @if (resume()!.cv) {
               <div>
-                <a (click)="openFile(resume()!.document ?? '', resume()!.documentContentType)" jhiTranslate="entity.action.open">Open</a>
-                {{ resume()!.documentContentType }}, {{ byteSize(resume()!.document ?? '') }}
+                <a (click)="openFile(resume()!.cv ?? '', resume()!.cvContentType)" jhiTranslate="entity.action.open">Open</a>
+                {{ resume()!.cvContentType }}, {{ byteSize(resume()!.cv ?? '') }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.resume.owner">Owner</span></dt>
+          <dd>
+            @if (resume()!.owner) {
+              <div>
+                <a [routerLink]="['/candidate', resume()!.owner?.id, 'view']">{{ resume()!.owner?.id }}</a>
               </div>
             }
           </dd>

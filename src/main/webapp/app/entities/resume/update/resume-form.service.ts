@@ -18,9 +18,9 @@ type ResumeFormDefaults = Pick<NewResume, 'id'>;
 
 type ResumeFormGroupContent = {
   id: FormControl<IResume['id'] | NewResume['id']>;
-  name: FormControl<IResume['name']>;
-  document: FormControl<IResume['document']>;
-  documentContentType: FormControl<IResume['documentContentType']>;
+  cv: FormControl<IResume['cv']>;
+  cvContentType: FormControl<IResume['cvContentType']>;
+  owner: FormControl<IResume['owner']>;
 };
 
 export type ResumeFormGroup = FormGroup<ResumeFormGroupContent>;
@@ -40,13 +40,11 @@ export class ResumeFormService {
           validators: [Validators.required],
         },
       ),
-      name: new FormControl(resumeRawValue.name, {
+      cv: new FormControl(resumeRawValue.cv, {
         validators: [Validators.required],
       }),
-      document: new FormControl(resumeRawValue.document, {
-        validators: [Validators.required],
-      }),
-      documentContentType: new FormControl(resumeRawValue.documentContentType),
+      cvContentType: new FormControl(resumeRawValue.cvContentType),
+      owner: new FormControl(resumeRawValue.owner),
     });
   }
 

@@ -36,14 +36,6 @@ public class Candidate implements Serializable {
     @Column(name = "years_of_experience", nullable = false)
     private Integer yearsOfExperience;
 
-    @Lob
-    @Column(name = "resume", nullable = false)
-    private byte[] resume;
-
-    @NotNull
-    @Column(name = "resume_content_type", nullable = false)
-    private String resumeContentType;
-
     @Column(name = "current_salary")
     private Double currentSalary;
 
@@ -84,6 +76,11 @@ public class Candidate implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "attendee", "application" }, allowSetters = true)
     private Set<Interview> interviewResults = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "owner" }, allowSetters = true)
+    private Set<Resume> candidateCVS = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @NotNull
@@ -181,32 +178,6 @@ public class Candidate implements Serializable {
 
     public void setYearsOfExperience(Integer yearsOfExperience) {
         this.yearsOfExperience = yearsOfExperience;
-    }
-
-    public byte[] getResume() {
-        return this.resume;
-    }
-
-    public Candidate resume(byte[] resume) {
-        this.setResume(resume);
-        return this;
-    }
-
-    public void setResume(byte[] resume) {
-        this.resume = resume;
-    }
-
-    public String getResumeContentType() {
-        return this.resumeContentType;
-    }
-
-    public Candidate resumeContentType(String resumeContentType) {
-        this.resumeContentType = resumeContentType;
-        return this;
-    }
-
-    public void setResumeContentType(String resumeContentType) {
-        this.resumeContentType = resumeContentType;
     }
 
     public Double getCurrentSalary() {
@@ -315,6 +286,37 @@ public class Candidate implements Serializable {
     public Candidate removeInterviewResult(Interview interview) {
         this.interviewResults.remove(interview);
         interview.setAttendee(null);
+        return this;
+    }
+
+    public Set<Resume> getCandidateCVS() {
+        return this.candidateCVS;
+    }
+
+    public void setCandidateCVS(Set<Resume> resumes) {
+        if (this.candidateCVS != null) {
+            this.candidateCVS.forEach(i -> i.setOwner(null));
+        }
+        if (resumes != null) {
+            resumes.forEach(i -> i.setOwner(this));
+        }
+        this.candidateCVS = resumes;
+    }
+
+    public Candidate candidateCVS(Set<Resume> resumes) {
+        this.setCandidateCVS(resumes);
+        return this;
+    }
+
+    public Candidate addCandidateCV(Resume resume) {
+        this.candidateCVS.add(resume);
+        resume.setOwner(this);
+        return this;
+    }
+
+    public Candidate removeCandidateCV(Resume resume) {
+        this.candidateCVS.remove(resume);
+        resume.setOwner(null);
         return this;
     }
 
@@ -441,8 +443,6 @@ public class Candidate implements Serializable {
             ", linkedinUrl='" + getLinkedinUrl() + "'" +
             ", fullName='" + getFullName() + "'" +
             ", yearsOfExperience=" + getYearsOfExperience() +
-            ", resume='" + getResume() + "'" +
-            ", resumeContentType='" + getResumeContentType() + "'" +
             ", currentSalary=" + getCurrentSalary() +
             ", desiredSalary=" + getDesiredSalary() +
             ", hasContract='" + getHasContract() + "'" +

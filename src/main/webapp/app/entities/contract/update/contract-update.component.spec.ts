@@ -83,10 +83,10 @@ describe('Contract Management Update Component', () => {
 
     it('Should call candidate query and add missing value', () => {
       const contract: IContract = { id: 456 };
-      const candidate: ICandidate = { id: 30342 };
+      const candidate: ICandidate = { id: 3496 };
       contract.candidate = candidate;
 
-      const candidateCollection: ICandidate[] = [{ id: 612 }];
+      const candidateCollection: ICandidate[] = [{ id: 6819 }];
       jest.spyOn(candidateService, 'query').mockReturnValue(of(new HttpResponse({ body: candidateCollection })));
       const expectedCollection: ICandidate[] = [candidate, ...candidateCollection];
       jest.spyOn(candidateService, 'addCandidateToCollectionIfMissing').mockReturnValue(expectedCollection);
@@ -101,10 +101,10 @@ describe('Contract Management Update Component', () => {
 
     it('Should call Recruiter query and add missing value', () => {
       const contract: IContract = { id: 456 };
-      const recruiter: IRecruiter = { id: 358 };
+      const recruiter: IRecruiter = { id: 25856 };
       contract.recruiter = recruiter;
 
-      const recruiterCollection: IRecruiter[] = [{ id: 9704 }];
+      const recruiterCollection: IRecruiter[] = [{ id: 5596 }];
       jest.spyOn(recruiterService, 'query').mockReturnValue(of(new HttpResponse({ body: recruiterCollection })));
       const additionalRecruiters = [recruiter];
       const expectedCollection: IRecruiter[] = [...additionalRecruiters, ...recruiterCollection];
@@ -123,10 +123,10 @@ describe('Contract Management Update Component', () => {
 
     it('Should call Employer query and add missing value', () => {
       const contract: IContract = { id: 456 };
-      const employer: IEmployer = { id: 24720 };
+      const employer: IEmployer = { id: 18484 };
       contract.employer = employer;
 
-      const employerCollection: IEmployer[] = [{ id: 31553 }];
+      const employerCollection: IEmployer[] = [{ id: 1655 }];
       jest.spyOn(employerService, 'query').mockReturnValue(of(new HttpResponse({ body: employerCollection })));
       const additionalEmployers = [employer];
       const expectedCollection: IEmployer[] = [...additionalEmployers, ...employerCollection];
@@ -145,10 +145,10 @@ describe('Contract Management Update Component', () => {
 
     it('Should call Application query and add missing value', () => {
       const contract: IContract = { id: 456 };
-      const application: IApplication = { id: 30722 };
+      const application: IApplication = { id: 30793 };
       contract.application = application;
 
-      const applicationCollection: IApplication[] = [{ id: 14351 }];
+      const applicationCollection: IApplication[] = [{ id: 16999 }];
       jest.spyOn(applicationService, 'query').mockReturnValue(of(new HttpResponse({ body: applicationCollection })));
       const additionalApplications = [application];
       const expectedCollection: IApplication[] = [...additionalApplications, ...applicationCollection];
@@ -169,13 +169,13 @@ describe('Contract Management Update Component', () => {
       const contract: IContract = { id: 456 };
       const template: ITemplate = { id: 12690 };
       contract.template = template;
-      const candidate: ICandidate = { id: 28553 };
+      const candidate: ICandidate = { id: 15257 };
       contract.candidate = candidate;
-      const recruiter: IRecruiter = { id: 23986 };
+      const recruiter: IRecruiter = { id: 22805 };
       contract.recruiter = recruiter;
-      const employer: IEmployer = { id: 26148 };
+      const employer: IEmployer = { id: 19815 };
       contract.employer = employer;
-      const application: IApplication = { id: 13290 };
+      const application: IApplication = { id: 8507 };
       contract.application = application;
 
       activatedRoute.data = of({ contract });

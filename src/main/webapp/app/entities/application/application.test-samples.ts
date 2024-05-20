@@ -8,9 +8,7 @@ export const sampleWithRequiredData: IApplication = {
   description: 'slow',
   numberOfCandidates: 13925,
   paymentAmount: 9974.61,
-  recruiterIncomeRate: 7424.62,
-  candidateIncomeRate: 25245.74,
-  status: 'NEW',
+  status: 'OPEN',
 };
 
 export const sampleWithPartialData: IApplication = {
@@ -19,34 +17,31 @@ export const sampleWithPartialData: IApplication = {
   description: 'lest phew realistic',
   numberOfCandidates: 21594,
   paymentAmount: 7886.8,
-  recruiterIncomeRate: 22162.64,
-  candidateIncomeRate: 3210.68,
+  candidateIncomeRate: 22162.64,
   status: 'NEW',
 };
 
 export const sampleWithFullData: IApplication = {
-  id: 17254,
-  title: 'apud sack',
-  description: 'provided midst',
-  numberOfCandidates: 9292,
-  paymentAmount: 998.71,
-  recruiterIncomeRate: 6593.01,
-  candidateIncomeRate: 21142.46,
-  deadline: dayjs('2024-05-17'),
-  status: 'ABORTED',
-  createdAt: dayjs('2024-05-17T05:52'),
-  openedAt: dayjs('2024-05-17T11:02'),
-  closedAt: dayjs('2024-05-17T06:23'),
-  doneAt: dayjs('2024-05-17T02:13'),
+  id: 512,
+  title: 'pince-nez like',
+  description: 'foolishly mileage while',
+  numberOfCandidates: 11421,
+  paymentAmount: 4375.4,
+  recruiterIncomeRate: 10719.33,
+  candidateIncomeRate: 16396.51,
+  deadline: dayjs('2024-05-20'),
+  status: 'CLOSED',
+  createdAt: dayjs('2024-05-20T03:19'),
+  openedAt: dayjs('2024-05-19T15:06'),
+  closedAt: dayjs('2024-05-20T11:14'),
+  doneAt: dayjs('2024-05-20T10:12'),
 };
 
 export const sampleWithNewData: NewApplication = {
-  title: 'amongst',
-  description: 'border unhitch snip',
-  numberOfCandidates: 13718,
-  paymentAmount: 29062.9,
-  recruiterIncomeRate: 7407.65,
-  candidateIncomeRate: 17044.2,
+  title: 'aw nick',
+  description: 'about yowza',
+  numberOfCandidates: 4832,
+  paymentAmount: 23454.98,
   status: 'CLOSED',
   id: null,
 };

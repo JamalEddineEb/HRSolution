@@ -53,7 +53,7 @@ public class Interview implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
-        value = { "techCV", "interviewResults", "domains", "applications", "contract", "ndaStatuses" },
+        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
         allowSetters = true
     )
     private Candidate attendee;

@@ -35,7 +35,7 @@
           <dd>
             @if (appAccount()!.owner) {
               <div>
-                <a [routerLink]="['/application-user', appAccount()!.owner?.id, 'view']">{{ appAccount()!.owner?.id }}</a>
+                <a [routerLink]="['/profile', appAccount()!.owner?.id, 'view']">{{ appAccount()!.owner?.id }}</a>
               </div>
             }
           </dd>

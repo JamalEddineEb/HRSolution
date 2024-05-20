@@ -123,14 +123,11 @@ public class ResumeResource {
         Optional<Resume> result = resumeRepository
             .findById(resume.getId())
             .map(existingResume -> {
-                if (resume.getName() != null) {
-                    existingResume.setName(resume.getName());
+                if (resume.getCv() != null) {
+                    existingResume.setCv(resume.getCv());
                 }
-                if (resume.getDocument() != null) {
-                    existingResume.setDocument(resume.getDocument());
-                }
-                if (resume.getDocumentContentType() != null) {
-                    existingResume.setDocumentContentType(resume.getDocumentContentType());
+                if (resume.getCvContentType() != null) {
+                    existingResume.setCvContentType(resume.getCvContentType());
                 }
 
                 return existingResume;

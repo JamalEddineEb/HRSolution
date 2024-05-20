@@ -7,9 +7,9 @@ const routes: Routes = [
     loadChildren: () => import('./admin/authority/authority.routes'),
   },
   {
-    path: 'application-user',
-    data: { pageTitle: 'hrSolutionApp.applicationUser.home.title' },
-    loadChildren: () => import('./application-user/application-user.routes'),
+    path: 'profile',
+    data: { pageTitle: 'hrSolutionApp.profile.home.title' },
+    loadChildren: () => import('./profile/profile.routes'),
   },
   {
     path: 'recruiter',

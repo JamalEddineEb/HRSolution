@@ -19,6 +19,7 @@ type RequestFormDefaults = Pick<NewRequest, 'id'>;
 type RequestFormGroupContent = {
   id: FormControl<IRequest['id'] | NewRequest['id']>;
   status: FormControl<IRequest['status']>;
+  expressionOfInterest: FormControl<IRequest['expressionOfInterest']>;
   relatedApplication: FormControl<IRequest['relatedApplication']>;
   recruiter: FormControl<IRequest['recruiter']>;
 };
@@ -41,6 +42,9 @@ export class RequestFormService {
         },
       ),
       status: new FormControl(requestRawValue.status, {
+        validators: [Validators.required],
+      }),
+      expressionOfInterest: new FormControl(requestRawValue.expressionOfInterest, {
         validators: [Validators.required],
       }),
       relatedApplication: new FormControl(requestRawValue.relatedApplication, {

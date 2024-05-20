@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240517140021"
+    "changelogDate": "20240520144407"
   },
   "applications": ["HRSolution"],
   "fields": [
@@ -16,12 +16,6 @@
     {
       "fieldName": "yearsOfExperience",
       "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "resume",
-      "fieldType": "byte[]",
-      "fieldTypeBlobContent": "any",
       "fieldValidateRules": ["required"]
     },
     {
@@ -67,6 +61,16 @@
       "otherEntityName": "interview",
       "otherEntityRelationshipName": "attendee",
       "relationshipName": "interviewResult",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "options": {
+        "onUpdate": "CASCADE"
+      },
+      "otherEntityName": "resume",
+      "otherEntityRelationshipName": "owner",
+      "relationshipName": "candidateCV",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },

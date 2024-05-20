@@ -27,17 +27,6 @@ public class EmployerAsserts {
     }
 
     /**
-     * Asserts that the derived primary key is set correctly.
-     *
-     * @param entityToPersist the entity used to persist
-     * @param persisted the persisted entity
-     */
-    public static void assertEmployerMapsIdRelationshipPersistedValue(Employer entityToPersist, Employer persisted) {
-        // Validate the id for MapsId, the ids must be same
-        assertThat(entityToPersist.getInternalUser().getId()).isEqualTo(persisted.getId());
-    }
-
-    /**
      * Asserts that the entity has all the auto generated properties (fields/relationships) set.
      *
      * @param expected the expected entity
@@ -72,6 +61,7 @@ public class EmployerAsserts {
     public static void assertEmployerUpdatableRelationshipsEquals(Employer expected, Employer actual) {
         assertThat(expected)
             .as("Verify Employer relationships")
+            .satisfies(e -> assertThat(e.getRelatedUser()).as("check relatedUser").isEqualTo(actual.getRelatedUser()))
             .satisfies(e -> assertThat(e.getWallet()).as("check wallet").isEqualTo(actual.getWallet()));
     }
 }

@@ -1,4 +1,4 @@
-import { IUser } from 'app/entities/user/user.model';
+import { IProfile } from 'app/entities/profile/profile.model';
 import { IWallet } from 'app/entities/wallet/wallet.model';
 import { IApplication } from 'app/entities/application/application.model';
 import { IDomain } from 'app/entities/domain/domain.model';
@@ -9,7 +9,7 @@ export interface IRecruiter {
   linkedinUrl?: string | null;
   approvedExperience?: boolean | null;
   score?: number | null;
-  internalUser?: Pick<IUser, 'id'> | null;
+  relatedUser?: IProfile | null;
   wallet?: IWallet | null;
   applications?: IApplication[] | null;
   operationalDomains?: IDomain[] | null;

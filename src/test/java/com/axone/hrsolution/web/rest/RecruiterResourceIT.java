@@ -10,15 +10,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.axone.hrsolution.IntegrationTest;
 import com.axone.hrsolution.domain.Domain;
+import com.axone.hrsolution.domain.Profile;
 import com.axone.hrsolution.domain.Recruiter;
-import com.axone.hrsolution.domain.User;
 import com.axone.hrsolution.domain.Wallet;
 import com.axone.hrsolution.repository.RecruiterRepository;
-import com.axone.hrsolution.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
@@ -68,9 +66,6 @@ class RecruiterResourceIT {
     @Autowired
     private RecruiterRepository recruiterRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @Mock
     private RecruiterRepository recruiterRepositoryMock;
 
@@ -95,10 +90,15 @@ class RecruiterResourceIT {
             .approvedExperience(DEFAULT_APPROVED_EXPERIENCE)
             .score(DEFAULT_SCORE);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        recruiter.setInternalUser(user);
+        Profile profile;
+        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
+            profile = ProfileResourceIT.createEntity(em);
+            em.persist(profile);
+            em.flush();
+        } else {
+            profile = TestUtil.findAll(em, Profile.class).get(0);
+        }
+        recruiter.setRelatedUser(profile);
         // Add required entity
         Wallet wallet;
         if (TestUtil.findAll(em, Wallet.class).isEmpty()) {
@@ -135,21 +135,34 @@ class RecruiterResourceIT {
             .approvedExperience(UPDATED_APPROVED_EXPERIENCE)
             .score(UPDATED_SCORE);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        recruiter.setInternalUser(user);
+        Profile profile;
+        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
+            profile = ProfileResourceIT.createUpdatedEntity(em);
+            em.persist(profile);
+            em.flush();
+        } else {
+            profile = TestUtil.findAll(em, Profile.class).get(0);
+        }
+        recruiter.setRelatedUser(profile);
         // Add required entity
         Wallet wallet;
-        wallet = WalletResourceIT.createUpdatedEntity(em);
-        em.persist(wallet);
-        em.flush();
+        if (TestUtil.findAll(em, Wallet.class).isEmpty()) {
+            wallet = WalletResourceIT.createUpdatedEntity(em);
+            em.persist(wallet);
+            em.flush();
+        } else {
+            wallet = TestUtil.findAll(em, Wallet.class).get(0);
+        }
         recruiter.setWallet(wallet);
         // Add required entity
         Domain domain;
-        domain = DomainResourceIT.createUpdatedEntity(em);
-        em.persist(domain);
-        em.flush();
+        if (TestUtil.findAll(em, Domain.class).isEmpty()) {
+            domain = DomainResourceIT.createUpdatedEntity(em);
+            em.persist(domain);
+            em.flush();
+        } else {
+            domain = TestUtil.findAll(em, Domain.class).get(0);
+        }
         recruiter.getOperationalDomains().add(domain);
         return recruiter;
     }
@@ -177,8 +190,6 @@ class RecruiterResourceIT {
         // Validate the Recruiter in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         assertRecruiterUpdatableFieldsEquals(returnedRecruiter, getPersistedRecruiter(returnedRecruiter));
-
-        assertRecruiterMapsIdRelationshipPersistedValue(recruiter, returnedRecruiter);
     }
 
     @Test
@@ -196,45 +207,6 @@ class RecruiterResourceIT {
 
         // Validate the Recruiter in the database
         assertSameRepositoryCount(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void updateRecruiterMapsIdAssociationWithNewId() throws Exception {
-        // Initialize the database
-        recruiterRepository.saveAndFlush(recruiter);
-        long databaseSizeBeforeCreate = getRepositoryCount();
-        // Add a new parent entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-
-        // Load the recruiter
-        Recruiter updatedRecruiter = recruiterRepository.findById(recruiter.getId()).orElseThrow();
-        assertThat(updatedRecruiter).isNotNull();
-        // Disconnect from session so that the updates on updatedRecruiter are not directly saved in db
-        em.detach(updatedRecruiter);
-
-        // Update the User with new association value
-        //updatedRecruiter.setUser(user);
-
-        // Update the entity
-        restRecruiterMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, updatedRecruiter.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedRecruiter))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Recruiter in the database
-        List<Recruiter> recruiterList = recruiterRepository.findAll();
-        assertSameRepositoryCount(databaseSizeBeforeCreate);
-        Recruiter testRecruiter = recruiterList.get(recruiterList.size() - 1);
-        // Validate the id for MapsId, the ids must be same
-        // Uncomment the following line for assertion. However, please note that there is a known issue and uncommenting will fail the test.
-        // Please look at https://github.com/jhipster/generator-jhipster/issues/9100. You can modify this test as necessary.
-        // assertThat(testRecruiter.getId()).isEqualTo(testRecruiter.getUser().getId());
     }
 
     @Test

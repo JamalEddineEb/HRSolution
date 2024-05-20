@@ -21,7 +21,7 @@ type EmployerFormGroupContent = {
   label: FormControl<IEmployer['label']>;
   linkedinUrl: FormControl<IEmployer['linkedinUrl']>;
   score: FormControl<IEmployer['score']>;
-  internalUser: FormControl<IEmployer['internalUser']>;
+  relatedUser: FormControl<IEmployer['relatedUser']>;
   wallet: FormControl<IEmployer['wallet']>;
 };
 
@@ -47,7 +47,7 @@ export class EmployerFormService {
       }),
       linkedinUrl: new FormControl(employerRawValue.linkedinUrl),
       score: new FormControl(employerRawValue.score),
-      internalUser: new FormControl(employerRawValue.internalUser, {
+      relatedUser: new FormControl(employerRawValue.relatedUser, {
         validators: [Validators.required],
       }),
       wallet: new FormControl(employerRawValue.wallet, {

@@ -1,5 +1,6 @@
 package com.axone.hrsolution.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -22,17 +23,20 @@ public class Resume implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
-
     @Lob
-    @Column(name = "document", nullable = false)
-    private byte[] document;
+    @Column(name = "cv", nullable = false)
+    private byte[] cv;
 
     @NotNull
-    @Column(name = "document_content_type", nullable = false)
-    private String documentContentType;
+    @Column(name = "cv_content_type", nullable = false)
+    private String cvContentType;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(
+        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
+        allowSetters = true
+    )
+    private Candidate owner;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -49,43 +53,43 @@ public class Resume implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return this.name;
+    public byte[] getCv() {
+        return this.cv;
     }
 
-    public Resume name(String name) {
-        this.setName(name);
+    public Resume cv(byte[] cv) {
+        this.setCv(cv);
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCv(byte[] cv) {
+        this.cv = cv;
     }
 
-    public byte[] getDocument() {
-        return this.document;
+    public String getCvContentType() {
+        return this.cvContentType;
     }
 
-    public Resume document(byte[] document) {
-        this.setDocument(document);
+    public Resume cvContentType(String cvContentType) {
+        this.cvContentType = cvContentType;
         return this;
     }
 
-    public void setDocument(byte[] document) {
-        this.document = document;
+    public void setCvContentType(String cvContentType) {
+        this.cvContentType = cvContentType;
     }
 
-    public String getDocumentContentType() {
-        return this.documentContentType;
+    public Candidate getOwner() {
+        return this.owner;
     }
 
-    public Resume documentContentType(String documentContentType) {
-        this.documentContentType = documentContentType;
+    public void setOwner(Candidate candidate) {
+        this.owner = candidate;
+    }
+
+    public Resume owner(Candidate candidate) {
+        this.setOwner(candidate);
         return this;
-    }
-
-    public void setDocumentContentType(String documentContentType) {
-        this.documentContentType = documentContentType;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -112,9 +116,8 @@ public class Resume implements Serializable {
     public String toString() {
         return "Resume{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", document='" + getDocument() + "'" +
-            ", documentContentType='" + getDocumentContentType() + "'" +
+            ", cv='" + getCv() + "'" +
+            ", cvContentType='" + getCvContentType() + "'" +
             "}";
     }
 }

@@ -2,7 +2,6 @@ package com.axone.hrsolution.web.rest;
 
 import com.axone.hrsolution.domain.Recruiter;
 import com.axone.hrsolution.repository.RecruiterRepository;
-import com.axone.hrsolution.repository.UserRepository;
 import com.axone.hrsolution.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -37,11 +36,8 @@ public class RecruiterResource {
 
     private final RecruiterRepository recruiterRepository;
 
-    private final UserRepository userRepository;
-
-    public RecruiterResource(RecruiterRepository recruiterRepository, UserRepository userRepository) {
+    public RecruiterResource(RecruiterRepository recruiterRepository) {
         this.recruiterRepository = recruiterRepository;
-        this.userRepository = userRepository;
     }
 
     /**
@@ -57,11 +53,6 @@ public class RecruiterResource {
         if (recruiter.getId() != null) {
             throw new BadRequestAlertException("A new recruiter cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if (Objects.isNull(recruiter.getInternalUser())) {
-            throw new BadRequestAlertException("Invalid association value provided", ENTITY_NAME, "null");
-        }
-        Long userId = recruiter.getInternalUser().getId();
-        userRepository.findById(userId).ifPresent(recruiter::internalUser);
         recruiter = recruiterRepository.save(recruiter);
         return ResponseEntity.created(new URI("/api/recruiters/" + recruiter.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, recruiter.getId().toString()))
@@ -162,7 +153,6 @@ public class RecruiterResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of recruiters in body.
      */
     @GetMapping("")
-    @Transactional(readOnly = true)
     public List<Recruiter> getAllRecruiters(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all Recruiters");
         if (eagerload) {
@@ -179,7 +169,6 @@ public class RecruiterResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the recruiter, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    @Transactional(readOnly = true)
     public ResponseEntity<Recruiter> getRecruiter(@PathVariable("id") Long id) {
         log.debug("REST request to get Recruiter : {}", id);
         Optional<Recruiter> recruiter = recruiterRepository.findOneWithEagerRelationships(id);

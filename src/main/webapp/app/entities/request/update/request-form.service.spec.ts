@@ -21,6 +21,7 @@ describe('Request Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             status: expect.any(Object),
+            expressionOfInterest: expect.any(Object),
             relatedApplication: expect.any(Object),
             recruiter: expect.any(Object),
           }),
@@ -34,6 +35,7 @@ describe('Request Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             status: expect.any(Object),
+            expressionOfInterest: expect.any(Object),
             relatedApplication: expect.any(Object),
             recruiter: expect.any(Object),
           }),

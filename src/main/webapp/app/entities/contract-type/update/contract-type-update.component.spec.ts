@@ -49,10 +49,10 @@ describe('ContractType Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Application query and add missing value', () => {
       const contractType: IContractType = { id: 456 };
-      const applications: IApplication[] = [{ id: 4276 }];
+      const applications: IApplication[] = [{ id: 3415 }];
       contractType.applications = applications;
 
-      const applicationCollection: IApplication[] = [{ id: 4832 }];
+      const applicationCollection: IApplication[] = [{ id: 14726 }];
       jest.spyOn(applicationService, 'query').mockReturnValue(of(new HttpResponse({ body: applicationCollection })));
       const additionalApplications = [...applications];
       const expectedCollection: IApplication[] = [...additionalApplications, ...applicationCollection];
@@ -71,7 +71,7 @@ describe('ContractType Management Update Component', () => {
 
     it('Should update editForm', () => {
       const contractType: IContractType = { id: 456 };
-      const application: IApplication = { id: 23455 };
+      const application: IApplication = { id: 9860 };
       contractType.applications = [application];
 
       activatedRoute.data = of({ contractType });

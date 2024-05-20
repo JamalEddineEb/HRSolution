@@ -39,7 +39,7 @@ public class Wallet implements Serializable {
     private AppAccount relatedToAccount;
 
     @JsonIgnoreProperties(
-        value = { "internalUser", "wallet", "requests", "contracts", "applications", "operationalDomains", "ndaStatuses" },
+        value = { "relatedUser", "wallet", "requests", "applications", "operationalDomains", "ndaStatuses", "contracts" },
         allowSetters = true
     )
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "wallet")
@@ -47,14 +47,14 @@ public class Wallet implements Serializable {
 
     @JsonIgnoreProperties(
         value = {
-            "internalUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
+            "relatedUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
         },
         allowSetters = true
     )
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "wallet")
     private Employer employer;
 
-    @JsonIgnoreProperties(value = { "internalUser", "systemWallet" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "relatedUser", "systemWallet" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "systemWallet")
     private Admin admin;
 

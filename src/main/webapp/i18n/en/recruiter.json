@@ -22,13 +22,13 @@
       "linkedinUrl": "Linkedin Url",
       "approvedExperience": "Approved Experience",
       "score": "Score",
-      "internalUser": "Internal User",
+      "relatedUser": "Related User",
       "wallet": "Wallet",
       "requests": "Requests",
-      "contracts": "Contracts",
       "applications": "Applications",
       "operationalDomain": "Operational Domain",
-      "ndaStatus": "Nda Status"
+      "ndaStatus": "Nda Status",
+      "contracts": "Contracts"
     }
   }
 }

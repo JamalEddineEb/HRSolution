@@ -5,10 +5,9 @@
     "authenticationType": "jwt",
     "baseName": "HRSolution",
     "clientFramework": "angular",
-    "creationTimestamp": 1715957425852,
     "devServerPort": 4200,
     "entities": [
-      "ApplicationUser",
+      "Profile",
       "Recruiter",
       "Candidate",
       "Resume",
@@ -41,9 +40,9 @@
       "Admin"
     ],
     "jhipsterVersion": "8.4.0",
-    "jwtSecretKey": "MWU4MTNiMjBmY2NhZjM2YTg0NDEwY2UxYjc2NDBhMmRiYzBhZWJlMjIzMmViZjExMmI3MmZlOWRjNzMwYzQwODgyZGJkYTc5ZDRlNzg2MTIyYTcyZDdmZjI2Yjk5YTliOTljMjk2ODQ3ZWNiMDEzOTdhZDdlN2JkMGRhMzVkN2U=",
+    "jwtSecretKey": "N2JmYTdlZjNkY2Y4ZGY1YmYzYmFmMjVlZTdkNzZmY2RjODU5NzE5MjhjODg5NDBlYWMxNzAyNTNiYmI2NTAxZjEyNTk4MDZhMjNkMTJjMzQyMDBlOGM2NTRiMzdhZDRmZDVkOTkyODdiZThlNzAzZjQ5ZjUxMGU0NzkxNTg0OGI=",
     "languages": ["en"],
-    "lastLiquibaseTimestamp": 1715956101000,
+    "lastLiquibaseTimestamp": 1716217927000,
     "monorepository": true,
     "nativeLanguage": "en",
     "packageFolder": "com/axone/hrsolution",

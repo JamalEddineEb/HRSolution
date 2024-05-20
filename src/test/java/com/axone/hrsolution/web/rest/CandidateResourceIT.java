@@ -16,7 +16,6 @@ import com.axone.hrsolution.repository.CandidateRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,11 +49,6 @@ class CandidateResourceIT {
 
     private static final Integer DEFAULT_YEARS_OF_EXPERIENCE = 1;
     private static final Integer UPDATED_YEARS_OF_EXPERIENCE = 2;
-
-    private static final byte[] DEFAULT_RESUME = TestUtil.createByteArray(1, "0");
-    private static final byte[] UPDATED_RESUME = TestUtil.createByteArray(1, "1");
-    private static final String DEFAULT_RESUME_CONTENT_TYPE = "image/jpg";
-    private static final String UPDATED_RESUME_CONTENT_TYPE = "image/png";
 
     private static final Double DEFAULT_CURRENT_SALARY = 1D;
     private static final Double UPDATED_CURRENT_SALARY = 2D;
@@ -105,8 +99,6 @@ class CandidateResourceIT {
             .linkedinUrl(DEFAULT_LINKEDIN_URL)
             .fullName(DEFAULT_FULL_NAME)
             .yearsOfExperience(DEFAULT_YEARS_OF_EXPERIENCE)
-            .resume(DEFAULT_RESUME)
-            .resumeContentType(DEFAULT_RESUME_CONTENT_TYPE)
             .currentSalary(DEFAULT_CURRENT_SALARY)
             .desiredSalary(DEFAULT_DESIRED_SALARY)
             .hasContract(DEFAULT_HAS_CONTRACT)
@@ -146,8 +138,6 @@ class CandidateResourceIT {
             .linkedinUrl(UPDATED_LINKEDIN_URL)
             .fullName(UPDATED_FULL_NAME)
             .yearsOfExperience(UPDATED_YEARS_OF_EXPERIENCE)
-            .resume(UPDATED_RESUME)
-            .resumeContentType(UPDATED_RESUME_CONTENT_TYPE)
             .currentSalary(UPDATED_CURRENT_SALARY)
             .desiredSalary(UPDATED_DESIRED_SALARY)
             .hasContract(UPDATED_HAS_CONTRACT)
@@ -297,8 +287,6 @@ class CandidateResourceIT {
             .andExpect(jsonPath("$.[*].linkedinUrl").value(hasItem(DEFAULT_LINKEDIN_URL)))
             .andExpect(jsonPath("$.[*].fullName").value(hasItem(DEFAULT_FULL_NAME)))
             .andExpect(jsonPath("$.[*].yearsOfExperience").value(hasItem(DEFAULT_YEARS_OF_EXPERIENCE)))
-            .andExpect(jsonPath("$.[*].resumeContentType").value(hasItem(DEFAULT_RESUME_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].resume").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_RESUME))))
             .andExpect(jsonPath("$.[*].currentSalary").value(hasItem(DEFAULT_CURRENT_SALARY.doubleValue())))
             .andExpect(jsonPath("$.[*].desiredSalary").value(hasItem(DEFAULT_DESIRED_SALARY.doubleValue())))
             .andExpect(jsonPath("$.[*].hasContract").value(hasItem(DEFAULT_HAS_CONTRACT.booleanValue())))
@@ -338,8 +326,6 @@ class CandidateResourceIT {
             .andExpect(jsonPath("$.linkedinUrl").value(DEFAULT_LINKEDIN_URL))
             .andExpect(jsonPath("$.fullName").value(DEFAULT_FULL_NAME))
             .andExpect(jsonPath("$.yearsOfExperience").value(DEFAULT_YEARS_OF_EXPERIENCE))
-            .andExpect(jsonPath("$.resumeContentType").value(DEFAULT_RESUME_CONTENT_TYPE))
-            .andExpect(jsonPath("$.resume").value(Base64.getEncoder().encodeToString(DEFAULT_RESUME)))
             .andExpect(jsonPath("$.currentSalary").value(DEFAULT_CURRENT_SALARY.doubleValue()))
             .andExpect(jsonPath("$.desiredSalary").value(DEFAULT_DESIRED_SALARY.doubleValue()))
             .andExpect(jsonPath("$.hasContract").value(DEFAULT_HAS_CONTRACT.booleanValue()))
@@ -370,8 +356,6 @@ class CandidateResourceIT {
             .linkedinUrl(UPDATED_LINKEDIN_URL)
             .fullName(UPDATED_FULL_NAME)
             .yearsOfExperience(UPDATED_YEARS_OF_EXPERIENCE)
-            .resume(UPDATED_RESUME)
-            .resumeContentType(UPDATED_RESUME_CONTENT_TYPE)
             .currentSalary(UPDATED_CURRENT_SALARY)
             .desiredSalary(UPDATED_DESIRED_SALARY)
             .hasContract(UPDATED_HAS_CONTRACT)
@@ -489,8 +473,6 @@ class CandidateResourceIT {
             .linkedinUrl(UPDATED_LINKEDIN_URL)
             .fullName(UPDATED_FULL_NAME)
             .yearsOfExperience(UPDATED_YEARS_OF_EXPERIENCE)
-            .resume(UPDATED_RESUME)
-            .resumeContentType(UPDATED_RESUME_CONTENT_TYPE)
             .currentSalary(UPDATED_CURRENT_SALARY)
             .desiredSalary(UPDATED_DESIRED_SALARY)
             .hasContract(UPDATED_HAS_CONTRACT)

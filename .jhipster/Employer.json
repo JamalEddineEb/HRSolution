@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240517141221"
+    "changelogDate": "20240520145607"
   },
   "applications": ["HRSolution"],
   "fields": [
@@ -22,17 +22,16 @@
   "relationships": [
     {
       "options": {
-        "id": true,
         "onDelete": "CASCADE",
         "onUpdate": "CASCADE"
       },
       "otherEntityField": "id",
-      "otherEntityName": "user",
-      "relationshipName": "internalUser",
+      "otherEntityName": "profile",
+      "otherEntityRelationshipName": "employer",
+      "relationshipName": "relatedUser",
       "relationshipSide": "left",
       "relationshipType": "one-to-one",
-      "relationshipValidateRules": "required",
-      "relationshipWithBuiltInEntity": true
+      "relationshipValidateRules": "required"
     },
     {
       "options": {

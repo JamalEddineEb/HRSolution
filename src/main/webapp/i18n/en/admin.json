@@ -19,7 +19,7 @@
       },
       "id": "ID",
       "systemName": "System Name",
-      "internalUser": "Internal User",
+      "relatedUser": "Related User",
       "systemWallet": "System Wallet"
     }
   }

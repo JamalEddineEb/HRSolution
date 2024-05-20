@@ -16,7 +16,7 @@ export const sampleWithFullData: IAppAccount = {
   id: 5686,
   accountNumber: 11105,
   cardNumber: 8514,
-  endDate: dayjs('2024-05-16'),
+  endDate: dayjs('2024-05-19'),
   cvv: 19955,
 };
 

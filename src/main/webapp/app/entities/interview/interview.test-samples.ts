@@ -24,8 +24,8 @@ export const sampleWithFullData: IInterview = {
   invitationLink: 'after canvass',
   interviewResult: true,
   rate: 28296.61,
-  startedAt: dayjs('2024-05-16'),
-  endedAt: dayjs('2024-05-17'),
+  startedAt: dayjs('2024-05-19'),
+  endedAt: dayjs('2024-05-20'),
   comments: 'gadzooks function',
 };
 

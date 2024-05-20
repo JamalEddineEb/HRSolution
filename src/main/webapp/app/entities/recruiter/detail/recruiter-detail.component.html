@@ -31,9 +31,13 @@
           <dd>
             <span>{{ recruiter()!.score }}</span>
           </dd>
-          <dt><span jhiTranslate="hrSolutionApp.recruiter.internalUser">Internal User</span></dt>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.relatedUser">Related User</span></dt>
           <dd>
-            <span>{{ recruiter()!.internalUser?.id }}</span>
+            @if (recruiter()!.relatedUser) {
+              <div>
+                <a [routerLink]="['/profile', recruiter()!.relatedUser?.id, 'view']">{{ recruiter()!.relatedUser?.id }}</a>
+              </div>
+            }
           </dd>
           <dt><span jhiTranslate="hrSolutionApp.recruiter.wallet">Wallet</span></dt>
           <dd>

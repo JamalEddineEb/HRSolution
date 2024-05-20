@@ -50,8 +50,6 @@ public class CandidateAsserts {
             .satisfies(e -> assertThat(e.getLinkedinUrl()).as("check linkedinUrl").isEqualTo(actual.getLinkedinUrl()))
             .satisfies(e -> assertThat(e.getFullName()).as("check fullName").isEqualTo(actual.getFullName()))
             .satisfies(e -> assertThat(e.getYearsOfExperience()).as("check yearsOfExperience").isEqualTo(actual.getYearsOfExperience()))
-            .satisfies(e -> assertThat(e.getResume()).as("check resume").isEqualTo(actual.getResume()))
-            .satisfies(e -> assertThat(e.getResumeContentType()).as("check resume contenty type").isEqualTo(actual.getResumeContentType()))
             .satisfies(e -> assertThat(e.getCurrentSalary()).as("check currentSalary").isEqualTo(actual.getCurrentSalary()))
             .satisfies(e -> assertThat(e.getDesiredSalary()).as("check desiredSalary").isEqualTo(actual.getDesiredSalary()))
             .satisfies(e -> assertThat(e.getHasContract()).as("check hasContract").isEqualTo(actual.getHasContract()))

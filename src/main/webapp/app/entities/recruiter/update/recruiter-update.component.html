@@ -66,28 +66,26 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_internalUser" jhiTranslate="hrSolutionApp.recruiter.internalUser">Internal User</label>
+          <label class="form-label" for="field_relatedUser" jhiTranslate="hrSolutionApp.recruiter.relatedUser">Related User</label>
           <select
             class="form-control"
-            id="field_internalUser"
-            data-cy="internalUser"
-            name="internalUser"
-            formControlName="internalUser"
-            [compareWith]="compareUser"
+            id="field_relatedUser"
+            data-cy="relatedUser"
+            name="relatedUser"
+            formControlName="relatedUser"
+            [compareWith]="compareProfile"
           >
-            @if (!editForm.get('internalUser')!.value) {
+            @if (editForm.get(['relatedUser'])!.value == null) {
               <option [ngValue]="null" selected></option>
             }
-            @for (userOption of usersSharedCollection; track $index) {
-              <option [ngValue]="userOption">{{ userOption.id }}</option>
+            @for (profileOption of relatedUsersCollection; track $index) {
+              <option [ngValue]="profileOption">{{ profileOption.id }}</option>
             }
           </select>
         </div>
-        @if (
-          editForm.get(['internalUser'])!.invalid && (editForm.get(['internalUser'])!.dirty || editForm.get(['internalUser'])!.touched)
-        ) {
+        @if (editForm.get(['relatedUser'])!.invalid && (editForm.get(['relatedUser'])!.dirty || editForm.get(['relatedUser'])!.touched)) {
           <div>
-            @if (editForm.get(['internalUser'])?.errors?.required) {
+            @if (editForm.get(['relatedUser'])?.errors?.required) {
               <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
             }
           </div>

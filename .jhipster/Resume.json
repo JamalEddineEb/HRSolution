@@ -1,22 +1,28 @@
 {
   "annotations": {
-    "changelogDate": "20240517140121"
+    "changelogDate": "20240520144507"
   },
   "applications": ["HRSolution"],
   "fields": [
     {
-      "fieldName": "name",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "document",
+      "fieldName": "cv",
       "fieldType": "byte[]",
       "fieldTypeBlobContent": "any",
       "fieldValidateRules": ["required"]
     }
   ],
   "name": "Resume",
-  "relationships": [],
+  "relationships": [
+    {
+      "options": {
+        "onDelete": "CASCADE"
+      },
+      "otherEntityName": "candidate",
+      "otherEntityRelationshipName": "candidateCV",
+      "relationshipName": "owner",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
   "searchEngine": "no"
 }

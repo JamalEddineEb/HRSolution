@@ -32,7 +32,7 @@ public class Domain implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "operationalDomains")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(
-        value = { "internalUser", "wallet", "requests", "contracts", "applications", "operationalDomains", "ndaStatuses" },
+        value = { "relatedUser", "wallet", "requests", "applications", "operationalDomains", "ndaStatuses", "contracts" },
         allowSetters = true
     )
     private Set<Recruiter> recruiters = new HashSet<>();
@@ -40,7 +40,7 @@ public class Domain implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "domains")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(
-        value = { "techCV", "interviewResults", "domains", "applications", "contract", "ndaStatuses" },
+        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
         allowSetters = true
     )
     private Set<Candidate> candidates = new HashSet<>();
@@ -67,7 +67,7 @@ public class Domain implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
         value = {
-            "internalUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
+            "relatedUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
         },
         allowSetters = true
     )

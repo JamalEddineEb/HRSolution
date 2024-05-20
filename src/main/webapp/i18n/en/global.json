@@ -9,7 +9,7 @@
         "main": "Entities",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
         "adminAuthority": "Authority",
-        "applicationUser": "Application User",
+        "profile": "Profile",
         "recruiter": "Recruiter",
         "candidate": "Candidate",
         "resume": "Resume",

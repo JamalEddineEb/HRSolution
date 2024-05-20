@@ -19,6 +19,7 @@
       },
       "id": "ID",
       "status": "Status",
+      "expressionOfInterest": "Expression Of Interest",
       "relatedApplication": "Related Application",
       "recruiter": "Recruiter"
     }

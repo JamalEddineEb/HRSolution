@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240517141421"
+    "changelogDate": "20240520145807"
   },
   "applications": ["HRSolution"],
   "fields": [
@@ -26,13 +26,11 @@
     },
     {
       "fieldName": "recruiterIncomeRate",
-      "fieldType": "Float",
-      "fieldValidateRules": ["required"]
+      "fieldType": "Float"
     },
     {
       "fieldName": "candidateIncomeRate",
-      "fieldType": "Float",
-      "fieldValidateRules": ["required"]
+      "fieldType": "Float"
     },
     {
       "fieldName": "deadline",

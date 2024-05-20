@@ -29,6 +29,10 @@ public class Request implements Serializable {
     @Column(name = "status", nullable = false)
     private RequestStatus status;
 
+    @NotNull
+    @Column(name = "expression_of_interest", nullable = false)
+    private String expressionOfInterest;
+
     @JsonIgnoreProperties(
         value = {
             "contracts",
@@ -52,7 +56,7 @@ public class Request implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(
-        value = { "internalUser", "wallet", "requests", "contracts", "applications", "operationalDomains", "ndaStatuses" },
+        value = { "relatedUser", "wallet", "requests", "applications", "operationalDomains", "ndaStatuses", "contracts" },
         allowSetters = true
     )
     private Recruiter recruiter;
@@ -83,6 +87,19 @@ public class Request implements Serializable {
 
     public void setStatus(RequestStatus status) {
         this.status = status;
+    }
+
+    public String getExpressionOfInterest() {
+        return this.expressionOfInterest;
+    }
+
+    public Request expressionOfInterest(String expressionOfInterest) {
+        this.setExpressionOfInterest(expressionOfInterest);
+        return this;
+    }
+
+    public void setExpressionOfInterest(String expressionOfInterest) {
+        this.expressionOfInterest = expressionOfInterest;
     }
 
     public Application getRelatedApplication() {
@@ -136,6 +153,7 @@ public class Request implements Serializable {
         return "Request{" +
             "id=" + getId() +
             ", status='" + getStatus() + "'" +
+            ", expressionOfInterest='" + getExpressionOfInterest() + "'" +
             "}";
     }
 }

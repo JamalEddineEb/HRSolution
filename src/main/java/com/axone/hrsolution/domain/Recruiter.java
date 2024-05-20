@@ -21,6 +21,7 @@ public class Recruiter implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -38,11 +39,11 @@ public class Recruiter implements Serializable {
     @Column(name = "score")
     private Float score;
 
+    @JsonIgnoreProperties(value = { "internalUser", "recruiter", "employer", "admin", "account" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
-    @MapsId
-    @JoinColumn(name = "id")
-    private User internalUser;
+    @JoinColumn(unique = true)
+    private Profile relatedUser;
 
     @JsonIgnoreProperties(value = { "relatedToAccount", "recruiter", "employer", "admin" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -54,11 +55,6 @@ public class Recruiter implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "relatedApplication", "recruiter" }, allowSetters = true)
     private Set<Request> requests = new HashSet<>();
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recruiter")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "template", "candidate", "recruiter", "employer", "application" }, allowSetters = true)
-    private Set<Contract> contracts = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
@@ -99,6 +95,11 @@ public class Recruiter implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "employer", "mediator", "candidate" }, allowSetters = true)
     private Set<NDA> ndaStatuses = new HashSet<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "recruiter")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "template", "candidate", "recruiter", "employer", "application" }, allowSetters = true)
+    private Set<Contract> contracts = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -167,16 +168,16 @@ public class Recruiter implements Serializable {
         this.score = score;
     }
 
-    public User getInternalUser() {
-        return this.internalUser;
+    public Profile getRelatedUser() {
+        return this.relatedUser;
     }
 
-    public void setInternalUser(User user) {
-        this.internalUser = user;
+    public void setRelatedUser(Profile profile) {
+        this.relatedUser = profile;
     }
 
-    public Recruiter internalUser(User user) {
-        this.setInternalUser(user);
+    public Recruiter relatedUser(Profile profile) {
+        this.setRelatedUser(profile);
         return this;
     }
 
@@ -221,37 +222,6 @@ public class Recruiter implements Serializable {
     public Recruiter removeRequests(Request request) {
         this.requests.remove(request);
         request.setRecruiter(null);
-        return this;
-    }
-
-    public Set<Contract> getContracts() {
-        return this.contracts;
-    }
-
-    public void setContracts(Set<Contract> contracts) {
-        if (this.contracts != null) {
-            this.contracts.forEach(i -> i.setRecruiter(null));
-        }
-        if (contracts != null) {
-            contracts.forEach(i -> i.setRecruiter(this));
-        }
-        this.contracts = contracts;
-    }
-
-    public Recruiter contracts(Set<Contract> contracts) {
-        this.setContracts(contracts);
-        return this;
-    }
-
-    public Recruiter addContracts(Contract contract) {
-        this.contracts.add(contract);
-        contract.setRecruiter(this);
-        return this;
-    }
-
-    public Recruiter removeContracts(Contract contract) {
-        this.contracts.remove(contract);
-        contract.setRecruiter(null);
         return this;
     }
 
@@ -329,6 +299,37 @@ public class Recruiter implements Serializable {
     public Recruiter removeNdaStatus(NDA nDA) {
         this.ndaStatuses.remove(nDA);
         nDA.setMediator(null);
+        return this;
+    }
+
+    public Set<Contract> getContracts() {
+        return this.contracts;
+    }
+
+    public void setContracts(Set<Contract> contracts) {
+        if (this.contracts != null) {
+            this.contracts.forEach(i -> i.setRecruiter(null));
+        }
+        if (contracts != null) {
+            contracts.forEach(i -> i.setRecruiter(this));
+        }
+        this.contracts = contracts;
+    }
+
+    public Recruiter contracts(Set<Contract> contracts) {
+        this.setContracts(contracts);
+        return this;
+    }
+
+    public Recruiter addContracts(Contract contract) {
+        this.contracts.add(contract);
+        contract.setRecruiter(this);
+        return this;
+    }
+
+    public Recruiter removeContracts(Contract contract) {
+        this.contracts.remove(contract);
+        contract.setRecruiter(null);
         return this;
     }
 

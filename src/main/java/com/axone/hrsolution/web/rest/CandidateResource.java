@@ -133,12 +133,6 @@ public class CandidateResource {
                 if (candidate.getYearsOfExperience() != null) {
                     existingCandidate.setYearsOfExperience(candidate.getYearsOfExperience());
                 }
-                if (candidate.getResume() != null) {
-                    existingCandidate.setResume(candidate.getResume());
-                }
-                if (candidate.getResumeContentType() != null) {
-                    existingCandidate.setResumeContentType(candidate.getResumeContentType());
-                }
                 if (candidate.getCurrentSalary() != null) {
                     existingCandidate.setCurrentSalary(candidate.getCurrentSalary());
                 }

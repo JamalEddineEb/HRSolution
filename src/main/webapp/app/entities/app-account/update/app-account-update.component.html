@@ -80,19 +80,12 @@
 
         <div class="mb-3">
           <label class="form-label" for="field_owner" jhiTranslate="hrSolutionApp.appAccount.owner">Owner</label>
-          <select
-            class="form-control"
-            id="field_owner"
-            data-cy="owner"
-            name="owner"
-            formControlName="owner"
-            [compareWith]="compareApplicationUser"
-          >
+          <select class="form-control" id="field_owner" data-cy="owner" name="owner" formControlName="owner" [compareWith]="compareProfile">
             @if (editForm.get(['owner'])!.value == null) {
               <option [ngValue]="null" selected></option>
             }
-            @for (applicationUserOption of ownersCollection; track $index) {
-              <option [ngValue]="applicationUserOption">{{ applicationUserOption.id }}</option>
+            @for (profileOption of ownersCollection; track $index) {
+              <option [ngValue]="profileOption">{{ profileOption.id }}</option>
             }
           </select>
         </div>

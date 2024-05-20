@@ -7,8 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/service/user.service';
+import { IProfile } from 'app/entities/profile/profile.model';
+import { ProfileService } from 'app/entities/profile/service/profile.service';
 import { IWallet } from 'app/entities/wallet/wallet.model';
 import { WalletService } from 'app/entities/wallet/service/wallet.service';
 import { AdminService } from '../service/admin.service';
@@ -25,19 +25,19 @@ export class AdminUpdateComponent implements OnInit {
   isSaving = false;
   admin: IAdmin | null = null;
 
-  usersSharedCollection: IUser[] = [];
+  relatedUsersCollection: IProfile[] = [];
   systemWalletsCollection: IWallet[] = [];
 
   protected adminService = inject(AdminService);
   protected adminFormService = inject(AdminFormService);
-  protected userService = inject(UserService);
+  protected profileService = inject(ProfileService);
   protected walletService = inject(WalletService);
   protected activatedRoute = inject(ActivatedRoute);
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: AdminFormGroup = this.adminFormService.createAdminFormGroup();
 
-  compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+  compareProfile = (o1: IProfile | null, o2: IProfile | null): boolean => this.profileService.compareProfile(o1, o2);
 
   compareWallet = (o1: IWallet | null, o2: IWallet | null): boolean => this.walletService.compareWallet(o1, o2);
 
@@ -89,7 +89,10 @@ export class AdminUpdateComponent implements OnInit {
     this.admin = admin;
     this.adminFormService.resetForm(this.editForm, admin);
 
-    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, admin.internalUser);
+    this.relatedUsersCollection = this.profileService.addProfileToCollectionIfMissing<IProfile>(
+      this.relatedUsersCollection,
+      admin.relatedUser,
+    );
     this.systemWalletsCollection = this.walletService.addWalletToCollectionIfMissing<IWallet>(
       this.systemWalletsCollection,
       admin.systemWallet,
@@ -97,11 +100,11 @@ export class AdminUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    this.userService
-      .query()
-      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
-      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.admin?.internalUser)))
-      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+    this.profileService
+      .query({ filter: 'admin-is-null' })
+      .pipe(map((res: HttpResponse<IProfile[]>) => res.body ?? []))
+      .pipe(map((profiles: IProfile[]) => this.profileService.addProfileToCollectionIfMissing<IProfile>(profiles, this.admin?.relatedUser)))
+      .subscribe((profiles: IProfile[]) => (this.relatedUsersCollection = profiles));
 
     this.walletService
       .query({ filter: 'admin-is-null' })

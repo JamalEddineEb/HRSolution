@@ -21,7 +21,7 @@ describe('Admin Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             systemName: expect.any(Object),
-            internalUser: expect.any(Object),
+            relatedUser: expect.any(Object),
             systemWallet: expect.any(Object),
           }),
         );
@@ -34,7 +34,7 @@ describe('Admin Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             systemName: expect.any(Object),
-            internalUser: expect.any(Object),
+            relatedUser: expect.any(Object),
             systemWallet: expect.any(Object),
           }),
         );

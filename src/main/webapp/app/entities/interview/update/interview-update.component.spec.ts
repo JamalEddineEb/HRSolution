@@ -53,10 +53,10 @@ describe('Interview Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Candidate query and add missing value', () => {
       const interview: IInterview = { id: 456 };
-      const attendee: ICandidate = { id: 10844 };
+      const attendee: ICandidate = { id: 19970 };
       interview.attendee = attendee;
 
-      const candidateCollection: ICandidate[] = [{ id: 8216 }];
+      const candidateCollection: ICandidate[] = [{ id: 24766 }];
       jest.spyOn(candidateService, 'query').mockReturnValue(of(new HttpResponse({ body: candidateCollection })));
       const additionalCandidates = [attendee];
       const expectedCollection: ICandidate[] = [...additionalCandidates, ...candidateCollection];
@@ -75,10 +75,10 @@ describe('Interview Management Update Component', () => {
 
     it('Should call Application query and add missing value', () => {
       const interview: IInterview = { id: 456 };
-      const application: IApplication = { id: 2813 };
+      const application: IApplication = { id: 9756 };
       interview.application = application;
 
-      const applicationCollection: IApplication[] = [{ id: 30793 }];
+      const applicationCollection: IApplication[] = [{ id: 27499 }];
       jest.spyOn(applicationService, 'query').mockReturnValue(of(new HttpResponse({ body: applicationCollection })));
       const additionalApplications = [application];
       const expectedCollection: IApplication[] = [...additionalApplications, ...applicationCollection];
@@ -97,9 +97,9 @@ describe('Interview Management Update Component', () => {
 
     it('Should update editForm', () => {
       const interview: IInterview = { id: 456 };
-      const attendee: ICandidate = { id: 28717 };
+      const attendee: ICandidate = { id: 17936 };
       interview.attendee = attendee;
-      const application: IApplication = { id: 16999 };
+      const application: IApplication = { id: 10516 };
       interview.application = application;
 
       activatedRoute.data = of({ interview });

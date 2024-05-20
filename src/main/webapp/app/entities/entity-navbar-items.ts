@@ -2,9 +2,9 @@ import NavbarItem from 'app/layouts/navbar/navbar-item.model';
 
 export const EntityNavbarItems: NavbarItem[] = [
   {
-    name: 'ApplicationUser',
-    route: '/application-user',
-    translationKey: 'global.menu.entities.applicationUser',
+    name: 'Profile',
+    route: '/profile',
+    translationKey: 'global.menu.entities.profile',
   },
   {
     name: 'Recruiter',

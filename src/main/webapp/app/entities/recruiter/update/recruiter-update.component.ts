@@ -7,8 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/service/user.service';
+import { IProfile } from 'app/entities/profile/profile.model';
+import { ProfileService } from 'app/entities/profile/service/profile.service';
 import { IWallet } from 'app/entities/wallet/wallet.model';
 import { WalletService } from 'app/entities/wallet/service/wallet.service';
 import { IApplication } from 'app/entities/application/application.model';
@@ -29,14 +29,14 @@ export class RecruiterUpdateComponent implements OnInit {
   isSaving = false;
   recruiter: IRecruiter | null = null;
 
-  usersSharedCollection: IUser[] = [];
+  relatedUsersCollection: IProfile[] = [];
   walletsCollection: IWallet[] = [];
   applicationsSharedCollection: IApplication[] = [];
   domainsSharedCollection: IDomain[] = [];
 
   protected recruiterService = inject(RecruiterService);
   protected recruiterFormService = inject(RecruiterFormService);
-  protected userService = inject(UserService);
+  protected profileService = inject(ProfileService);
   protected walletService = inject(WalletService);
   protected applicationService = inject(ApplicationService);
   protected domainService = inject(DomainService);
@@ -45,7 +45,7 @@ export class RecruiterUpdateComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: RecruiterFormGroup = this.recruiterFormService.createRecruiterFormGroup();
 
-  compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
+  compareProfile = (o1: IProfile | null, o2: IProfile | null): boolean => this.profileService.compareProfile(o1, o2);
 
   compareWallet = (o1: IWallet | null, o2: IWallet | null): boolean => this.walletService.compareWallet(o1, o2);
 
@@ -101,7 +101,10 @@ export class RecruiterUpdateComponent implements OnInit {
     this.recruiter = recruiter;
     this.recruiterFormService.resetForm(this.editForm, recruiter);
 
-    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, recruiter.internalUser);
+    this.relatedUsersCollection = this.profileService.addProfileToCollectionIfMissing<IProfile>(
+      this.relatedUsersCollection,
+      recruiter.relatedUser,
+    );
     this.walletsCollection = this.walletService.addWalletToCollectionIfMissing<IWallet>(this.walletsCollection, recruiter.wallet);
     this.applicationsSharedCollection = this.applicationService.addApplicationToCollectionIfMissing<IApplication>(
       this.applicationsSharedCollection,
@@ -114,11 +117,13 @@ export class RecruiterUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    this.userService
-      .query()
-      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
-      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.recruiter?.internalUser)))
-      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
+    this.profileService
+      .query({ filter: 'recruiter-is-null' })
+      .pipe(map((res: HttpResponse<IProfile[]>) => res.body ?? []))
+      .pipe(
+        map((profiles: IProfile[]) => this.profileService.addProfileToCollectionIfMissing<IProfile>(profiles, this.recruiter?.relatedUser)),
+      )
+      .subscribe((profiles: IProfile[]) => (this.relatedUsersCollection = profiles));
 
     this.walletService
       .query({ filter: 'recruiter-is-null' })

@@ -39,11 +39,11 @@ public class AppAccount implements Serializable {
     @Column(name = "cvv")
     private Integer cvv;
 
-    @JsonIgnoreProperties(value = { "internalUser", "account" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "internalUser", "recruiter", "employer", "admin", "account" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
     @JoinColumn(unique = true)
-    private ApplicationUser owner;
+    private Profile owner;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @NotNull
@@ -74,7 +74,7 @@ public class AppAccount implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
         value = {
-            "internalUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
+            "relatedUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
         },
         allowSetters = true
     )
@@ -147,16 +147,16 @@ public class AppAccount implements Serializable {
         this.cvv = cvv;
     }
 
-    public ApplicationUser getOwner() {
+    public Profile getOwner() {
         return this.owner;
     }
 
-    public void setOwner(ApplicationUser applicationUser) {
-        this.owner = applicationUser;
+    public void setOwner(Profile profile) {
+        this.owner = profile;
     }
 
-    public AppAccount owner(ApplicationUser applicationUser) {
-        this.setOwner(applicationUser);
+    public AppAccount owner(Profile profile) {
+        this.setOwner(profile);
         return this;
     }
 

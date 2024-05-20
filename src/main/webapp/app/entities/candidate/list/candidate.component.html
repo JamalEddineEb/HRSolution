@@ -63,13 +63,6 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="resume">
-              <div class="d-flex">
-                <span jhiTranslate="hrSolutionApp.candidate.resume">Resume</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
             <th scope="col" jhiSortBy="currentSalary">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.candidate.currentSalary">Current Salary</span>
@@ -135,12 +128,6 @@
               <td>{{ candidate.linkedinUrl }}</td>
               <td>{{ candidate.fullName }}</td>
               <td>{{ candidate.yearsOfExperience }}</td>
-              <td>
-                @if (candidate.resume) {
-                  <a (click)="openFile(candidate.resume, candidate.resumeContentType)" jhiTranslate="entity.action.open">Open</a>
-                  <span>{{ candidate.resumeContentType }}, {{ byteSize(candidate.resume) }}</span>
-                }
-              </td>
               <td>{{ candidate.currentSalary }}</td>
               <td>{{ candidate.desiredSalary }}</td>
               <td>{{ candidate.hasContract }}</td>

@@ -18,8 +18,8 @@
         "title": "Resume"
       },
       "id": "ID",
-      "name": "Name",
-      "document": "Document"
+      "cv": "Cv",
+      "owner": "Owner"
     }
   }
 }

@@ -22,7 +22,7 @@ type RecruiterFormGroupContent = {
   linkedinUrl: FormControl<IRecruiter['linkedinUrl']>;
   approvedExperience: FormControl<IRecruiter['approvedExperience']>;
   score: FormControl<IRecruiter['score']>;
-  internalUser: FormControl<IRecruiter['internalUser']>;
+  relatedUser: FormControl<IRecruiter['relatedUser']>;
   wallet: FormControl<IRecruiter['wallet']>;
   applications: FormControl<IRecruiter['applications']>;
   operationalDomains: FormControl<IRecruiter['operationalDomains']>;
@@ -53,7 +53,7 @@ export class RecruiterFormService {
       }),
       approvedExperience: new FormControl(recruiterRawValue.approvedExperience),
       score: new FormControl(recruiterRawValue.score),
-      internalUser: new FormControl(recruiterRawValue.internalUser, {
+      relatedUser: new FormControl(recruiterRawValue.relatedUser, {
         validators: [Validators.required],
       }),
       wallet: new FormControl(recruiterRawValue.wallet, {

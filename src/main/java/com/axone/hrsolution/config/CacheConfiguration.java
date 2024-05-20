@@ -50,15 +50,16 @@ public class CacheConfiguration {
             createCache(cm, com.axone.hrsolution.domain.User.class.getName());
             createCache(cm, com.axone.hrsolution.domain.Authority.class.getName());
             createCache(cm, com.axone.hrsolution.domain.User.class.getName() + ".authorities");
-            createCache(cm, com.axone.hrsolution.domain.ApplicationUser.class.getName());
+            createCache(cm, com.axone.hrsolution.domain.Profile.class.getName());
             createCache(cm, com.axone.hrsolution.domain.Recruiter.class.getName());
             createCache(cm, com.axone.hrsolution.domain.Recruiter.class.getName() + ".requests");
-            createCache(cm, com.axone.hrsolution.domain.Recruiter.class.getName() + ".contracts");
             createCache(cm, com.axone.hrsolution.domain.Recruiter.class.getName() + ".applications");
             createCache(cm, com.axone.hrsolution.domain.Recruiter.class.getName() + ".operationalDomains");
             createCache(cm, com.axone.hrsolution.domain.Recruiter.class.getName() + ".ndaStatuses");
+            createCache(cm, com.axone.hrsolution.domain.Recruiter.class.getName() + ".contracts");
             createCache(cm, com.axone.hrsolution.domain.Candidate.class.getName());
             createCache(cm, com.axone.hrsolution.domain.Candidate.class.getName() + ".interviewResults");
+            createCache(cm, com.axone.hrsolution.domain.Candidate.class.getName() + ".candidateCVS");
             createCache(cm, com.axone.hrsolution.domain.Candidate.class.getName() + ".domains");
             createCache(cm, com.axone.hrsolution.domain.Candidate.class.getName() + ".applications");
             createCache(cm, com.axone.hrsolution.domain.Candidate.class.getName() + ".ndaStatuses");

@@ -19,7 +19,7 @@ type AdminFormDefaults = Pick<NewAdmin, 'id'>;
 type AdminFormGroupContent = {
   id: FormControl<IAdmin['id'] | NewAdmin['id']>;
   systemName: FormControl<IAdmin['systemName']>;
-  internalUser: FormControl<IAdmin['internalUser']>;
+  relatedUser: FormControl<IAdmin['relatedUser']>;
   systemWallet: FormControl<IAdmin['systemWallet']>;
 };
 
@@ -43,7 +43,7 @@ export class AdminFormService {
       systemName: new FormControl(adminRawValue.systemName, {
         validators: [Validators.required],
       }),
-      internalUser: new FormControl(adminRawValue.internalUser, {
+      relatedUser: new FormControl(adminRawValue.relatedUser, {
         validators: [Validators.required],
       }),
       systemWallet: new FormControl(adminRawValue.systemWallet, {

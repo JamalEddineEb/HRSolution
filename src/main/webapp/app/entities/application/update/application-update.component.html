@@ -117,22 +117,6 @@
             data-cy="recruiterIncomeRate"
             formControlName="recruiterIncomeRate"
           />
-          @if (
-            editForm.get('recruiterIncomeRate')!.invalid &&
-            (editForm.get('recruiterIncomeRate')!.dirty || editForm.get('recruiterIncomeRate')!.touched)
-          ) {
-            <div>
-              @if (editForm.get('recruiterIncomeRate')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('recruiterIncomeRate')?.errors?.number"
-                jhiTranslate="entity.validation.number"
-                >This field should be a number.</small
-              >
-            </div>
-          }
         </div>
 
         <div class="mb-3">
@@ -147,22 +131,6 @@
             data-cy="candidateIncomeRate"
             formControlName="candidateIncomeRate"
           />
-          @if (
-            editForm.get('candidateIncomeRate')!.invalid &&
-            (editForm.get('candidateIncomeRate')!.dirty || editForm.get('candidateIncomeRate')!.touched)
-          ) {
-            <div>
-              @if (editForm.get('candidateIncomeRate')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('candidateIncomeRate')?.errors?.number"
-                jhiTranslate="entity.validation.number"
-                >This field should be a number.</small
-              >
-            </div>
-          }
         </div>
 
         <div class="mb-3">

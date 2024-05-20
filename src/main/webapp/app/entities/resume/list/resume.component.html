@@ -42,17 +42,16 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="name">
+            <th scope="col" jhiSortBy="cv">
               <div class="d-flex">
-                <span jhiTranslate="hrSolutionApp.resume.name">Name</span>
+                <span jhiTranslate="hrSolutionApp.resume.cv">Cv</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="document">
+            <th scope="col" jhiSortBy="owner.id">
               <div class="d-flex">
-                <span jhiTranslate="hrSolutionApp.resume.document">Document</span>
-
+                <span jhiTranslate="hrSolutionApp.resume.owner">Owner</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -65,11 +64,17 @@
               <td>
                 <a [routerLink]="['/resume', resume.id, 'view']">{{ resume.id }}</a>
               </td>
-              <td>{{ resume.name }}</td>
               <td>
-                @if (resume.document) {
-                  <a (click)="openFile(resume.document, resume.documentContentType)" jhiTranslate="entity.action.open">Open</a>
-                  <span>{{ resume.documentContentType }}, {{ byteSize(resume.document) }}</span>
+                @if (resume.cv) {
+                  <a (click)="openFile(resume.cv, resume.cvContentType)" jhiTranslate="entity.action.open">Open</a>
+                  <span>{{ resume.cvContentType }}, {{ byteSize(resume.cv) }}</span>
+                }
+              </td>
+              <td>
+                @if (resume.owner) {
+                  <div>
+                    <a [routerLink]="['/candidate', resume.owner.id, 'view']">{{ resume.owner.id }}</a>
+                  </div>
                 }
               </td>
               <td class="text-end">

@@ -1,5 +1,6 @@
 package com.axone.hrsolution.domain;
 
+import static com.axone.hrsolution.domain.CandidateTestSamples.*;
 import static com.axone.hrsolution.domain.ResumeTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -20,5 +21,17 @@ class ResumeTest {
 
         resume2 = getResumeSample2();
         assertThat(resume1).isNotEqualTo(resume2);
+    }
+
+    @Test
+    void ownerTest() throws Exception {
+        Resume resume = getResumeRandomSampleGenerator();
+        Candidate candidateBack = getCandidateRandomSampleGenerator();
+
+        resume.setOwner(candidateBack);
+        assertThat(resume.getOwner()).isEqualTo(candidateBack);
+
+        resume.owner(null);
+        assertThat(resume.getOwner()).isNull();
     }
 }

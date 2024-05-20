@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240517141321"
+    "changelogDate": "20240520145707"
   },
   "applications": ["HRSolution"],
   "fields": [
@@ -9,6 +9,11 @@
       "fieldType": "RequestStatus",
       "fieldValidateRules": ["required"],
       "fieldValues": "PROCESSING,ACCEPTED,REJECTED,REVOKED"
+    },
+    {
+      "fieldName": "expressionOfInterest",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     }
   ],
   "name": "Request",

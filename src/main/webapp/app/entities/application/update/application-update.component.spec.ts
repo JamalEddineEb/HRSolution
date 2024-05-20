@@ -161,10 +161,10 @@ describe('Application Management Update Component', () => {
 
     it('Should call Employer query and add missing value', () => {
       const application: IApplication = { id: 456 };
-      const employer: IEmployer = { id: 28461 };
+      const employer: IEmployer = { id: 28231 };
       application.employer = employer;
 
-      const employerCollection: IEmployer[] = [{ id: 27457 }];
+      const employerCollection: IEmployer[] = [{ id: 11938 }];
       jest.spyOn(employerService, 'query').mockReturnValue(of(new HttpResponse({ body: employerCollection })));
       const additionalEmployers = [employer];
       const expectedCollection: IEmployer[] = [...additionalEmployers, ...employerCollection];
@@ -183,10 +183,10 @@ describe('Application Management Update Component', () => {
 
     it('Should call Recruiter query and add missing value', () => {
       const application: IApplication = { id: 456 };
-      const recruiters: IRecruiter[] = [{ id: 19393 }];
+      const recruiters: IRecruiter[] = [{ id: 19540 }];
       application.recruiters = recruiters;
 
-      const recruiterCollection: IRecruiter[] = [{ id: 674 }];
+      const recruiterCollection: IRecruiter[] = [{ id: 15599 }];
       jest.spyOn(recruiterService, 'query').mockReturnValue(of(new HttpResponse({ body: recruiterCollection })));
       const additionalRecruiters = [...recruiters];
       const expectedCollection: IRecruiter[] = [...additionalRecruiters, ...recruiterCollection];
@@ -205,10 +205,10 @@ describe('Application Management Update Component', () => {
 
     it('Should call Candidate query and add missing value', () => {
       const application: IApplication = { id: 456 };
-      const candidates: ICandidate[] = [{ id: 18203 }];
+      const candidates: ICandidate[] = [{ id: 21115 }];
       application.candidates = candidates;
 
-      const candidateCollection: ICandidate[] = [{ id: 9970 }];
+      const candidateCollection: ICandidate[] = [{ id: 11965 }];
       jest.spyOn(candidateService, 'query').mockReturnValue(of(new HttpResponse({ body: candidateCollection })));
       const additionalCandidates = [...candidates];
       const expectedCollection: ICandidate[] = [...additionalCandidates, ...candidateCollection];
@@ -235,11 +235,11 @@ describe('Application Management Update Component', () => {
       application.criteria = [criteria];
       const domain: IDomain = { id: 26070 };
       application.domains = [domain];
-      const employer: IEmployer = { id: 9559 };
+      const employer: IEmployer = { id: 3910 };
       application.employer = employer;
-      const recruiters: IRecruiter = { id: 2663 };
+      const recruiters: IRecruiter = { id: 23907 };
       application.recruiters = [recruiters];
-      const candidates: ICandidate = { id: 677 };
+      const candidates: ICandidate = { id: 17544 };
       application.candidates = [candidates];
 
       activatedRoute.data = of({ application });

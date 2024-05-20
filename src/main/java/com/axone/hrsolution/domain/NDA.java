@@ -46,7 +46,7 @@ public class NDA implements Serializable {
     @NotNull
     @JsonIgnoreProperties(
         value = {
-            "internalUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
+            "relatedUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
         },
         allowSetters = true
     )
@@ -55,7 +55,7 @@ public class NDA implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(
-        value = { "internalUser", "wallet", "requests", "contracts", "applications", "operationalDomains", "ndaStatuses" },
+        value = { "relatedUser", "wallet", "requests", "applications", "operationalDomains", "ndaStatuses", "contracts" },
         allowSetters = true
     )
     private Recruiter mediator;
@@ -63,7 +63,7 @@ public class NDA implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(
-        value = { "techCV", "interviewResults", "domains", "applications", "contract", "ndaStatuses" },
+        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
         allowSetters = true
     )
     private Candidate candidate;

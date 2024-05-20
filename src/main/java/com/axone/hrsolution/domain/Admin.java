@@ -19,6 +19,7 @@ public class Admin implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -26,11 +27,11 @@ public class Admin implements Serializable {
     @Column(name = "system_name", nullable = false)
     private String systemName;
 
+    @JsonIgnoreProperties(value = { "internalUser", "recruiter", "employer", "admin", "account" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
-    @MapsId
-    @JoinColumn(name = "id")
-    private User internalUser;
+    @JoinColumn(unique = true)
+    private Profile relatedUser;
 
     @JsonIgnoreProperties(value = { "relatedToAccount", "recruiter", "employer", "admin" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -66,16 +67,16 @@ public class Admin implements Serializable {
         this.systemName = systemName;
     }
 
-    public User getInternalUser() {
-        return this.internalUser;
+    public Profile getRelatedUser() {
+        return this.relatedUser;
     }
 
-    public void setInternalUser(User user) {
-        this.internalUser = user;
+    public void setRelatedUser(Profile profile) {
+        this.relatedUser = profile;
     }
 
-    public Admin internalUser(User user) {
-        this.setInternalUser(user);
+    public Admin relatedUser(Profile profile) {
+        this.setRelatedUser(profile);
         return this;
     }
 

@@ -44,12 +44,10 @@ public class Application implements Serializable {
     @Column(name = "payment_amount", nullable = false)
     private Double paymentAmount;
 
-    @NotNull
-    @Column(name = "recruiter_income_rate", nullable = false)
+    @Column(name = "recruiter_income_rate")
     private Float recruiterIncomeRate;
 
-    @NotNull
-    @Column(name = "candidate_income_rate", nullable = false)
+    @Column(name = "candidate_income_rate")
     private Float candidateIncomeRate;
 
     @Column(name = "deadline")
@@ -129,7 +127,7 @@ public class Application implements Serializable {
     @NotNull
     @JsonIgnoreProperties(
         value = {
-            "internalUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
+            "relatedUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
         },
         allowSetters = true
     )
@@ -138,7 +136,7 @@ public class Application implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "applications")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(
-        value = { "internalUser", "wallet", "requests", "contracts", "applications", "operationalDomains", "ndaStatuses" },
+        value = { "relatedUser", "wallet", "requests", "applications", "operationalDomains", "ndaStatuses", "contracts" },
         allowSetters = true
     )
     private Set<Recruiter> recruiters = new HashSet<>();
@@ -146,7 +144,7 @@ public class Application implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "applications")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(
-        value = { "techCV", "interviewResults", "domains", "applications", "contract", "ndaStatuses" },
+        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
         allowSetters = true
     )
     private Set<Candidate> candidates = new HashSet<>();

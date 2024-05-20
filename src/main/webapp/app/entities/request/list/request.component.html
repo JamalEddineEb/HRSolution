@@ -49,6 +49,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="expressionOfInterest">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.request.expressionOfInterest">Expression Of Interest</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="relatedApplication.id">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.request.relatedApplication">Related Application</span>
@@ -77,6 +84,7 @@
                   ]
                 }}
               </td>
+              <td>{{ request.expressionOfInterest }}</td>
               <td>
                 @if (request.relatedApplication) {
                   <div>

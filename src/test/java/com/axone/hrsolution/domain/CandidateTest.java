@@ -6,6 +6,7 @@ import static com.axone.hrsolution.domain.ContractTestSamples.*;
 import static com.axone.hrsolution.domain.DomainTestSamples.*;
 import static com.axone.hrsolution.domain.InterviewTestSamples.*;
 import static com.axone.hrsolution.domain.NDATestSamples.*;
+import static com.axone.hrsolution.domain.ResumeTestSamples.*;
 import static com.axone.hrsolution.domain.TechnicalCVTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -62,6 +63,28 @@ class CandidateTest {
         candidate.setInterviewResults(new HashSet<>());
         assertThat(candidate.getInterviewResults()).doesNotContain(interviewBack);
         assertThat(interviewBack.getAttendee()).isNull();
+    }
+
+    @Test
+    void candidateCVTest() throws Exception {
+        Candidate candidate = getCandidateRandomSampleGenerator();
+        Resume resumeBack = getResumeRandomSampleGenerator();
+
+        candidate.addCandidateCV(resumeBack);
+        assertThat(candidate.getCandidateCVS()).containsOnly(resumeBack);
+        assertThat(resumeBack.getOwner()).isEqualTo(candidate);
+
+        candidate.removeCandidateCV(resumeBack);
+        assertThat(candidate.getCandidateCVS()).doesNotContain(resumeBack);
+        assertThat(resumeBack.getOwner()).isNull();
+
+        candidate.candidateCVS(new HashSet<>(Set.of(resumeBack)));
+        assertThat(candidate.getCandidateCVS()).containsOnly(resumeBack);
+        assertThat(resumeBack.getOwner()).isEqualTo(candidate);
+
+        candidate.setCandidateCVS(new HashSet<>());
+        assertThat(candidate.getCandidateCVS()).doesNotContain(resumeBack);
+        assertThat(resumeBack.getOwner()).isNull();
     }
 
     @Test

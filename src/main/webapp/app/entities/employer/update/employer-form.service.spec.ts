@@ -23,7 +23,7 @@ describe('Employer Form Service', () => {
             label: expect.any(Object),
             linkedinUrl: expect.any(Object),
             score: expect.any(Object),
-            internalUser: expect.any(Object),
+            relatedUser: expect.any(Object),
             wallet: expect.any(Object),
           }),
         );
@@ -38,7 +38,7 @@ describe('Employer Form Service', () => {
             label: expect.any(Object),
             linkedinUrl: expect.any(Object),
             score: expect.any(Object),
-            internalUser: expect.any(Object),
+            relatedUser: expect.any(Object),
             wallet: expect.any(Object),
           }),
         );

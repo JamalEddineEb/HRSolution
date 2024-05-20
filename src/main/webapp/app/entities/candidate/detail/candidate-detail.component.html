@@ -27,15 +27,6 @@
           <dd>
             <span>{{ candidate()!.yearsOfExperience }}</span>
           </dd>
-          <dt><span jhiTranslate="hrSolutionApp.candidate.resume">Resume</span></dt>
-          <dd>
-            @if (candidate()!.resume) {
-              <div>
-                <a (click)="openFile(candidate()!.resume ?? '', candidate()!.resumeContentType)" jhiTranslate="entity.action.open">Open</a>
-                {{ candidate()!.resumeContentType }}, {{ byteSize(candidate()!.resume ?? '') }}
-              </div>
-            }
-          </dd>
           <dt><span jhiTranslate="hrSolutionApp.candidate.currentSalary">Current Salary</span></dt>
           <dd>
             <span>{{ candidate()!.currentSalary }}</span>

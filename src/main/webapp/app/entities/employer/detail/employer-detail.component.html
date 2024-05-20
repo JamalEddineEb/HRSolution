@@ -27,9 +27,13 @@
           <dd>
             <span>{{ employer()!.score }}</span>
           </dd>
-          <dt><span jhiTranslate="hrSolutionApp.employer.internalUser">Internal User</span></dt>
+          <dt><span jhiTranslate="hrSolutionApp.employer.relatedUser">Related User</span></dt>
           <dd>
-            <span>{{ employer()!.internalUser?.id }}</span>
+            @if (employer()!.relatedUser) {
+              <div>
+                <a [routerLink]="['/profile', employer()!.relatedUser?.id, 'view']">{{ employer()!.relatedUser?.id }}</a>
+              </div>
+            }
           </dd>
           <dt><span jhiTranslate="hrSolutionApp.employer.wallet">Wallet</span></dt>
           <dd>

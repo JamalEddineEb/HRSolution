@@ -5,8 +5,8 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
 
-import { IUser } from 'app/entities/user/user.model';
-import { UserService } from 'app/entities/user/service/user.service';
+import { IProfile } from 'app/entities/profile/profile.model';
+import { ProfileService } from 'app/entities/profile/service/profile.service';
 import { IWallet } from 'app/entities/wallet/wallet.model';
 import { WalletService } from 'app/entities/wallet/service/wallet.service';
 import { IEmployer } from '../employer.model';
@@ -21,7 +21,7 @@ describe('Employer Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let employerFormService: EmployerFormService;
   let employerService: EmployerService;
-  let userService: UserService;
+  let profileService: ProfileService;
   let walletService: WalletService;
 
   beforeEach(() => {
@@ -44,33 +44,29 @@ describe('Employer Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     employerFormService = TestBed.inject(EmployerFormService);
     employerService = TestBed.inject(EmployerService);
-    userService = TestBed.inject(UserService);
+    profileService = TestBed.inject(ProfileService);
     walletService = TestBed.inject(WalletService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call User query and add missing value', () => {
+    it('Should call relatedUser query and add missing value', () => {
       const employer: IEmployer = { id: 456 };
-      const internalUser: IUser = { id: 13922 };
-      employer.internalUser = internalUser;
+      const relatedUser: IProfile = { id: 14553 };
+      employer.relatedUser = relatedUser;
 
-      const userCollection: IUser[] = [{ id: 31604 }];
-      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
-      const additionalUsers = [internalUser];
-      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
-      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const relatedUserCollection: IProfile[] = [{ id: 21743 }];
+      jest.spyOn(profileService, 'query').mockReturnValue(of(new HttpResponse({ body: relatedUserCollection })));
+      const expectedCollection: IProfile[] = [relatedUser, ...relatedUserCollection];
+      jest.spyOn(profileService, 'addProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ employer });
       comp.ngOnInit();
 
-      expect(userService.query).toHaveBeenCalled();
-      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(
-        userCollection,
-        ...additionalUsers.map(expect.objectContaining),
-      );
-      expect(comp.usersSharedCollection).toEqual(expectedCollection);
+      expect(profileService.query).toHaveBeenCalled();
+      expect(profileService.addProfileToCollectionIfMissing).toHaveBeenCalledWith(relatedUserCollection, relatedUser);
+      expect(comp.relatedUsersCollection).toEqual(expectedCollection);
     });
 
     it('Should call wallet query and add missing value', () => {
@@ -93,15 +89,15 @@ describe('Employer Management Update Component', () => {
 
     it('Should update editForm', () => {
       const employer: IEmployer = { id: 456 };
-      const internalUser: IUser = { id: 12535 };
-      employer.internalUser = internalUser;
+      const relatedUser: IProfile = { id: 16349 };
+      employer.relatedUser = relatedUser;
       const wallet: IWallet = { id: 26313 };
       employer.wallet = wallet;
 
       activatedRoute.data = of({ employer });
       comp.ngOnInit();
 
-      expect(comp.usersSharedCollection).toContain(internalUser);
+      expect(comp.relatedUsersCollection).toContain(relatedUser);
       expect(comp.walletsCollection).toContain(wallet);
       expect(comp.employer).toEqual(employer);
     });
@@ -176,13 +172,13 @@ describe('Employer Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareUser', () => {
-      it('Should forward to userService', () => {
+    describe('compareProfile', () => {
+      it('Should forward to profileService', () => {
         const entity = { id: 123 };
         const entity2 = { id: 456 };
-        jest.spyOn(userService, 'compareUser');
-        comp.compareUser(entity, entity2);
-        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
+        jest.spyOn(profileService, 'compareProfile');
+        comp.compareProfile(entity, entity2);
+        expect(profileService.compareProfile).toHaveBeenCalledWith(entity, entity2);
       });
     });
 

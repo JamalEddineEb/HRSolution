@@ -21,7 +21,7 @@
       "label": "Label",
       "linkedinUrl": "Linkedin Url",
       "score": "Score",
-      "internalUser": "Internal User",
+      "relatedUser": "Related User",
       "wallet": "Wallet",
       "operationalDomain": "Operational Domain",
       "paymentAccount": "Payment Account",

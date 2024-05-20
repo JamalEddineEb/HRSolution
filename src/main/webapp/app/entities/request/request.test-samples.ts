@@ -1,22 +1,26 @@
 import { IRequest, NewRequest } from './request.model';
 
 export const sampleWithRequiredData: IRequest = {
-  id: 29848,
-  status: 'ACCEPTED',
+  id: 14568,
+  status: 'REVOKED',
+  expressionOfInterest: 'meh',
 };
 
 export const sampleWithPartialData: IRequest = {
-  id: 32212,
+  id: 6778,
   status: 'PROCESSING',
+  expressionOfInterest: 'boo stench per',
 };
 
 export const sampleWithFullData: IRequest = {
-  id: 22956,
+  id: 28641,
   status: 'REVOKED',
+  expressionOfInterest: 'boo',
 };
 
 export const sampleWithNewData: NewRequest = {
-  status: 'ACCEPTED',
+  status: 'PROCESSING',
+  expressionOfInterest: 'into supposing',
   id: null,
 };
 

@@ -2,7 +2,6 @@ package com.axone.hrsolution.web.rest;
 
 import com.axone.hrsolution.domain.Admin;
 import com.axone.hrsolution.repository.AdminRepository;
-import com.axone.hrsolution.repository.UserRepository;
 import com.axone.hrsolution.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -37,11 +36,8 @@ public class AdminResource {
 
     private final AdminRepository adminRepository;
 
-    private final UserRepository userRepository;
-
-    public AdminResource(AdminRepository adminRepository, UserRepository userRepository) {
+    public AdminResource(AdminRepository adminRepository) {
         this.adminRepository = adminRepository;
-        this.userRepository = userRepository;
     }
 
     /**
@@ -57,11 +53,6 @@ public class AdminResource {
         if (admin.getId() != null) {
             throw new BadRequestAlertException("A new admin cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if (Objects.isNull(admin.getInternalUser())) {
-            throw new BadRequestAlertException("Invalid association value provided", ENTITY_NAME, "null");
-        }
-        Long userId = admin.getInternalUser().getId();
-        userRepository.findById(userId).ifPresent(admin::internalUser);
         admin = adminRepository.save(admin);
         return ResponseEntity.created(new URI("/api/admins/" + admin.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, admin.getId().toString()))
@@ -150,7 +141,6 @@ public class AdminResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of admins in body.
      */
     @GetMapping("")
-    @Transactional(readOnly = true)
     public List<Admin> getAllAdmins() {
         log.debug("REST request to get all Admins");
         return adminRepository.findAll();
@@ -163,7 +153,6 @@ public class AdminResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the admin, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    @Transactional(readOnly = true)
     public ResponseEntity<Admin> getAdmin(@PathVariable("id") Long id) {
         log.debug("REST request to get Admin : {}", id);
         Optional<Admin> admin = adminRepository.findById(id);

@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240517135921"
+    "changelogDate": "20240520144307"
   },
   "applications": ["HRSolution"],
   "fields": [
@@ -27,17 +27,16 @@
   "relationships": [
     {
       "options": {
-        "id": true,
         "onDelete": "CASCADE",
         "onUpdate": "CASCADE"
       },
       "otherEntityField": "id",
-      "otherEntityName": "user",
-      "relationshipName": "internalUser",
+      "otherEntityName": "profile",
+      "otherEntityRelationshipName": "recruiter",
+      "relationshipName": "relatedUser",
       "relationshipSide": "left",
       "relationshipType": "one-to-one",
-      "relationshipValidateRules": "required",
-      "relationshipWithBuiltInEntity": true
+      "relationshipValidateRules": "required"
     },
     {
       "options": {
@@ -53,16 +52,6 @@
       "otherEntityName": "request",
       "otherEntityRelationshipName": "recruiter",
       "relationshipName": "requests",
-      "relationshipSide": "left",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "options": {
-        "onUpdate": "CASCADE"
-      },
-      "otherEntityName": "contract",
-      "otherEntityRelationshipName": "recruiter",
-      "relationshipName": "contracts",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
@@ -93,6 +82,16 @@
       "otherEntityName": "nDA",
       "otherEntityRelationshipName": "mediator",
       "relationshipName": "ndaStatus",
+      "relationshipSide": "right",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "options": {
+        "onUpdate": "CASCADE"
+      },
+      "otherEntityName": "contract",
+      "otherEntityRelationshipName": "recruiter",
+      "relationshipName": "contracts",
       "relationshipSide": "right",
       "relationshipType": "one-to-many"
     }

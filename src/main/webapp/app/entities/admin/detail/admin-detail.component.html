@@ -19,9 +19,13 @@
           <dd>
             <span>{{ admin()!.systemName }}</span>
           </dd>
-          <dt><span jhiTranslate="hrSolutionApp.admin.internalUser">Internal User</span></dt>
+          <dt><span jhiTranslate="hrSolutionApp.admin.relatedUser">Related User</span></dt>
           <dd>
-            <span>{{ admin()!.internalUser?.id }}</span>
+            @if (admin()!.relatedUser) {
+              <div>
+                <a [routerLink]="['/profile', admin()!.relatedUser?.id, 'view']">{{ admin()!.relatedUser?.id }}</a>
+              </div>
+            }
           </dd>
           <dt><span jhiTranslate="hrSolutionApp.admin.systemWallet">System Wallet</span></dt>
           <dd>

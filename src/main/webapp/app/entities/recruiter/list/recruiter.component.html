@@ -70,9 +70,9 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="internalUser.id">
+            <th scope="col" jhiSortBy="relatedUser.id">
               <div class="d-flex">
-                <span jhiTranslate="hrSolutionApp.recruiter.internalUser">Internal User</span>
+                <span jhiTranslate="hrSolutionApp.recruiter.relatedUser">Related User</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
@@ -108,7 +108,11 @@
               <td>{{ recruiter.approvedExperience }}</td>
               <td>{{ recruiter.score }}</td>
               <td>
-                {{ recruiter.internalUser?.id }}
+                @if (recruiter.relatedUser) {
+                  <div>
+                    <a [routerLink]="['/profile', recruiter.relatedUser.id, 'view']">{{ recruiter.relatedUser.id }}</a>
+                  </div>
+                }
               </td>
               <td>
                 @if (recruiter.wallet) {

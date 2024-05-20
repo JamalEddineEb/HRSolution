@@ -2,8 +2,8 @@ package com.axone.hrsolution.domain;
 
 import static com.axone.hrsolution.domain.AppAccountTestSamples.*;
 import static com.axone.hrsolution.domain.AppAccountTypeTestSamples.*;
-import static com.axone.hrsolution.domain.ApplicationUserTestSamples.*;
 import static com.axone.hrsolution.domain.EmployerTestSamples.*;
+import static com.axone.hrsolution.domain.ProfileTestSamples.*;
 import static com.axone.hrsolution.domain.ProviderTestSamples.*;
 import static com.axone.hrsolution.domain.WalletTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,10 +32,10 @@ class AppAccountTest {
     @Test
     void ownerTest() throws Exception {
         AppAccount appAccount = getAppAccountRandomSampleGenerator();
-        ApplicationUser applicationUserBack = getApplicationUserRandomSampleGenerator();
+        Profile profileBack = getProfileRandomSampleGenerator();
 
-        appAccount.setOwner(applicationUserBack);
-        assertThat(appAccount.getOwner()).isEqualTo(applicationUserBack);
+        appAccount.setOwner(profileBack);
+        assertThat(appAccount.getOwner()).isEqualTo(profileBack);
 
         appAccount.owner(null);
         assertThat(appAccount.getOwner()).isNull();

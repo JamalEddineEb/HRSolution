@@ -7,8 +7,6 @@ export interface ICandidate {
   linkedinUrl?: string | null;
   fullName?: string | null;
   yearsOfExperience?: number | null;
-  resume?: string | null;
-  resumeContentType?: string | null;
   currentSalary?: number | null;
   desiredSalary?: number | null;
   hasContract?: boolean | null;

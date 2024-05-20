@@ -47,11 +47,8 @@ public class ResumeAsserts {
     public static void assertResumeUpdatableFieldsEquals(Resume expected, Resume actual) {
         assertThat(expected)
             .as("Verify Resume relevant properties")
-            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
-            .satisfies(e -> assertThat(e.getDocument()).as("check document").isEqualTo(actual.getDocument()))
-            .satisfies(
-                e -> assertThat(e.getDocumentContentType()).as("check document contenty type").isEqualTo(actual.getDocumentContentType())
-            );
+            .satisfies(e -> assertThat(e.getCv()).as("check cv").isEqualTo(actual.getCv()))
+            .satisfies(e -> assertThat(e.getCvContentType()).as("check cv contenty type").isEqualTo(actual.getCvContentType()));
     }
 
     /**
@@ -60,5 +57,9 @@ public class ResumeAsserts {
      * @param expected the expected entity
      * @param actual the actual entity
      */
-    public static void assertResumeUpdatableRelationshipsEquals(Resume expected, Resume actual) {}
+    public static void assertResumeUpdatableRelationshipsEquals(Resume expected, Resume actual) {
+        assertThat(expected)
+            .as("Verify Resume relationships")
+            .satisfies(e -> assertThat(e.getOwner()).as("check owner").isEqualTo(actual.getOwner()));
+    }
 }

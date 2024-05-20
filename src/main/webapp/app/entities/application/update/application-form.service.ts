@@ -97,12 +97,8 @@ export class ApplicationFormService {
       paymentAmount: new FormControl(applicationRawValue.paymentAmount, {
         validators: [Validators.required],
       }),
-      recruiterIncomeRate: new FormControl(applicationRawValue.recruiterIncomeRate, {
-        validators: [Validators.required],
-      }),
-      candidateIncomeRate: new FormControl(applicationRawValue.candidateIncomeRate, {
-        validators: [Validators.required],
-      }),
+      recruiterIncomeRate: new FormControl(applicationRawValue.recruiterIncomeRate),
+      candidateIncomeRate: new FormControl(applicationRawValue.candidateIncomeRate),
       deadline: new FormControl(applicationRawValue.deadline),
       status: new FormControl(applicationRawValue.status, {
         validators: [Validators.required],

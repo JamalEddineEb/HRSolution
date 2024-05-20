@@ -62,7 +62,7 @@ public class Contract implements Serializable {
     private Template template;
 
     @JsonIgnoreProperties(
-        value = { "techCV", "interviewResults", "domains", "applications", "contract", "ndaStatuses" },
+        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
         allowSetters = true
     )
     @OneToOne(fetch = FetchType.LAZY)
@@ -72,7 +72,7 @@ public class Contract implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(
-        value = { "internalUser", "wallet", "requests", "contracts", "applications", "operationalDomains", "ndaStatuses" },
+        value = { "relatedUser", "wallet", "requests", "applications", "operationalDomains", "ndaStatuses", "contracts" },
         allowSetters = true
     )
     private Recruiter recruiter;
@@ -81,7 +81,7 @@ public class Contract implements Serializable {
     @NotNull
     @JsonIgnoreProperties(
         value = {
-            "internalUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
+            "relatedUser", "wallet", "operationalDomains", "paymentAccounts", "applications", "contracts", "templates", "ndaStatuses",
         },
         allowSetters = true
     )

@@ -1,8 +1,10 @@
+import { ICandidate } from 'app/entities/candidate/candidate.model';
+
 export interface IResume {
   id: number;
-  name?: string | null;
-  document?: string | null;
-  documentContentType?: string | null;
+  cv?: string | null;
+  cvContentType?: string | null;
+  owner?: ICandidate | null;
 }
 
 export type NewResume = Omit<IResume, 'id'> & { id: null };

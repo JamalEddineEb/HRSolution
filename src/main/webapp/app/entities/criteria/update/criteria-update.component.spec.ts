@@ -49,10 +49,10 @@ describe('Criteria Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Application query and add missing value', () => {
       const criteria: ICriteria = { id: 456 };
-      const applications: IApplication[] = [{ id: 9860 }];
+      const applications: IApplication[] = [{ id: 16473 }];
       criteria.applications = applications;
 
-      const applicationCollection: IApplication[] = [{ id: 27802 }];
+      const applicationCollection: IApplication[] = [{ id: 29388 }];
       jest.spyOn(applicationService, 'query').mockReturnValue(of(new HttpResponse({ body: applicationCollection })));
       const additionalApplications = [...applications];
       const expectedCollection: IApplication[] = [...additionalApplications, ...applicationCollection];
@@ -71,7 +71,7 @@ describe('Criteria Management Update Component', () => {
 
     it('Should update editForm', () => {
       const criteria: ICriteria = { id: 456 };
-      const application: IApplication = { id: 15878 };
+      const application: IApplication = { id: 30722 };
       criteria.applications = [application];
 
       activatedRoute.data = of({ criteria });

@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240517142121"
+    "changelogDate": "20240520150507"
   },
   "applications": ["HRSolution"],
   "fields": [
@@ -29,7 +29,7 @@
         "onDelete": "CASCADE",
         "onUpdate": "CASCADE"
       },
-      "otherEntityName": "applicationUser",
+      "otherEntityName": "profile",
       "otherEntityRelationshipName": "account",
       "relationshipName": "owner",
       "relationshipSide": "left",

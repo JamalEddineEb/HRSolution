@@ -1,9 +1,0 @@
-export enum RequestStatus {
-  PROCESSING = 'PROCESSING',
-
-  ACCEPTED = 'ACCEPTED',
-
-  REJECTED = 'REJECTED',
-
-  REVOKED = 'REVOKED',
-}

@@ -27,17 +27,6 @@ public class AdminAsserts {
     }
 
     /**
-     * Asserts that the derived primary key is set correctly.
-     *
-     * @param entityToPersist the entity used to persist
-     * @param persisted the persisted entity
-     */
-    public static void assertAdminMapsIdRelationshipPersistedValue(Admin entityToPersist, Admin persisted) {
-        // Validate the id for MapsId, the ids must be same
-        assertThat(entityToPersist.getInternalUser().getId()).isEqualTo(persisted.getId());
-    }
-
-    /**
      * Asserts that the entity has all the auto generated properties (fields/relationships) set.
      *
      * @param expected the expected entity
@@ -70,6 +59,7 @@ public class AdminAsserts {
     public static void assertAdminUpdatableRelationshipsEquals(Admin expected, Admin actual) {
         assertThat(expected)
             .as("Verify Admin relationships")
+            .satisfies(e -> assertThat(e.getRelatedUser()).as("check relatedUser").isEqualTo(actual.getRelatedUser()))
             .satisfies(e -> assertThat(e.getSystemWallet()).as("check systemWallet").isEqualTo(actual.getSystemWallet()));
     }
 }

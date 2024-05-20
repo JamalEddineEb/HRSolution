@@ -5,6 +5,7 @@ import { RequestStatus } from 'app/entities/enumerations/request-status.model';
 export interface IRequest {
   id: number;
   status?: keyof typeof RequestStatus | null;
+  expressionOfInterest?: string | null;
   relatedApplication?: IApplication | null;
   recruiter?: IRecruiter | null;
 }

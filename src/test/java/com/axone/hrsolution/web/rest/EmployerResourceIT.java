@@ -9,13 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.axone.hrsolution.IntegrationTest;
 import com.axone.hrsolution.domain.Employer;
-import com.axone.hrsolution.domain.User;
+import com.axone.hrsolution.domain.Profile;
 import com.axone.hrsolution.domain.Wallet;
 import com.axone.hrsolution.repository.EmployerRepository;
-import com.axone.hrsolution.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,9 +55,6 @@ class EmployerResourceIT {
     private EmployerRepository employerRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -76,10 +71,15 @@ class EmployerResourceIT {
     public static Employer createEntity(EntityManager em) {
         Employer employer = new Employer().label(DEFAULT_LABEL).linkedinUrl(DEFAULT_LINKEDIN_URL).score(DEFAULT_SCORE);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        employer.setInternalUser(user);
+        Profile profile;
+        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
+            profile = ProfileResourceIT.createEntity(em);
+            em.persist(profile);
+            em.flush();
+        } else {
+            profile = TestUtil.findAll(em, Profile.class).get(0);
+        }
+        employer.setRelatedUser(profile);
         // Add required entity
         Wallet wallet;
         if (TestUtil.findAll(em, Wallet.class).isEmpty()) {
@@ -102,15 +102,24 @@ class EmployerResourceIT {
     public static Employer createUpdatedEntity(EntityManager em) {
         Employer employer = new Employer().label(UPDATED_LABEL).linkedinUrl(UPDATED_LINKEDIN_URL).score(UPDATED_SCORE);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        employer.setInternalUser(user);
+        Profile profile;
+        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
+            profile = ProfileResourceIT.createUpdatedEntity(em);
+            em.persist(profile);
+            em.flush();
+        } else {
+            profile = TestUtil.findAll(em, Profile.class).get(0);
+        }
+        employer.setRelatedUser(profile);
         // Add required entity
         Wallet wallet;
-        wallet = WalletResourceIT.createUpdatedEntity(em);
-        em.persist(wallet);
-        em.flush();
+        if (TestUtil.findAll(em, Wallet.class).isEmpty()) {
+            wallet = WalletResourceIT.createUpdatedEntity(em);
+            em.persist(wallet);
+            em.flush();
+        } else {
+            wallet = TestUtil.findAll(em, Wallet.class).get(0);
+        }
         employer.setWallet(wallet);
         return employer;
     }
@@ -138,8 +147,6 @@ class EmployerResourceIT {
         // Validate the Employer in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         assertEmployerUpdatableFieldsEquals(returnedEmployer, getPersistedEmployer(returnedEmployer));
-
-        assertEmployerMapsIdRelationshipPersistedValue(employer, returnedEmployer);
     }
 
     @Test
@@ -157,45 +164,6 @@ class EmployerResourceIT {
 
         // Validate the Employer in the database
         assertSameRepositoryCount(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void updateEmployerMapsIdAssociationWithNewId() throws Exception {
-        // Initialize the database
-        employerRepository.saveAndFlush(employer);
-        long databaseSizeBeforeCreate = getRepositoryCount();
-        // Add a new parent entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-
-        // Load the employer
-        Employer updatedEmployer = employerRepository.findById(employer.getId()).orElseThrow();
-        assertThat(updatedEmployer).isNotNull();
-        // Disconnect from session so that the updates on updatedEmployer are not directly saved in db
-        em.detach(updatedEmployer);
-
-        // Update the User with new association value
-        //updatedEmployer.setUser(user);
-
-        // Update the entity
-        restEmployerMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, updatedEmployer.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedEmployer))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Employer in the database
-        List<Employer> employerList = employerRepository.findAll();
-        assertSameRepositoryCount(databaseSizeBeforeCreate);
-        Employer testEmployer = employerList.get(employerList.size() - 1);
-        // Validate the id for MapsId, the ids must be same
-        // Uncomment the following line for assertion. However, please note that there is a known issue and uncommenting will fail the test.
-        // Please look at https://github.com/jhipster/generator-jhipster/issues/9100. You can modify this test as necessary.
-        // assertThat(testEmployer.getId()).isEqualTo(testEmployer.getUser().getId());
     }
 
     @Test

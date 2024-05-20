@@ -1,30 +1,29 @@
 import { IRecruiter, NewRecruiter } from './recruiter.model';
 
 export const sampleWithRequiredData: IRecruiter = {
-  id: 11889,
-  label: 'eek inasmuch',
-  linkedinUrl: 'indeed well bonnet',
+  id: 14954,
+  label: 'notepad society indeed',
+  linkedinUrl: 'besides expense instructive',
 };
 
 export const sampleWithPartialData: IRecruiter = {
-  id: 5746,
-  label: 'duh chandelier',
-  linkedinUrl: 'patrol wick while',
+  id: 4466,
+  label: 'meanwhile because',
+  linkedinUrl: 'cruelly empty',
   approvedExperience: false,
-  score: 7627.23,
 };
 
 export const sampleWithFullData: IRecruiter = {
-  id: 30315,
-  label: 'glorify while geez',
-  linkedinUrl: 'disinter a searchingly',
-  approvedExperience: true,
-  score: 16465.64,
+  id: 14382,
+  label: 'platter',
+  linkedinUrl: 'affair hosiery',
+  approvedExperience: false,
+  score: 30416.82,
 };
 
 export const sampleWithNewData: NewRecruiter = {
-  label: 'despite onto',
-  linkedinUrl: 'down defenseless blond',
+  label: 'sans absent staid',
+  linkedinUrl: 'now',
   id: null,
 };
 

@@ -2,7 +2,6 @@ package com.axone.hrsolution.web.rest;
 
 import com.axone.hrsolution.domain.Employer;
 import com.axone.hrsolution.repository.EmployerRepository;
-import com.axone.hrsolution.repository.UserRepository;
 import com.axone.hrsolution.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -37,11 +36,8 @@ public class EmployerResource {
 
     private final EmployerRepository employerRepository;
 
-    private final UserRepository userRepository;
-
-    public EmployerResource(EmployerRepository employerRepository, UserRepository userRepository) {
+    public EmployerResource(EmployerRepository employerRepository) {
         this.employerRepository = employerRepository;
-        this.userRepository = userRepository;
     }
 
     /**
@@ -57,11 +53,6 @@ public class EmployerResource {
         if (employer.getId() != null) {
             throw new BadRequestAlertException("A new employer cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        if (Objects.isNull(employer.getInternalUser())) {
-            throw new BadRequestAlertException("Invalid association value provided", ENTITY_NAME, "null");
-        }
-        Long userId = employer.getInternalUser().getId();
-        userRepository.findById(userId).ifPresent(employer::internalUser);
         employer = employerRepository.save(employer);
         return ResponseEntity.created(new URI("/api/employers/" + employer.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, employer.getId().toString()))
@@ -158,7 +149,6 @@ public class EmployerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of employers in body.
      */
     @GetMapping("")
-    @Transactional(readOnly = true)
     public List<Employer> getAllEmployers() {
         log.debug("REST request to get all Employers");
         return employerRepository.findAll();
@@ -171,7 +161,6 @@ public class EmployerResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the employer, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    @Transactional(readOnly = true)
     public ResponseEntity<Employer> getEmployer(@PathVariable("id") Long id) {
         log.debug("REST request to get Employer : {}", id);
         Optional<Employer> employer = employerRepository.findById(id);

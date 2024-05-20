@@ -47,7 +47,10 @@ public class RequestAsserts {
     public static void assertRequestUpdatableFieldsEquals(Request expected, Request actual) {
         assertThat(expected)
             .as("Verify Request relevant properties")
-            .satisfies(e -> assertThat(e.getStatus()).as("check status").isEqualTo(actual.getStatus()));
+            .satisfies(e -> assertThat(e.getStatus()).as("check status").isEqualTo(actual.getStatus()))
+            .satisfies(
+                e -> assertThat(e.getExpressionOfInterest()).as("check expressionOfInterest").isEqualTo(actual.getExpressionOfInterest())
+            );
     }
 
     /**

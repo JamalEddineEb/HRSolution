@@ -1,4 +1,4 @@
-import { IUser } from 'app/entities/user/user.model';
+import { IProfile } from 'app/entities/profile/profile.model';
 import { IWallet } from 'app/entities/wallet/wallet.model';
 
 export interface IEmployer {
@@ -6,7 +6,7 @@ export interface IEmployer {
   label?: string | null;
   linkedinUrl?: string | null;
   score?: number | null;
-  internalUser?: Pick<IUser, 'id'> | null;
+  relatedUser?: IProfile | null;
   wallet?: IWallet | null;
 }
 

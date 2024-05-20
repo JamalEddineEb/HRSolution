@@ -71,10 +71,10 @@ describe('Request Management Update Component', () => {
 
     it('Should call Recruiter query and add missing value', () => {
       const request: IRequest = { id: 456 };
-      const recruiter: IRecruiter = { id: 4049 };
+      const recruiter: IRecruiter = { id: 21082 };
       request.recruiter = recruiter;
 
-      const recruiterCollection: IRecruiter[] = [{ id: 1702 }];
+      const recruiterCollection: IRecruiter[] = [{ id: 28060 }];
       jest.spyOn(recruiterService, 'query').mockReturnValue(of(new HttpResponse({ body: recruiterCollection })));
       const additionalRecruiters = [recruiter];
       const expectedCollection: IRecruiter[] = [...additionalRecruiters, ...recruiterCollection];
@@ -95,7 +95,7 @@ describe('Request Management Update Component', () => {
       const request: IRequest = { id: 456 };
       const relatedApplication: IApplication = { id: 15241 };
       request.relatedApplication = relatedApplication;
-      const recruiter: IRecruiter = { id: 21487 };
+      const recruiter: IRecruiter = { id: 8025 };
       request.recruiter = recruiter;
 
       activatedRoute.data = of({ request });

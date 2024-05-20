@@ -5,8 +5,8 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
 
-import { IApplicationUser } from 'app/entities/application-user/application-user.model';
-import { ApplicationUserService } from 'app/entities/application-user/service/application-user.service';
+import { IProfile } from 'app/entities/profile/profile.model';
+import { ProfileService } from 'app/entities/profile/service/profile.service';
 import { IAppAccountType } from 'app/entities/app-account-type/app-account-type.model';
 import { AppAccountTypeService } from 'app/entities/app-account-type/service/app-account-type.service';
 import { IProvider } from 'app/entities/provider/provider.model';
@@ -25,7 +25,7 @@ describe('AppAccount Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let appAccountFormService: AppAccountFormService;
   let appAccountService: AppAccountService;
-  let applicationUserService: ApplicationUserService;
+  let profileService: ProfileService;
   let appAccountTypeService: AppAccountTypeService;
   let providerService: ProviderService;
   let employerService: EmployerService;
@@ -50,7 +50,7 @@ describe('AppAccount Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     appAccountFormService = TestBed.inject(AppAccountFormService);
     appAccountService = TestBed.inject(AppAccountService);
-    applicationUserService = TestBed.inject(ApplicationUserService);
+    profileService = TestBed.inject(ProfileService);
     appAccountTypeService = TestBed.inject(AppAccountTypeService);
     providerService = TestBed.inject(ProviderService);
     employerService = TestBed.inject(EmployerService);
@@ -61,19 +61,19 @@ describe('AppAccount Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call owner query and add missing value', () => {
       const appAccount: IAppAccount = { id: 456 };
-      const owner: IApplicationUser = { id: 28198 };
+      const owner: IProfile = { id: 9657 };
       appAccount.owner = owner;
 
-      const ownerCollection: IApplicationUser[] = [{ id: 4515 }];
-      jest.spyOn(applicationUserService, 'query').mockReturnValue(of(new HttpResponse({ body: ownerCollection })));
-      const expectedCollection: IApplicationUser[] = [owner, ...ownerCollection];
-      jest.spyOn(applicationUserService, 'addApplicationUserToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const ownerCollection: IProfile[] = [{ id: 15011 }];
+      jest.spyOn(profileService, 'query').mockReturnValue(of(new HttpResponse({ body: ownerCollection })));
+      const expectedCollection: IProfile[] = [owner, ...ownerCollection];
+      jest.spyOn(profileService, 'addProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ appAccount });
       comp.ngOnInit();
 
-      expect(applicationUserService.query).toHaveBeenCalled();
-      expect(applicationUserService.addApplicationUserToCollectionIfMissing).toHaveBeenCalledWith(ownerCollection, owner);
+      expect(profileService.query).toHaveBeenCalled();
+      expect(profileService.addProfileToCollectionIfMissing).toHaveBeenCalledWith(ownerCollection, owner);
       expect(comp.ownersCollection).toEqual(expectedCollection);
     });
 
@@ -123,10 +123,10 @@ describe('AppAccount Management Update Component', () => {
 
     it('Should call Employer query and add missing value', () => {
       const appAccount: IAppAccount = { id: 456 };
-      const ifEmployer: IEmployer = { id: 28589 };
+      const ifEmployer: IEmployer = { id: 8998 };
       appAccount.ifEmployer = ifEmployer;
 
-      const employerCollection: IEmployer[] = [{ id: 29632 }];
+      const employerCollection: IEmployer[] = [{ id: 12791 }];
       jest.spyOn(employerService, 'query').mockReturnValue(of(new HttpResponse({ body: employerCollection })));
       const additionalEmployers = [ifEmployer];
       const expectedCollection: IEmployer[] = [...additionalEmployers, ...employerCollection];
@@ -145,13 +145,13 @@ describe('AppAccount Management Update Component', () => {
 
     it('Should update editForm', () => {
       const appAccount: IAppAccount = { id: 456 };
-      const owner: IApplicationUser = { id: 5319 };
+      const owner: IProfile = { id: 29296 };
       appAccount.owner = owner;
       const type: IAppAccountType = { id: 26934 };
       appAccount.types = [type];
       const provider: IProvider = { id: 10882 };
       appAccount.providers = [provider];
-      const ifEmployer: IEmployer = { id: 4568 };
+      const ifEmployer: IEmployer = { id: 5163 };
       appAccount.ifEmployer = ifEmployer;
 
       activatedRoute.data = of({ appAccount });
@@ -234,13 +234,13 @@ describe('AppAccount Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareApplicationUser', () => {
-      it('Should forward to applicationUserService', () => {
+    describe('compareProfile', () => {
+      it('Should forward to profileService', () => {
         const entity = { id: 123 };
         const entity2 = { id: 456 };
-        jest.spyOn(applicationUserService, 'compareApplicationUser');
-        comp.compareApplicationUser(entity, entity2);
-        expect(applicationUserService.compareApplicationUser).toHaveBeenCalledWith(entity, entity2);
+        jest.spyOn(profileService, 'compareProfile');
+        comp.compareProfile(entity, entity2);
+        expect(profileService.compareProfile).toHaveBeenCalledWith(entity, entity2);
       });
     });
 

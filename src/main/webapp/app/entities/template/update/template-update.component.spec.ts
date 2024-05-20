@@ -53,10 +53,10 @@ describe('Template Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Employer query and add missing value', () => {
       const template: ITemplate = { id: 456 };
-      const owner: IEmployer = { id: 31289 };
+      const owner: IEmployer = { id: 21028 };
       template.owner = owner;
 
-      const employerCollection: IEmployer[] = [{ id: 25916 }];
+      const employerCollection: IEmployer[] = [{ id: 13442 }];
       jest.spyOn(employerService, 'query').mockReturnValue(of(new HttpResponse({ body: employerCollection })));
       const additionalEmployers = [owner];
       const expectedCollection: IEmployer[] = [...additionalEmployers, ...employerCollection];
@@ -75,10 +75,10 @@ describe('Template Management Update Component', () => {
 
     it('Should call Application query and add missing value', () => {
       const template: ITemplate = { id: 456 };
-      const applications: IApplication[] = [{ id: 15788 }];
+      const applications: IApplication[] = [{ id: 14351 }];
       template.applications = applications;
 
-      const applicationCollection: IApplication[] = [{ id: 16473 }];
+      const applicationCollection: IApplication[] = [{ id: 13290 }];
       jest.spyOn(applicationService, 'query').mockReturnValue(of(new HttpResponse({ body: applicationCollection })));
       const additionalApplications = [...applications];
       const expectedCollection: IApplication[] = [...additionalApplications, ...applicationCollection];
@@ -97,9 +97,9 @@ describe('Template Management Update Component', () => {
 
     it('Should update editForm', () => {
       const template: ITemplate = { id: 456 };
-      const owner: IEmployer = { id: 23123 };
+      const owner: IEmployer = { id: 18963 };
       template.owner = owner;
-      const application: IApplication = { id: 29388 };
+      const application: IApplication = { id: 2813 };
       template.applications = [application];
 
       activatedRoute.data = of({ template });

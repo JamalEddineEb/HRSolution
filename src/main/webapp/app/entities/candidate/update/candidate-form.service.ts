@@ -21,8 +21,6 @@ type CandidateFormGroupContent = {
   linkedinUrl: FormControl<ICandidate['linkedinUrl']>;
   fullName: FormControl<ICandidate['fullName']>;
   yearsOfExperience: FormControl<ICandidate['yearsOfExperience']>;
-  resume: FormControl<ICandidate['resume']>;
-  resumeContentType: FormControl<ICandidate['resumeContentType']>;
   currentSalary: FormControl<ICandidate['currentSalary']>;
   desiredSalary: FormControl<ICandidate['desiredSalary']>;
   hasContract: FormControl<ICandidate['hasContract']>;
@@ -57,10 +55,6 @@ export class CandidateFormService {
       yearsOfExperience: new FormControl(candidateRawValue.yearsOfExperience, {
         validators: [Validators.required],
       }),
-      resume: new FormControl(candidateRawValue.resume, {
-        validators: [Validators.required],
-      }),
-      resumeContentType: new FormControl(candidateRawValue.resumeContentType),
       currentSalary: new FormControl(candidateRawValue.currentSalary),
       desiredSalary: new FormControl(candidateRawValue.desiredSalary),
       hasContract: new FormControl(candidateRawValue.hasContract, {

@@ -126,6 +126,9 @@ public class RequestResource {
                 if (request.getStatus() != null) {
                     existingRequest.setStatus(request.getStatus());
                 }
+                if (request.getExpressionOfInterest() != null) {
+                    existingRequest.setExpressionOfInterest(request.getExpressionOfInterest());
+                }
 
                 return existingRequest;
             })

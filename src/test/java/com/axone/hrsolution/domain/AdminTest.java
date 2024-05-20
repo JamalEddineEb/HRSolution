@@ -1,6 +1,7 @@
 package com.axone.hrsolution.domain;
 
 import static com.axone.hrsolution.domain.AdminTestSamples.*;
+import static com.axone.hrsolution.domain.ProfileTestSamples.*;
 import static com.axone.hrsolution.domain.WalletTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,6 +22,18 @@ class AdminTest {
 
         admin2 = getAdminSample2();
         assertThat(admin1).isNotEqualTo(admin2);
+    }
+
+    @Test
+    void relatedUserTest() throws Exception {
+        Admin admin = getAdminRandomSampleGenerator();
+        Profile profileBack = getProfileRandomSampleGenerator();
+
+        admin.setRelatedUser(profileBack);
+        assertThat(admin.getRelatedUser()).isEqualTo(profileBack);
+
+        admin.relatedUser(null);
+        assertThat(admin.getRelatedUser()).isNull();
     }
 
     @Test

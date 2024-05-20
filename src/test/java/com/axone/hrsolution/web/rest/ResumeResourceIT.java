@@ -32,13 +32,10 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ResumeResourceIT {
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
-
-    private static final byte[] DEFAULT_DOCUMENT = TestUtil.createByteArray(1, "0");
-    private static final byte[] UPDATED_DOCUMENT = TestUtil.createByteArray(1, "1");
-    private static final String DEFAULT_DOCUMENT_CONTENT_TYPE = "image/jpg";
-    private static final String UPDATED_DOCUMENT_CONTENT_TYPE = "image/png";
+    private static final byte[] DEFAULT_CV = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_CV = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_CV_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_CV_CONTENT_TYPE = "image/png";
 
     private static final String ENTITY_API_URL = "/api/resumes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -67,7 +64,7 @@ class ResumeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Resume createEntity(EntityManager em) {
-        Resume resume = new Resume().name(DEFAULT_NAME).document(DEFAULT_DOCUMENT).documentContentType(DEFAULT_DOCUMENT_CONTENT_TYPE);
+        Resume resume = new Resume().cv(DEFAULT_CV).cvContentType(DEFAULT_CV_CONTENT_TYPE);
         return resume;
     }
 
@@ -78,7 +75,7 @@ class ResumeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Resume createUpdatedEntity(EntityManager em) {
-        Resume resume = new Resume().name(UPDATED_NAME).document(UPDATED_DOCUMENT).documentContentType(UPDATED_DOCUMENT_CONTENT_TYPE);
+        Resume resume = new Resume().cv(UPDATED_CV).cvContentType(UPDATED_CV_CONTENT_TYPE);
         return resume;
     }
 
@@ -126,22 +123,6 @@ class ResumeResourceIT {
 
     @Test
     @Transactional
-    void checkNameIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        resume.setName(null);
-
-        // Create the Resume, which fails.
-
-        restResumeMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(resume)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllResumes() throws Exception {
         // Initialize the database
         resumeRepository.saveAndFlush(resume);
@@ -152,9 +133,8 @@ class ResumeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(resume.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
-            .andExpect(jsonPath("$.[*].documentContentType").value(hasItem(DEFAULT_DOCUMENT_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].document").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_DOCUMENT))));
+            .andExpect(jsonPath("$.[*].cvContentType").value(hasItem(DEFAULT_CV_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].cv").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_CV))));
     }
 
     @Test
@@ -169,9 +149,8 @@ class ResumeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(resume.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
-            .andExpect(jsonPath("$.documentContentType").value(DEFAULT_DOCUMENT_CONTENT_TYPE))
-            .andExpect(jsonPath("$.document").value(Base64.getEncoder().encodeToString(DEFAULT_DOCUMENT)));
+            .andExpect(jsonPath("$.cvContentType").value(DEFAULT_CV_CONTENT_TYPE))
+            .andExpect(jsonPath("$.cv").value(Base64.getEncoder().encodeToString(DEFAULT_CV)));
     }
 
     @Test
@@ -193,7 +172,7 @@ class ResumeResourceIT {
         Resume updatedResume = resumeRepository.findById(resume.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedResume are not directly saved in db
         em.detach(updatedResume);
-        updatedResume.name(UPDATED_NAME).document(UPDATED_DOCUMENT).documentContentType(UPDATED_DOCUMENT_CONTENT_TYPE);
+        updatedResume.cv(UPDATED_CV).cvContentType(UPDATED_CV_CONTENT_TYPE);
 
         restResumeMockMvc
             .perform(
@@ -269,7 +248,7 @@ class ResumeResourceIT {
         Resume partialUpdatedResume = new Resume();
         partialUpdatedResume.setId(resume.getId());
 
-        partialUpdatedResume.name(UPDATED_NAME).document(UPDATED_DOCUMENT).documentContentType(UPDATED_DOCUMENT_CONTENT_TYPE);
+        partialUpdatedResume.cv(UPDATED_CV).cvContentType(UPDATED_CV_CONTENT_TYPE);
 
         restResumeMockMvc
             .perform(
@@ -297,7 +276,7 @@ class ResumeResourceIT {
         Resume partialUpdatedResume = new Resume();
         partialUpdatedResume.setId(resume.getId());
 
-        partialUpdatedResume.name(UPDATED_NAME).document(UPDATED_DOCUMENT).documentContentType(UPDATED_DOCUMENT_CONTENT_TYPE);
+        partialUpdatedResume.cv(UPDATED_CV).cvContentType(UPDATED_CV_CONTENT_TYPE);
 
         restResumeMockMvc
             .perform(

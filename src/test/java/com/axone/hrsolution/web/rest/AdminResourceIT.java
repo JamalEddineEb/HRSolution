@@ -9,13 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.axone.hrsolution.IntegrationTest;
 import com.axone.hrsolution.domain.Admin;
-import com.axone.hrsolution.domain.User;
+import com.axone.hrsolution.domain.Profile;
 import com.axone.hrsolution.domain.Wallet;
 import com.axone.hrsolution.repository.AdminRepository;
-import com.axone.hrsolution.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
-import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,9 +49,6 @@ class AdminResourceIT {
     private AdminRepository adminRepository;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private EntityManager em;
 
     @Autowired
@@ -70,10 +65,15 @@ class AdminResourceIT {
     public static Admin createEntity(EntityManager em) {
         Admin admin = new Admin().systemName(DEFAULT_SYSTEM_NAME);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        admin.setInternalUser(user);
+        Profile profile;
+        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
+            profile = ProfileResourceIT.createEntity(em);
+            em.persist(profile);
+            em.flush();
+        } else {
+            profile = TestUtil.findAll(em, Profile.class).get(0);
+        }
+        admin.setRelatedUser(profile);
         // Add required entity
         Wallet wallet;
         if (TestUtil.findAll(em, Wallet.class).isEmpty()) {
@@ -96,15 +96,24 @@ class AdminResourceIT {
     public static Admin createUpdatedEntity(EntityManager em) {
         Admin admin = new Admin().systemName(UPDATED_SYSTEM_NAME);
         // Add required entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-        admin.setInternalUser(user);
+        Profile profile;
+        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
+            profile = ProfileResourceIT.createUpdatedEntity(em);
+            em.persist(profile);
+            em.flush();
+        } else {
+            profile = TestUtil.findAll(em, Profile.class).get(0);
+        }
+        admin.setRelatedUser(profile);
         // Add required entity
         Wallet wallet;
-        wallet = WalletResourceIT.createUpdatedEntity(em);
-        em.persist(wallet);
-        em.flush();
+        if (TestUtil.findAll(em, Wallet.class).isEmpty()) {
+            wallet = WalletResourceIT.createUpdatedEntity(em);
+            em.persist(wallet);
+            em.flush();
+        } else {
+            wallet = TestUtil.findAll(em, Wallet.class).get(0);
+        }
         admin.setSystemWallet(wallet);
         return admin;
     }
@@ -132,8 +141,6 @@ class AdminResourceIT {
         // Validate the Admin in the database
         assertIncrementedRepositoryCount(databaseSizeBeforeCreate);
         assertAdminUpdatableFieldsEquals(returnedAdmin, getPersistedAdmin(returnedAdmin));
-
-        assertAdminMapsIdRelationshipPersistedValue(admin, returnedAdmin);
     }
 
     @Test
@@ -151,45 +158,6 @@ class AdminResourceIT {
 
         // Validate the Admin in the database
         assertSameRepositoryCount(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void updateAdminMapsIdAssociationWithNewId() throws Exception {
-        // Initialize the database
-        adminRepository.saveAndFlush(admin);
-        long databaseSizeBeforeCreate = getRepositoryCount();
-        // Add a new parent entity
-        User user = UserResourceIT.createEntity(em);
-        em.persist(user);
-        em.flush();
-
-        // Load the admin
-        Admin updatedAdmin = adminRepository.findById(admin.getId()).orElseThrow();
-        assertThat(updatedAdmin).isNotNull();
-        // Disconnect from session so that the updates on updatedAdmin are not directly saved in db
-        em.detach(updatedAdmin);
-
-        // Update the User with new association value
-        //updatedAdmin.setUser(user);
-
-        // Update the entity
-        restAdminMockMvc
-            .perform(
-                put(ENTITY_API_URL_ID, updatedAdmin.getId())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(om.writeValueAsBytes(updatedAdmin))
-            )
-            .andExpect(status().isOk());
-
-        // Validate the Admin in the database
-        List<Admin> adminList = adminRepository.findAll();
-        assertSameRepositoryCount(databaseSizeBeforeCreate);
-        Admin testAdmin = adminList.get(adminList.size() - 1);
-        // Validate the id for MapsId, the ids must be same
-        // Uncomment the following line for assertion. However, please note that there is a known issue and uncommenting will fail the test.
-        // Please look at https://github.com/jhipster/generator-jhipster/issues/9100. You can modify this test as necessary.
-        // assertThat(testAdmin.getId()).isEqualTo(testAdmin.getUser().getId());
     }
 
     @Test

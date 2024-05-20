@@ -16,11 +16,33 @@
         }
 
         <div class="mb-3">
-          <label class="form-label" for="field_name" jhiTranslate="hrSolutionApp.resume.name">Name</label>
-          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
-          @if (editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)) {
+          <label class="form-label" for="field_cv" jhiTranslate="hrSolutionApp.resume.cv">Cv</label>
+          <div>
+            @if (editForm.get('cv')!.value) {
+              <div class="form-text text-danger clearfix">
+                <a
+                  class="pull-start"
+                  (click)="openFile(editForm.get('cv')!.value!, editForm.get('cvContentType')!.value!)"
+                  jhiTranslate="entity.action.open"
+                  >Open</a
+                ><br />
+                <span class="pull-start">{{ editForm.get('cvContentType')!.value }}, {{ byteSize(editForm.get('cv')!.value!) }}</span>
+                <button
+                  type="button"
+                  (click)="editForm.patchValue({ cv: undefined, cvContentType: undefined })"
+                  class="btn btn-secondary btn-xs pull-end"
+                >
+                  <fa-icon icon="times"></fa-icon>
+                </button>
+              </div>
+            }
+            <input type="file" id="file_cv" data-cy="cv" (change)="setFileData($event, 'cv', false)" jhiTranslate="entity.action.addblob" />
+          </div>
+          <input type="hidden" class="form-control" name="cv" id="field_cv" data-cy="cv" formControlName="cv" />
+          <input type="hidden" class="form-control" name="cvContentType" id="field_cvContentType" formControlName="cvContentType" />
+          @if (editForm.get('cv')!.invalid && (editForm.get('cv')!.dirty || editForm.get('cv')!.touched)) {
             <div>
-              @if (editForm.get('name')?.errors?.required) {
+              @if (editForm.get('cv')?.errors?.required) {
                 <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
               }
             </div>
@@ -28,51 +50,20 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_document" jhiTranslate="hrSolutionApp.resume.document">Document</label>
-          <div>
-            @if (editForm.get('document')!.value) {
-              <div class="form-text text-danger clearfix">
-                <a
-                  class="pull-start"
-                  (click)="openFile(editForm.get('document')!.value!, editForm.get('documentContentType')!.value!)"
-                  jhiTranslate="entity.action.open"
-                  >Open</a
-                ><br />
-                <span class="pull-start"
-                  >{{ editForm.get('documentContentType')!.value }}, {{ byteSize(editForm.get('document')!.value!) }}</span
-                >
-                <button
-                  type="button"
-                  (click)="editForm.patchValue({ document: undefined, documentContentType: undefined })"
-                  class="btn btn-secondary btn-xs pull-end"
-                >
-                  <fa-icon icon="times"></fa-icon>
-                </button>
-              </div>
-            }
-            <input
-              type="file"
-              id="file_document"
-              data-cy="document"
-              (change)="setFileData($event, 'document', false)"
-              jhiTranslate="entity.action.addblob"
-            />
-          </div>
-          <input type="hidden" class="form-control" name="document" id="field_document" data-cy="document" formControlName="document" />
-          <input
-            type="hidden"
+          <label class="form-label" for="field_owner" jhiTranslate="hrSolutionApp.resume.owner">Owner</label>
+          <select
             class="form-control"
-            name="documentContentType"
-            id="field_documentContentType"
-            formControlName="documentContentType"
-          />
-          @if (editForm.get('document')!.invalid && (editForm.get('document')!.dirty || editForm.get('document')!.touched)) {
-            <div>
-              @if (editForm.get('document')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
+            id="field_owner"
+            data-cy="owner"
+            name="owner"
+            formControlName="owner"
+            [compareWith]="compareCandidate"
+          >
+            <option [ngValue]="null"></option>
+            @for (candidateOption of candidatesSharedCollection; track $index) {
+              <option [ngValue]="candidateOption">{{ candidateOption.id }}</option>
+            }
+          </select>
         </div>
       </div>
 

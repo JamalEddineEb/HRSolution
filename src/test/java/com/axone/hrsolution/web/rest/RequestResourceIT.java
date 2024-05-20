@@ -37,6 +37,9 @@ class RequestResourceIT {
     private static final RequestStatus DEFAULT_STATUS = RequestStatus.PROCESSING;
     private static final RequestStatus UPDATED_STATUS = RequestStatus.ACCEPTED;
 
+    private static final String DEFAULT_EXPRESSION_OF_INTEREST = "AAAAAAAAAA";
+    private static final String UPDATED_EXPRESSION_OF_INTEREST = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/requests";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -64,7 +67,7 @@ class RequestResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Request createEntity(EntityManager em) {
-        Request request = new Request().status(DEFAULT_STATUS);
+        Request request = new Request().status(DEFAULT_STATUS).expressionOfInterest(DEFAULT_EXPRESSION_OF_INTEREST);
         // Add required entity
         Application application;
         if (TestUtil.findAll(em, Application.class).isEmpty()) {
@@ -95,7 +98,7 @@ class RequestResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Request createUpdatedEntity(EntityManager em) {
-        Request request = new Request().status(UPDATED_STATUS);
+        Request request = new Request().status(UPDATED_STATUS).expressionOfInterest(UPDATED_EXPRESSION_OF_INTEREST);
         // Add required entity
         Application application;
         if (TestUtil.findAll(em, Application.class).isEmpty()) {
@@ -179,6 +182,22 @@ class RequestResourceIT {
 
     @Test
     @Transactional
+    void checkExpressionOfInterestIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        request.setExpressionOfInterest(null);
+
+        // Create the Request, which fails.
+
+        restRequestMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(request)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllRequests() throws Exception {
         // Initialize the database
         requestRepository.saveAndFlush(request);
@@ -189,7 +208,8 @@ class RequestResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(request.getId().intValue())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].expressionOfInterest").value(hasItem(DEFAULT_EXPRESSION_OF_INTEREST)));
     }
 
     @Test
@@ -204,7 +224,8 @@ class RequestResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(request.getId().intValue()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.expressionOfInterest").value(DEFAULT_EXPRESSION_OF_INTEREST));
     }
 
     @Test
@@ -226,7 +247,7 @@ class RequestResourceIT {
         Request updatedRequest = requestRepository.findById(request.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedRequest are not directly saved in db
         em.detach(updatedRequest);
-        updatedRequest.status(UPDATED_STATUS);
+        updatedRequest.status(UPDATED_STATUS).expressionOfInterest(UPDATED_EXPRESSION_OF_INTEREST);
 
         restRequestMockMvc
             .perform(
@@ -330,7 +351,7 @@ class RequestResourceIT {
         Request partialUpdatedRequest = new Request();
         partialUpdatedRequest.setId(request.getId());
 
-        partialUpdatedRequest.status(UPDATED_STATUS);
+        partialUpdatedRequest.status(UPDATED_STATUS).expressionOfInterest(UPDATED_EXPRESSION_OF_INTEREST);
 
         restRequestMockMvc
             .perform(

@@ -4,6 +4,7 @@ import static com.axone.hrsolution.domain.ApplicationTestSamples.*;
 import static com.axone.hrsolution.domain.ContractTestSamples.*;
 import static com.axone.hrsolution.domain.DomainTestSamples.*;
 import static com.axone.hrsolution.domain.NDATestSamples.*;
+import static com.axone.hrsolution.domain.ProfileTestSamples.*;
 import static com.axone.hrsolution.domain.RecruiterTestSamples.*;
 import static com.axone.hrsolution.domain.RequestTestSamples.*;
 import static com.axone.hrsolution.domain.WalletTestSamples.*;
@@ -28,6 +29,18 @@ class RecruiterTest {
 
         recruiter2 = getRecruiterSample2();
         assertThat(recruiter1).isNotEqualTo(recruiter2);
+    }
+
+    @Test
+    void relatedUserTest() throws Exception {
+        Recruiter recruiter = getRecruiterRandomSampleGenerator();
+        Profile profileBack = getProfileRandomSampleGenerator();
+
+        recruiter.setRelatedUser(profileBack);
+        assertThat(recruiter.getRelatedUser()).isEqualTo(profileBack);
+
+        recruiter.relatedUser(null);
+        assertThat(recruiter.getRelatedUser()).isNull();
     }
 
     @Test
@@ -62,28 +75,6 @@ class RecruiterTest {
         recruiter.setRequests(new HashSet<>());
         assertThat(recruiter.getRequests()).doesNotContain(requestBack);
         assertThat(requestBack.getRecruiter()).isNull();
-    }
-
-    @Test
-    void contractsTest() throws Exception {
-        Recruiter recruiter = getRecruiterRandomSampleGenerator();
-        Contract contractBack = getContractRandomSampleGenerator();
-
-        recruiter.addContracts(contractBack);
-        assertThat(recruiter.getContracts()).containsOnly(contractBack);
-        assertThat(contractBack.getRecruiter()).isEqualTo(recruiter);
-
-        recruiter.removeContracts(contractBack);
-        assertThat(recruiter.getContracts()).doesNotContain(contractBack);
-        assertThat(contractBack.getRecruiter()).isNull();
-
-        recruiter.contracts(new HashSet<>(Set.of(contractBack)));
-        assertThat(recruiter.getContracts()).containsOnly(contractBack);
-        assertThat(contractBack.getRecruiter()).isEqualTo(recruiter);
-
-        recruiter.setContracts(new HashSet<>());
-        assertThat(recruiter.getContracts()).doesNotContain(contractBack);
-        assertThat(contractBack.getRecruiter()).isNull();
     }
 
     @Test
@@ -142,5 +133,27 @@ class RecruiterTest {
         recruiter.setNdaStatuses(new HashSet<>());
         assertThat(recruiter.getNdaStatuses()).doesNotContain(nDABack);
         assertThat(nDABack.getMediator()).isNull();
+    }
+
+    @Test
+    void contractsTest() throws Exception {
+        Recruiter recruiter = getRecruiterRandomSampleGenerator();
+        Contract contractBack = getContractRandomSampleGenerator();
+
+        recruiter.addContracts(contractBack);
+        assertThat(recruiter.getContracts()).containsOnly(contractBack);
+        assertThat(contractBack.getRecruiter()).isEqualTo(recruiter);
+
+        recruiter.removeContracts(contractBack);
+        assertThat(recruiter.getContracts()).doesNotContain(contractBack);
+        assertThat(contractBack.getRecruiter()).isNull();
+
+        recruiter.contracts(new HashSet<>(Set.of(contractBack)));
+        assertThat(recruiter.getContracts()).containsOnly(contractBack);
+        assertThat(contractBack.getRecruiter()).isEqualTo(recruiter);
+
+        recruiter.setContracts(new HashSet<>());
+        assertThat(recruiter.getContracts()).doesNotContain(contractBack);
+        assertThat(contractBack.getRecruiter()).isNull();
     }
 }

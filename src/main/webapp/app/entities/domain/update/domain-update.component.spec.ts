@@ -61,10 +61,10 @@ describe('Domain Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Recruiter query and add missing value', () => {
       const domain: IDomain = { id: 456 };
-      const recruiters: IRecruiter[] = [{ id: 20554 }];
+      const recruiters: IRecruiter[] = [{ id: 2171 }];
       domain.recruiters = recruiters;
 
-      const recruiterCollection: IRecruiter[] = [{ id: 20930 }];
+      const recruiterCollection: IRecruiter[] = [{ id: 32314 }];
       jest.spyOn(recruiterService, 'query').mockReturnValue(of(new HttpResponse({ body: recruiterCollection })));
       const additionalRecruiters = [...recruiters];
       const expectedCollection: IRecruiter[] = [...additionalRecruiters, ...recruiterCollection];
@@ -83,10 +83,10 @@ describe('Domain Management Update Component', () => {
 
     it('Should call Candidate query and add missing value', () => {
       const domain: IDomain = { id: 456 };
-      const candidates: ICandidate[] = [{ id: 26307 }];
+      const candidates: ICandidate[] = [{ id: 2656 }];
       domain.candidates = candidates;
 
-      const candidateCollection: ICandidate[] = [{ id: 28704 }];
+      const candidateCollection: ICandidate[] = [{ id: 12326 }];
       jest.spyOn(candidateService, 'query').mockReturnValue(of(new HttpResponse({ body: candidateCollection })));
       const additionalCandidates = [...candidates];
       const expectedCollection: ICandidate[] = [...additionalCandidates, ...candidateCollection];
@@ -105,10 +105,10 @@ describe('Domain Management Update Component', () => {
 
     it('Should call Application query and add missing value', () => {
       const domain: IDomain = { id: 456 };
-      const applications: IApplication[] = [{ id: 14084 }];
+      const applications: IApplication[] = [{ id: 27802 }];
       domain.applications = applications;
 
-      const applicationCollection: IApplication[] = [{ id: 3415 }];
+      const applicationCollection: IApplication[] = [{ id: 15878 }];
       jest.spyOn(applicationService, 'query').mockReturnValue(of(new HttpResponse({ body: applicationCollection })));
       const additionalApplications = [...applications];
       const expectedCollection: IApplication[] = [...additionalApplications, ...applicationCollection];
@@ -127,10 +127,10 @@ describe('Domain Management Update Component', () => {
 
     it('Should call Employer query and add missing value', () => {
       const domain: IDomain = { id: 456 };
-      const employer: IEmployer = { id: 6136 };
+      const employer: IEmployer = { id: 19886 };
       domain.employer = employer;
 
-      const employerCollection: IEmployer[] = [{ id: 6745 }];
+      const employerCollection: IEmployer[] = [{ id: 17024 }];
       jest.spyOn(employerService, 'query').mockReturnValue(of(new HttpResponse({ body: employerCollection })));
       const additionalEmployers = [employer];
       const expectedCollection: IEmployer[] = [...additionalEmployers, ...employerCollection];
@@ -149,13 +149,13 @@ describe('Domain Management Update Component', () => {
 
     it('Should update editForm', () => {
       const domain: IDomain = { id: 456 };
-      const recruiter: IRecruiter = { id: 25973 };
+      const recruiter: IRecruiter = { id: 13145 };
       domain.recruiters = [recruiter];
-      const candidate: ICandidate = { id: 12850 };
+      const candidate: ICandidate = { id: 25653 };
       domain.candidates = [candidate];
-      const application: IApplication = { id: 14726 };
+      const application: IApplication = { id: 15788 };
       domain.applications = [application];
-      const employer: IEmployer = { id: 20004 };
+      const employer: IEmployer = { id: 13336 };
       domain.employer = employer;
 
       activatedRoute.data = of({ domain });

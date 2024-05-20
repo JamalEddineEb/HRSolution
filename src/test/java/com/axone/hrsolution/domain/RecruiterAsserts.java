@@ -27,17 +27,6 @@ public class RecruiterAsserts {
     }
 
     /**
-     * Asserts that the derived primary key is set correctly.
-     *
-     * @param entityToPersist the entity used to persist
-     * @param persisted the persisted entity
-     */
-    public static void assertRecruiterMapsIdRelationshipPersistedValue(Recruiter entityToPersist, Recruiter persisted) {
-        // Validate the id for MapsId, the ids must be same
-        assertThat(entityToPersist.getInternalUser().getId()).isEqualTo(persisted.getId());
-    }
-
-    /**
      * Asserts that the entity has all the auto generated properties (fields/relationships) set.
      *
      * @param expected the expected entity
@@ -73,6 +62,7 @@ public class RecruiterAsserts {
     public static void assertRecruiterUpdatableRelationshipsEquals(Recruiter expected, Recruiter actual) {
         assertThat(expected)
             .as("Verify Recruiter relationships")
+            .satisfies(e -> assertThat(e.getRelatedUser()).as("check relatedUser").isEqualTo(actual.getRelatedUser()))
             .satisfies(e -> assertThat(e.getWallet()).as("check wallet").isEqualTo(actual.getWallet()))
             .satisfies(e -> assertThat(e.getApplications()).as("check applications").isEqualTo(actual.getApplications()))
             .satisfies(e -> assertThat(e.getOperationalDomains()).as("check operationalDomains").isEqualTo(actual.getOperationalDomains()));
