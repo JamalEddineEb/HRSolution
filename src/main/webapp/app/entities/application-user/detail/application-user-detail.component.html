@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (applicationUser()) {
+      <div>
+        <h2 data-cy="applicationUserDetailsHeading">
+          <span jhiTranslate="hrSolutionApp.applicationUser.detail.title">Application User</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ applicationUser()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.applicationUser.profileImage">Profile Image</span></dt>
+          <dd>
+            @if (applicationUser()!.profileImage) {
+              <div>
+                <a (click)="openFile(applicationUser()!.profileImage ?? '', applicationUser()!.profileImageContentType)">
+                  <img
+                    [src]="'data:' + applicationUser()!.profileImageContentType + ';base64,' + applicationUser()!.profileImage"
+                    style="max-width: 100%"
+                    alt="applicationUser"
+                  />
+                </a>
+                {{ applicationUser()!.profileImageContentType }}, {{ byteSize(applicationUser()!.profileImage ?? '') }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.applicationUser.address">Address</span></dt>
+          <dd>
+            <span>{{ applicationUser()!.address }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.applicationUser.role">Role</span></dt>
+          <dd>
+            <span [jhiTranslate]="'hrSolutionApp.UserRole.' + (applicationUser()!.role ?? 'null')">{{
+              { null: '', ADMIN: 'ADMIN', RECRUITER: 'RECRUITER', EMPLOYER: 'EMPLOYER' }[applicationUser()!.role ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.applicationUser.status">Status</span></dt>
+          <dd>
+            <span [jhiTranslate]="'hrSolutionApp.UserStatus.' + (applicationUser()!.status ?? 'null')">{{
+              { null: '', ACTIVE: 'ACTIVE', DEACTIVATED: 'DEACTIVATED', BANNED: 'BANNED' }[applicationUser()!.status ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.applicationUser.internalUser">Internal User</span></dt>
+          <dd>
+            <span>{{ applicationUser()!.internalUser?.login }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/application-user', applicationUser()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

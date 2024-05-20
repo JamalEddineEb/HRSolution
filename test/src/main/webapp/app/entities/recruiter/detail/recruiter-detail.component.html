@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (recruiter()) {
+      <div>
+        <h2 data-cy="recruiterDetailsHeading"><span jhiTranslate="hrSolutionApp.recruiter.detail.title">Recruiter</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ recruiter()!.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.label">Label</span></dt>
+          <dd>
+            <span>{{ recruiter()!.label }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.linkedinUrl">Linkedin Url</span></dt>
+          <dd>
+            <span>{{ recruiter()!.linkedinUrl }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.approvedExperience">Approved Experience</span></dt>
+          <dd>
+            <span>{{ recruiter()!.approvedExperience }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.score">Score</span></dt>
+          <dd>
+            <span>{{ recruiter()!.score }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.relatedUser">Related User</span></dt>
+          <dd>
+            @if (recruiter()!.relatedUser) {
+              <div>
+                <a [routerLink]="['/profile', recruiter()!.relatedUser?.id, 'view']">{{ recruiter()!.relatedUser?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.wallet">Wallet</span></dt>
+          <dd>
+            @if (recruiter()!.wallet) {
+              <div>
+                <a [routerLink]="['/wallet', recruiter()!.wallet?.id, 'view']">{{ recruiter()!.wallet?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.applications">Applications</span></dt>
+          <dd>
+            @for (applications of recruiter()!.applications; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/application', applications.id, 'view']">{{ applications?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.operationalDomain">Operational Domain</span></dt>
+          <dd>
+            @for (operationalDomain of recruiter()!.operationalDomains; track $index; let last = $last) {
+              <span>
+                <a [routerLink]="['/domain', operationalDomain.id, 'view']">{{ operationalDomain?.id }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/recruiter', recruiter()!.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

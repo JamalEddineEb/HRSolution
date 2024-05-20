@@ -1,0 +1,22 @@
+{
+  "annotations": {
+    "changelogDate": "20240517140121"
+  },
+  "applications": ["HRSolution"],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "document",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Resume",
+  "relationships": [],
+  "searchEngine": "no"
+}

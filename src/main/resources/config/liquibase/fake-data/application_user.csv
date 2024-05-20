@@ -1,0 +1,3 @@
+id;profile_image;profile_image_content_type;address;role;status
+1;../fake-data/blob/hipster.png;image/png;document bunt;EMPLOYER;DEACTIVATED
+2;../fake-data/blob/hipster.png;image/png;foolishly willfully hive;RECRUITER;ACTIVE

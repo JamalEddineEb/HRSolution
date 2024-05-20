@@ -1,0 +1,164 @@
+<div>
+  <h2 id="page-heading" data-cy="RecruiterHeading">
+    <span jhiTranslate="hrSolutionApp.recruiter.home.title">Recruiters</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="hrSolutionApp.recruiter.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-recruiter"
+        [routerLink]="['/recruiter/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="hrSolutionApp.recruiter.home.createLabel">Create a new Recruiter</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (recruiters?.length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="hrSolutionApp.recruiter.home.notFound">No Recruiters found</span>
+    </div>
+  }
+
+  @if (recruiters && recruiters.length > 0) {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [sortState]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="label">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.recruiter.label">Label</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="linkedinUrl">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.recruiter.linkedinUrl">Linkedin Url</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="approvedExperience">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.recruiter.approvedExperience">Approved Experience</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="score">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.recruiter.score">Score</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="relatedUser.id">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.recruiter.relatedUser">Related User</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="wallet.id">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.recruiter.wallet">Wallet</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="applications.id">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.recruiter.applications">Applications</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="operationalDomain.id">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.recruiter.operationalDomain">Operational Domain</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (recruiter of recruiters; track trackId) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/recruiter', recruiter.id, 'view']">{{ recruiter.id }}</a>
+              </td>
+              <td>{{ recruiter.label }}</td>
+              <td>{{ recruiter.linkedinUrl }}</td>
+              <td>{{ recruiter.approvedExperience }}</td>
+              <td>{{ recruiter.score }}</td>
+              <td>
+                @if (recruiter.relatedUser) {
+                  <div>
+                    <a [routerLink]="['/profile', recruiter.relatedUser.id, 'view']">{{ recruiter.relatedUser.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (recruiter.wallet) {
+                  <div>
+                    <a [routerLink]="['/wallet', recruiter.wallet.id, 'view']">{{ recruiter.wallet.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @for (applications of recruiter.applications; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/application', applications.id, 'view']">{{ applications.id }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
+              <td>
+                @for (operationalDomain of recruiter.operationalDomains; track $index; let last = $last) {
+                  <span>
+                    <a class="form-control-static" [routerLink]="['/domain', operationalDomain.id, 'view']">{{ operationalDomain.id }}</a
+                    >{{ last ? '' : ', ' }}
+                  </span>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/recruiter', recruiter.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/recruiter', recruiter.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(recruiter)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

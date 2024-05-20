@@ -1,0 +1,11 @@
+id;profile_image;profile_image_content_type;address;role;status
+1;../fake-data/blob/hipster.png;image/png;imaginative politely;EMPLOYER;BANNED
+2;../fake-data/blob/hipster.png;image/png;vector so suspect;ADMIN;ACTIVE
+3;../fake-data/blob/hipster.png;image/png;happily;RECRUITER;ACTIVE
+4;../fake-data/blob/hipster.png;image/png;amidst;ADMIN;BANNED
+5;../fake-data/blob/hipster.png;image/png;phew;EMPLOYER;ACTIVE
+6;../fake-data/blob/hipster.png;image/png;mate;ADMIN;DEACTIVATED
+7;../fake-data/blob/hipster.png;image/png;while;ADMIN;DEACTIVATED
+8;../fake-data/blob/hipster.png;image/png;when;ADMIN;DEACTIVATED
+9;../fake-data/blob/hipster.png;image/png;represent;RECRUITER;BANNED
+10;../fake-data/blob/hipster.png;image/png;interrupt ashram abaft;ADMIN;DEACTIVATED
