@@ -41,6 +41,12 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CandidateResourceIT {
 
+    private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
+
     private static final String DEFAULT_LINKEDIN_URL = "AAAAAAAAAA";
     private static final String UPDATED_LINKEDIN_URL = "BBBBBBBBBB";
 
@@ -96,6 +102,8 @@ class CandidateResourceIT {
      */
     public static Candidate createEntity(EntityManager em) {
         Candidate candidate = new Candidate()
+            .firstName(DEFAULT_FIRST_NAME)
+            .lastName(DEFAULT_LAST_NAME)
             .linkedinUrl(DEFAULT_LINKEDIN_URL)
             .fullName(DEFAULT_FULL_NAME)
             .yearsOfExperience(DEFAULT_YEARS_OF_EXPERIENCE)
@@ -135,6 +143,8 @@ class CandidateResourceIT {
      */
     public static Candidate createUpdatedEntity(EntityManager em) {
         Candidate candidate = new Candidate()
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
             .linkedinUrl(UPDATED_LINKEDIN_URL)
             .fullName(UPDATED_FULL_NAME)
             .yearsOfExperience(UPDATED_YEARS_OF_EXPERIENCE)
@@ -284,6 +294,8 @@ class CandidateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(candidate.getId().intValue())))
+            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
             .andExpect(jsonPath("$.[*].linkedinUrl").value(hasItem(DEFAULT_LINKEDIN_URL)))
             .andExpect(jsonPath("$.[*].fullName").value(hasItem(DEFAULT_FULL_NAME)))
             .andExpect(jsonPath("$.[*].yearsOfExperience").value(hasItem(DEFAULT_YEARS_OF_EXPERIENCE)))
@@ -323,6 +335,8 @@ class CandidateResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(candidate.getId().intValue()))
+            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME))
+            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
             .andExpect(jsonPath("$.linkedinUrl").value(DEFAULT_LINKEDIN_URL))
             .andExpect(jsonPath("$.fullName").value(DEFAULT_FULL_NAME))
             .andExpect(jsonPath("$.yearsOfExperience").value(DEFAULT_YEARS_OF_EXPERIENCE))
@@ -353,6 +367,8 @@ class CandidateResourceIT {
         // Disconnect from session so that the updates on updatedCandidate are not directly saved in db
         em.detach(updatedCandidate);
         updatedCandidate
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
             .linkedinUrl(UPDATED_LINKEDIN_URL)
             .fullName(UPDATED_FULL_NAME)
             .yearsOfExperience(UPDATED_YEARS_OF_EXPERIENCE)
@@ -438,7 +454,7 @@ class CandidateResourceIT {
         Candidate partialUpdatedCandidate = new Candidate();
         partialUpdatedCandidate.setId(candidate.getId());
 
-        partialUpdatedCandidate.linkedinUrl(UPDATED_LINKEDIN_URL);
+        partialUpdatedCandidate.firstName(UPDATED_FIRST_NAME);
 
         restCandidateMockMvc
             .perform(
@@ -470,6 +486,8 @@ class CandidateResourceIT {
         partialUpdatedCandidate.setId(candidate.getId());
 
         partialUpdatedCandidate
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
             .linkedinUrl(UPDATED_LINKEDIN_URL)
             .fullName(UPDATED_FULL_NAME)
             .yearsOfExperience(UPDATED_YEARS_OF_EXPERIENCE)

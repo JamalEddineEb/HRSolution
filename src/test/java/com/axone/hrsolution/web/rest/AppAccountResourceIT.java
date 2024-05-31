@@ -11,8 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.axone.hrsolution.IntegrationTest;
 import com.axone.hrsolution.domain.AppAccount;
 import com.axone.hrsolution.domain.AppAccountType;
-import com.axone.hrsolution.domain.Profile;
 import com.axone.hrsolution.domain.Provider;
+import com.axone.hrsolution.domain.User;
 import com.axone.hrsolution.repository.AppAccountRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
@@ -92,15 +92,10 @@ class AppAccountResourceIT {
             .endDate(DEFAULT_END_DATE)
             .cvv(DEFAULT_CVV);
         // Add required entity
-        Profile profile;
-        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
-            profile = ProfileResourceIT.createEntity(em);
-            em.persist(profile);
-            em.flush();
-        } else {
-            profile = TestUtil.findAll(em, Profile.class).get(0);
-        }
-        appAccount.setOwner(profile);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        appAccount.setRelatedUser(user);
         // Add required entity
         AppAccountType appAccountType;
         if (TestUtil.findAll(em, AppAccountType.class).isEmpty()) {
@@ -137,15 +132,10 @@ class AppAccountResourceIT {
             .endDate(UPDATED_END_DATE)
             .cvv(UPDATED_CVV);
         // Add required entity
-        Profile profile;
-        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
-            profile = ProfileResourceIT.createUpdatedEntity(em);
-            em.persist(profile);
-            em.flush();
-        } else {
-            profile = TestUtil.findAll(em, Profile.class).get(0);
-        }
-        appAccount.setOwner(profile);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        appAccount.setRelatedUser(user);
         // Add required entity
         AppAccountType appAccountType;
         if (TestUtil.findAll(em, AppAccountType.class).isEmpty()) {

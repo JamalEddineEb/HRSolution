@@ -8,32 +8,44 @@ application {
     clientFramework angularX
   }
 
-  entities Profile, Recruiter, Candidate, Resume, NDA, TechnicalCV, TechCVEducation, TechCVEmployment, 
-  TechCVProject, TechCVAchievement, TechCVDocs, TechCVHardSkills, TechCVSoftSkills, TechCVAltActivities, Employer, 
-  Request, Application, ContractType, Domain, Criteria, Template, Contract, Wallet, AppAccount, Provider, 
-  AppAccountType, AppTest, AppTestType, CustomQuestion, Interview, Admin
+  entities *
 }
 
-
-entity Profile {
+entity Recruiter {
+    firstName String
+    lastName String
     profileImage ImageBlob
     address String
     role UserRole required
     status UserStatus required
+    name String
+    label String required
+    linkedinUrl String required
+    approvedExperience Boolean
+    score Float
 }
+
+entity Employer {
+    firstName String
+    lastName String
+    profileImage ImageBlob
+    address String
+    role UserRole required
+    status UserStatus required
+    name String
+    label String required
+}
+
 enum UserRole {
     ADMIN, RECRUITER, EMPLOYER
 }
 enum UserStatus {
     ACTIVE, DEACTIVATED, BANNED
 }
-entity Recruiter {
-    label String required
-    linkedinUrl String required
-    approvedExperience Boolean
-    score Float
-}
+
 entity Candidate {
+    firstName String
+    lastName String
     linkedinUrl String
     fullName String required
     yearsOfExperience Integer required
@@ -44,7 +56,7 @@ entity Candidate {
     rate Float
 }
 entity Resume {
-    cv AnyBlob required
+    resume AnyBlob required
 }
 entity NDA {
     document AnyBlob required
@@ -86,13 +98,9 @@ entity TechCVSoftSkills {
 entity TechCVAltActivities {
     activities String required
 }
-entity Employer {
-    label String required
-    linkedinUrl String 
-    score Float
-}
+
 entity Request {
-    status RequestStatus required 
+    status RequestStatus required
     expressionOfInterest String required
 }
 enum RequestStatus {
@@ -128,7 +136,7 @@ entity Template {
     label String required
     type TemplateContractType required
     description String
-    standard Boolean required 
+    standard Boolean required
     docLink AnyBlob required
 }
 enum TemplateContractType {
@@ -199,19 +207,18 @@ entity Admin {
     systemName String required
 }
 relationship OneToOne {
-    @OnDelete("CASCADE") @OnUpdate("CASCADE") Profile{internalUser(login) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") User with builtInEntity ,
-    @OnDelete("CASCADE") @OnUpdate("CASCADE") Recruiter{relatedUser(id) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Profile ,
-    @OnDelete("CASCADE") @OnUpdate("CASCADE") Employer{relatedUser(id) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Profile ,
-    @OnDelete("CASCADE") @OnUpdate("CASCADE") Admin{relatedUser(id) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Profile ,
-    @OnDelete("CASCADE") @OnUpdate("CASCADE") Recruiter{wallet required} to @OnUpdate("CASCADE") Wallet ,
-    @OnDelete("CASCADE") @OnUpdate("CASCADE") Candidate{techCV required} to @OnUpdate("CASCADE") TechnicalCV{candidate}
-    @OnDelete("CASCADE") @OnUpdate("CASCADE") Employer{wallet required}  to @OnUpdate("CASCADE") Wallet ,
+    @OnDelete("CASCADE") @OnUpdate("CASCADE") Recruiter{relatedUser(login) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") User with builtInEntity ,
+    @OnDelete("CASCADE") @OnUpdate("CASCADE") Employer{relatedUser(login) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") User with builtInEntity ,
+    @OnDelete("CASCADE") @OnUpdate("CASCADE") Admin{relatedUser(login) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") User with builtInEntity ,
+    @OnDelete("CASCADE") @OnUpdate("CASCADE") Recruiter{wallet(balance) required} to @OnUpdate("CASCADE") Wallet ,
+    @OnDelete("CASCADE") @OnUpdate("CASCADE") Candidate{techCV(name) required} to @OnUpdate("CASCADE") TechnicalCV{candidate}
+    @OnDelete("CASCADE") @OnUpdate("CASCADE") Employer{wallet(balance) required}  to @OnUpdate("CASCADE") Wallet ,
     @OnUpdate("CASCADE") Wallet{relatedToAccount} to @OnUpdate("CASCADE") AppAccount{relatedWallet} ,
-    @OnUpdate("CASCADE") AppAccount{owner required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Profile{account} ,
-    @OnUpdate("CASCADE") Admin{systemWallet required} to @OnUpdate("CASCADE") Wallet ,
+    @OnUpdate("CASCADE") AppAccount{relatedUser(login) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") User with builtInEntity ,
+    @OnUpdate("CASCADE") Admin{systemWallet(balance) required} to @OnUpdate("CASCADE") Wallet ,
     Request{relatedApplication required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Application ,
     @OnUpdate("CASCADE") Contract{template required} to Template ,
-    @OnUpdate("CASCADE") Contract{candidate} to @OnUpdate("CASCADE") Candidate
+    @OnUpdate("CASCADE") Contract{candidate(lastName)} to @OnUpdate("CASCADE") Candidate
 }
 relationship OneToMany {
     @OnDelete("CASCADE") @OnUpdate("CASCADE") Recruiter{requests} to Request{recruiter required} ,
@@ -226,30 +233,30 @@ relationship OneToMany {
     @OnDelete("CASCADE") @OnUpdate("CASCADE") TechnicalCV{altActivities} to @OnUpdate("CASCADE") TechCVAltActivities ,
     Employer{operationalDomain required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Domain ,
     @OnDelete("CASCADE") @OnUpdate("CASCADE") Employer{paymentAccount required} to @OnUpdate("CASCADE") AppAccount{ifEmployer} ,
-    @OnUpdate("CASCADE") Employer{application} to @OnUpdate("CASCADE") Application{employer required} ,
-    @OnUpdate("CASCADE") Employer{contract} to @OnUpdate("CASCADE") Contract{employer required} ,
-    @OnUpdate("CASCADE") Employer{template} to @OnUpdate("CASCADE") Template{owner required} ,
-    @OnUpdate("CASCADE") Application{contracts} to @OnUpdate("CASCADE") Contract{application required} ,
+    @OnUpdate("CASCADE") Employer{application(title)} to @OnUpdate("CASCADE") Application{employer(lastName) required} ,
+    @OnUpdate("CASCADE") Employer{contract(label)} to @OnUpdate("CASCADE") Contract{employer(lastName) required} ,
+    @OnUpdate("CASCADE") Employer{template(label)} to @OnUpdate("CASCADE") Template{owner(lastName) required} ,
+    @OnUpdate("CASCADE") Application{contracts(label)} to @OnUpdate("CASCADE") Contract{application required} ,
     @OnUpdate("CASCADE") Application{interviews} to @OnUpdate("CASCADE") Interview{application required} ,
     @OnDelete("CASCADE") @OnUpdate("CASCADE") AppTest{customQuestions} to @OnUpdate("CASCADE") CustomQuestion,
-    @OnDelete("CASCADE") Candidate{candidateCV} to @OnUpdate("CASCADE") Resume{owner}
+    @OnDelete("CASCADE") Candidate{candidateResume(resume)} to @OnUpdate("CASCADE") Resume{owner}
 }
 relationship ManyToOne {
-    @OnUpdate("CASCADE") NDA{employer required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Employer{ndaStatus} ,
-    @OnUpdate("CASCADE") NDA{mediator required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Recruiter{ndaStatus} ,
-    @OnUpdate("CASCADE") NDA{candidate required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Candidate{ndaStatus} ,
-    @OnUpdate("CASCADE") Contract{recruiter required} to @OnUpdate("CASCADE") Recruiter{contracts} ,
+    @OnUpdate("CASCADE") NDA{employer(lastName) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Employer{ndaStatus} ,
+    @OnUpdate("CASCADE") NDA{mediator(lastName) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Recruiter{ndaStatus} ,
+    @OnUpdate("CASCADE") NDA{candidate(lastName) required} to @OnDelete("CASCADE") @OnUpdate("CASCADE") Candidate{ndaStatus} ,
+    @OnUpdate("CASCADE") Contract{recruiter(lastName) required} to @OnUpdate("CASCADE") Recruiter{contracts} ,
 }
 relationship ManyToMany {
-    @OnDelete("CASCADE") @OnUpdate("CASCADE") Recruiter{applications} to @OnUpdate("CASCADE") Application{recruiters} ,
-    @OnUpdate("CASCADE") Recruiter{operationalDomain required} to @OnUpdate("CASCADE") Domain ,
-    @OnUpdate("CASCADE") Candidate{domain required} to @OnUpdate("CASCADE") Domain ,
-    @OnUpdate("CASCADE") Application{contractType required} to @OnUpdate("CASCADE") ContractType ,
-    @OnUpdate("CASCADE") Application{contractTemplate} to @OnUpdate("CASCADE") Template ,
-    @OnUpdate("CASCADE") Application{criteria required} to @OnUpdate("CASCADE") Criteria ,
-    @OnUpdate("CASCADE") Application{domain required} to @OnUpdate("CASCADE") Domain ,
-    @OnUpdate("CASCADE") AppAccount{type required} to @OnUpdate("CASCADE") AppAccountType ,
-    @OnUpdate("CASCADE") AppAccount{provider required} to @OnUpdate("CASCADE") Provider ,
-    @OnUpdate("CASCADE") Candidate{applications} to @OnUpdate("CASCADE") Application{candidates} ,
-    @OnUpdate("CASCADE") AppTest{type} to @OnUpdate("CASCADE") AppTestType
+    @OnDelete("CASCADE") @OnUpdate("CASCADE") Recruiter{applications(title)} to @OnUpdate("CASCADE") Application{recruiters(lastName)} ,
+    @OnUpdate("CASCADE") Recruiter{operationalDomain(name) required} to @OnUpdate("CASCADE") Domain ,
+    @OnUpdate("CASCADE") Candidate{domain(name) required} to @OnUpdate("CASCADE") Domain ,
+    @OnUpdate("CASCADE") Application{contractType(name) required} to @OnUpdate("CASCADE") ContractType ,
+    @OnUpdate("CASCADE") Application{contractTemplate(label)} to @OnUpdate("CASCADE") Template ,
+    @OnUpdate("CASCADE") Application{criteria(name) required} to @OnUpdate("CASCADE") Criteria ,
+    @OnUpdate("CASCADE") Application{domain(name) required} to @OnUpdate("CASCADE") Domain ,
+    @OnUpdate("CASCADE") AppAccount{type(type) required} to @OnUpdate("CASCADE") AppAccountType ,
+    @OnUpdate("CASCADE") AppAccount{provider(name) required} to @OnUpdate("CASCADE") Provider ,
+    @OnUpdate("CASCADE") Candidate{applications(title)} to @OnUpdate("CASCADE") Application{candidates(lastName)} ,
+    @OnUpdate("CASCADE") AppTest{type(type)} to @OnUpdate("CASCADE") AppTestType
 }

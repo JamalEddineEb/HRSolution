@@ -21,17 +21,13 @@
           </dd>
           <dt><span jhiTranslate="hrSolutionApp.admin.relatedUser">Related User</span></dt>
           <dd>
-            @if (admin()!.relatedUser) {
-              <div>
-                <a [routerLink]="['/profile', admin()!.relatedUser?.id, 'view']">{{ admin()!.relatedUser?.id }}</a>
-              </div>
-            }
+            <span>{{ admin()!.relatedUser?.login }}</span>
           </dd>
           <dt><span jhiTranslate="hrSolutionApp.admin.systemWallet">System Wallet</span></dt>
           <dd>
             @if (admin()!.systemWallet) {
               <div>
-                <a [routerLink]="['/wallet', admin()!.systemWallet?.id, 'view']">{{ admin()!.systemWallet?.id }}</a>
+                <a [routerLink]="['/wallet', admin()!.systemWallet?.id, 'view']">{{ admin()!.systemWallet?.balance }}</a>
               </div>
             }
           </dd>

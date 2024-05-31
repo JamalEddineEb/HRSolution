@@ -158,12 +158,17 @@ public class ContractResource {
     /**
      * {@code GET  /contracts} : get all the contracts.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of contracts in body.
      */
     @GetMapping("")
-    public List<Contract> getAllContracts() {
+    public List<Contract> getAllContracts(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all Contracts");
-        return contractRepository.findAll();
+        if (eagerload) {
+            return contractRepository.findAllWithEagerRelationships();
+        } else {
+            return contractRepository.findAll();
+        }
     }
 
     /**
@@ -175,7 +180,7 @@ public class ContractResource {
     @GetMapping("/{id}")
     public ResponseEntity<Contract> getContract(@PathVariable("id") Long id) {
         log.debug("REST request to get Contract : {}", id);
-        Optional<Contract> contract = contractRepository.findById(id);
+        Optional<Contract> contract = contractRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(contract);
     }
 

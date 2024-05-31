@@ -123,6 +123,30 @@ public class RecruiterResource {
         Optional<Recruiter> result = recruiterRepository
             .findById(recruiter.getId())
             .map(existingRecruiter -> {
+                if (recruiter.getFirstName() != null) {
+                    existingRecruiter.setFirstName(recruiter.getFirstName());
+                }
+                if (recruiter.getLastName() != null) {
+                    existingRecruiter.setLastName(recruiter.getLastName());
+                }
+                if (recruiter.getProfileImage() != null) {
+                    existingRecruiter.setProfileImage(recruiter.getProfileImage());
+                }
+                if (recruiter.getProfileImageContentType() != null) {
+                    existingRecruiter.setProfileImageContentType(recruiter.getProfileImageContentType());
+                }
+                if (recruiter.getAddress() != null) {
+                    existingRecruiter.setAddress(recruiter.getAddress());
+                }
+                if (recruiter.getRole() != null) {
+                    existingRecruiter.setRole(recruiter.getRole());
+                }
+                if (recruiter.getStatus() != null) {
+                    existingRecruiter.setStatus(recruiter.getStatus());
+                }
+                if (recruiter.getName() != null) {
+                    existingRecruiter.setName(recruiter.getName());
+                }
                 if (recruiter.getLabel() != null) {
                     existingRecruiter.setLabel(recruiter.getLabel());
                 }

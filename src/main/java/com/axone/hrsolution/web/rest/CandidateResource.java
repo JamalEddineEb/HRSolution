@@ -124,6 +124,12 @@ public class CandidateResource {
         Optional<Candidate> result = candidateRepository
             .findById(candidate.getId())
             .map(existingCandidate -> {
+                if (candidate.getFirstName() != null) {
+                    existingCandidate.setFirstName(candidate.getFirstName());
+                }
+                if (candidate.getLastName() != null) {
+                    existingCandidate.setLastName(candidate.getLastName());
+                }
                 if (candidate.getLinkedinUrl() != null) {
                     existingCandidate.setLinkedinUrl(candidate.getLinkedinUrl());
                 }

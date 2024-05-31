@@ -66,24 +66,24 @@ class CandidateTest {
     }
 
     @Test
-    void candidateCVTest() throws Exception {
+    void candidateResumeTest() throws Exception {
         Candidate candidate = getCandidateRandomSampleGenerator();
         Resume resumeBack = getResumeRandomSampleGenerator();
 
-        candidate.addCandidateCV(resumeBack);
-        assertThat(candidate.getCandidateCVS()).containsOnly(resumeBack);
+        candidate.addCandidateResume(resumeBack);
+        assertThat(candidate.getCandidateResumes()).containsOnly(resumeBack);
         assertThat(resumeBack.getOwner()).isEqualTo(candidate);
 
-        candidate.removeCandidateCV(resumeBack);
-        assertThat(candidate.getCandidateCVS()).doesNotContain(resumeBack);
+        candidate.removeCandidateResume(resumeBack);
+        assertThat(candidate.getCandidateResumes()).doesNotContain(resumeBack);
         assertThat(resumeBack.getOwner()).isNull();
 
-        candidate.candidateCVS(new HashSet<>(Set.of(resumeBack)));
-        assertThat(candidate.getCandidateCVS()).containsOnly(resumeBack);
+        candidate.candidateResumes(new HashSet<>(Set.of(resumeBack)));
+        assertThat(candidate.getCandidateResumes()).containsOnly(resumeBack);
         assertThat(resumeBack.getOwner()).isEqualTo(candidate);
 
-        candidate.setCandidateCVS(new HashSet<>());
-        assertThat(candidate.getCandidateCVS()).doesNotContain(resumeBack);
+        candidate.setCandidateResumes(new HashSet<>());
+        assertThat(candidate.getCandidateResumes()).doesNotContain(resumeBack);
         assertThat(resumeBack.getOwner()).isNull();
     }
 

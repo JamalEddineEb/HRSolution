@@ -16,6 +16,16 @@
         }
 
         <div class="mb-3">
+          <label class="form-label" for="field_firstName" jhiTranslate="hrSolutionApp.candidate.firstName">First Name</label>
+          <input type="text" class="form-control" name="firstName" id="field_firstName" data-cy="firstName" formControlName="firstName" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_lastName" jhiTranslate="hrSolutionApp.candidate.lastName">Last Name</label>
+          <input type="text" class="form-control" name="lastName" id="field_lastName" data-cy="lastName" formControlName="lastName" />
+        </div>
+
+        <div class="mb-3">
           <label class="form-label" for="field_linkedinUrl" jhiTranslate="hrSolutionApp.candidate.linkedinUrl">Linkedin Url</label>
           <input
             type="text"
@@ -143,7 +153,7 @@
               <option [ngValue]="null" selected></option>
             }
             @for (technicalCVOption of techCVSCollection; track $index) {
-              <option [ngValue]="technicalCVOption">{{ technicalCVOption.id }}</option>
+              <option [ngValue]="technicalCVOption">{{ technicalCVOption.name }}</option>
             }
           </select>
         </div>
@@ -167,7 +177,7 @@
             [compareWith]="compareDomain"
           >
             @for (domainOption of domainsSharedCollection; track $index) {
-              <option [ngValue]="domainOption">{{ domainOption.id }}</option>
+              <option [ngValue]="domainOption">{{ domainOption.name }}</option>
             }
           </select>
         </div>
@@ -191,7 +201,7 @@
             [compareWith]="compareApplication"
           >
             @for (applicationOption of applicationsSharedCollection; track $index) {
-              <option [ngValue]="applicationOption">{{ applicationOption.id }}</option>
+              <option [ngValue]="applicationOption">{{ applicationOption.title }}</option>
             }
           </select>
         </div>

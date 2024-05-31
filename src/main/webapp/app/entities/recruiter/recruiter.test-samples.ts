@@ -1,29 +1,48 @@
 import { IRecruiter, NewRecruiter } from './recruiter.model';
 
 export const sampleWithRequiredData: IRecruiter = {
-  id: 14954,
-  label: 'notepad society indeed',
-  linkedinUrl: 'besides expense instructive',
+  id: 19595,
+  role: 'RECRUITER',
+  status: 'ACTIVE',
+  label: 'lilac bathroom mysteriously',
+  linkedinUrl: 'politely',
 };
 
 export const sampleWithPartialData: IRecruiter = {
   id: 4466,
-  label: 'meanwhile because',
-  linkedinUrl: 'cruelly empty',
-  approvedExperience: false,
+  firstName: 'Gunnar',
+  lastName: 'Harber',
+  profileImage: '../fake-data/blob/hipster.png',
+  profileImageContentType: 'unknown',
+  role: 'ADMIN',
+  status: 'DEACTIVATED',
+  name: 'elegantly',
+  label: 'wick while',
+  linkedinUrl: 'impressionable pitch parade',
+  approvedExperience: true,
 };
 
 export const sampleWithFullData: IRecruiter = {
-  id: 14382,
-  label: 'platter',
-  linkedinUrl: 'affair hosiery',
-  approvedExperience: false,
-  score: 30416.82,
+  id: 7230,
+  firstName: 'Rogelio',
+  lastName: 'Kerluke',
+  profileImage: '../fake-data/blob/hipster.png',
+  profileImageContentType: 'unknown',
+  address: 'whenever meet hypochondria',
+  role: 'EMPLOYER',
+  status: 'BANNED',
+  name: 'now',
+  label: 'now ha mutter',
+  linkedinUrl: 'bah crane',
+  approvedExperience: true,
+  score: 2662.77,
 };
 
 export const sampleWithNewData: NewRecruiter = {
-  label: 'sans absent staid',
-  linkedinUrl: 'now',
+  role: 'EMPLOYER',
+  status: 'BANNED',
+  label: 'eek',
+  linkedinUrl: 'swill',
   id: null,
 };
 

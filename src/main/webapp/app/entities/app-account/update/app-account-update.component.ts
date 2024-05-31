@@ -7,8 +7,8 @@ import { finalize, map } from 'rxjs/operators';
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IProfile } from 'app/entities/profile/profile.model';
-import { ProfileService } from 'app/entities/profile/service/profile.service';
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/service/user.service';
 import { IAppAccountType } from 'app/entities/app-account-type/app-account-type.model';
 import { AppAccountTypeService } from 'app/entities/app-account-type/service/app-account-type.service';
 import { IProvider } from 'app/entities/provider/provider.model';
@@ -29,14 +29,14 @@ export class AppAccountUpdateComponent implements OnInit {
   isSaving = false;
   appAccount: IAppAccount | null = null;
 
-  ownersCollection: IProfile[] = [];
+  usersSharedCollection: IUser[] = [];
   appAccountTypesSharedCollection: IAppAccountType[] = [];
   providersSharedCollection: IProvider[] = [];
   employersSharedCollection: IEmployer[] = [];
 
   protected appAccountService = inject(AppAccountService);
   protected appAccountFormService = inject(AppAccountFormService);
-  protected profileService = inject(ProfileService);
+  protected userService = inject(UserService);
   protected appAccountTypeService = inject(AppAccountTypeService);
   protected providerService = inject(ProviderService);
   protected employerService = inject(EmployerService);
@@ -45,7 +45,7 @@ export class AppAccountUpdateComponent implements OnInit {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   editForm: AppAccountFormGroup = this.appAccountFormService.createAppAccountFormGroup();
 
-  compareProfile = (o1: IProfile | null, o2: IProfile | null): boolean => this.profileService.compareProfile(o1, o2);
+  compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
 
   compareAppAccountType = (o1: IAppAccountType | null, o2: IAppAccountType | null): boolean =>
     this.appAccountTypeService.compareAppAccountType(o1, o2);
@@ -102,7 +102,7 @@ export class AppAccountUpdateComponent implements OnInit {
     this.appAccount = appAccount;
     this.appAccountFormService.resetForm(this.editForm, appAccount);
 
-    this.ownersCollection = this.profileService.addProfileToCollectionIfMissing<IProfile>(this.ownersCollection, appAccount.owner);
+    this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, appAccount.relatedUser);
     this.appAccountTypesSharedCollection = this.appAccountTypeService.addAppAccountTypeToCollectionIfMissing<IAppAccountType>(
       this.appAccountTypesSharedCollection,
       ...(appAccount.types ?? []),
@@ -118,11 +118,11 @@ export class AppAccountUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    this.profileService
-      .query({ filter: 'account-is-null' })
-      .pipe(map((res: HttpResponse<IProfile[]>) => res.body ?? []))
-      .pipe(map((profiles: IProfile[]) => this.profileService.addProfileToCollectionIfMissing<IProfile>(profiles, this.appAccount?.owner)))
-      .subscribe((profiles: IProfile[]) => (this.ownersCollection = profiles));
+    this.userService
+      .query()
+      .pipe(map((res: HttpResponse<IUser[]>) => res.body ?? []))
+      .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.appAccount?.relatedUser)))
+      .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
 
     this.appAccountTypeService
       .query()

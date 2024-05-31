@@ -123,14 +123,32 @@ public class EmployerResource {
         Optional<Employer> result = employerRepository
             .findById(employer.getId())
             .map(existingEmployer -> {
+                if (employer.getFirstName() != null) {
+                    existingEmployer.setFirstName(employer.getFirstName());
+                }
+                if (employer.getLastName() != null) {
+                    existingEmployer.setLastName(employer.getLastName());
+                }
+                if (employer.getProfileImage() != null) {
+                    existingEmployer.setProfileImage(employer.getProfileImage());
+                }
+                if (employer.getProfileImageContentType() != null) {
+                    existingEmployer.setProfileImageContentType(employer.getProfileImageContentType());
+                }
+                if (employer.getAddress() != null) {
+                    existingEmployer.setAddress(employer.getAddress());
+                }
+                if (employer.getRole() != null) {
+                    existingEmployer.setRole(employer.getRole());
+                }
+                if (employer.getStatus() != null) {
+                    existingEmployer.setStatus(employer.getStatus());
+                }
+                if (employer.getName() != null) {
+                    existingEmployer.setName(employer.getName());
+                }
                 if (employer.getLabel() != null) {
                     existingEmployer.setLabel(employer.getLabel());
-                }
-                if (employer.getLinkedinUrl() != null) {
-                    existingEmployer.setLinkedinUrl(employer.getLinkedinUrl());
-                }
-                if (employer.getScore() != null) {
-                    existingEmployer.setScore(employer.getScore());
                 }
 
                 return existingEmployer;
@@ -146,12 +164,17 @@ public class EmployerResource {
     /**
      * {@code GET  /employers} : get all the employers.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of employers in body.
      */
     @GetMapping("")
-    public List<Employer> getAllEmployers() {
+    public List<Employer> getAllEmployers(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all Employers");
-        return employerRepository.findAll();
+        if (eagerload) {
+            return employerRepository.findAllWithEagerRelationships();
+        } else {
+            return employerRepository.findAll();
+        }
     }
 
     /**
@@ -163,7 +186,7 @@ public class EmployerResource {
     @GetMapping("/{id}")
     public ResponseEntity<Employer> getEmployer(@PathVariable("id") Long id) {
         log.debug("REST request to get Employer : {}", id);
-        Optional<Employer> employer = employerRepository.findById(id);
+        Optional<Employer> employer = employerRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(employer);
     }
 

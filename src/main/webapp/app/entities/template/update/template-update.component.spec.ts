@@ -53,10 +53,10 @@ describe('Template Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Employer query and add missing value', () => {
       const template: ITemplate = { id: 456 };
-      const owner: IEmployer = { id: 21028 };
+      const owner: IEmployer = { id: 30380 };
       template.owner = owner;
 
-      const employerCollection: IEmployer[] = [{ id: 13442 }];
+      const employerCollection: IEmployer[] = [{ id: 4516 }];
       jest.spyOn(employerService, 'query').mockReturnValue(of(new HttpResponse({ body: employerCollection })));
       const additionalEmployers = [owner];
       const expectedCollection: IEmployer[] = [...additionalEmployers, ...employerCollection];
@@ -97,7 +97,7 @@ describe('Template Management Update Component', () => {
 
     it('Should update editForm', () => {
       const template: ITemplate = { id: 456 };
-      const owner: IEmployer = { id: 18963 };
+      const owner: IEmployer = { id: 8742 };
       template.owner = owner;
       const application: IApplication = { id: 2813 };
       template.applications = [application];

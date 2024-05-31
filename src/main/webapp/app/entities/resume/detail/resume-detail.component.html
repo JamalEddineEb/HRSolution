@@ -15,12 +15,12 @@
           <dd>
             <span>{{ resume()!.id }}</span>
           </dd>
-          <dt><span jhiTranslate="hrSolutionApp.resume.cv">Cv</span></dt>
+          <dt><span jhiTranslate="hrSolutionApp.resume.resume">Resume</span></dt>
           <dd>
-            @if (resume()!.cv) {
+            @if (resume()!.resume) {
               <div>
-                <a (click)="openFile(resume()!.cv ?? '', resume()!.cvContentType)" jhiTranslate="entity.action.open">Open</a>
-                {{ resume()!.cvContentType }}, {{ byteSize(resume()!.cv ?? '') }}
+                <a (click)="openFile(resume()!.resume ?? '', resume()!.resumeContentType)" jhiTranslate="entity.action.open">Open</a>
+                {{ resume()!.resumeContentType }}, {{ byteSize(resume()!.resume ?? '') }}
               </div>
             }
           </dd>

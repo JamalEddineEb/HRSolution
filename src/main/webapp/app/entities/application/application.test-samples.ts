@@ -29,12 +29,12 @@ export const sampleWithFullData: IApplication = {
   paymentAmount: 4375.4,
   recruiterIncomeRate: 10719.33,
   candidateIncomeRate: 16396.51,
-  deadline: dayjs('2024-05-20'),
+  deadline: dayjs('2024-05-24'),
   status: 'CLOSED',
-  createdAt: dayjs('2024-05-20T03:19'),
-  openedAt: dayjs('2024-05-19T15:06'),
-  closedAt: dayjs('2024-05-20T11:14'),
-  doneAt: dayjs('2024-05-20T10:12'),
+  createdAt: dayjs('2024-05-24T03:25'),
+  openedAt: dayjs('2024-05-23T15:13'),
+  closedAt: dayjs('2024-05-24T11:20'),
+  doneAt: dayjs('2024-05-24T10:18'),
 };
 
 export const sampleWithNewData: NewApplication = {

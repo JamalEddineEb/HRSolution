@@ -70,19 +70,19 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="owner.id">
+            <th scope="col" jhiSortBy="relatedUser.login">
               <div class="d-flex">
-                <span jhiTranslate="hrSolutionApp.appAccount.owner">Owner</span>
+                <span jhiTranslate="hrSolutionApp.appAccount.relatedUser">Related User</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="type.id">
+            <th scope="col" jhiSortBy="type.type">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.appAccount.type">Type</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="provider.id">
+            <th scope="col" jhiSortBy="provider.name">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.appAccount.provider">Provider</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -108,16 +108,12 @@
               <td>{{ appAccount.endDate | formatMediumDate }}</td>
               <td>{{ appAccount.cvv }}</td>
               <td>
-                @if (appAccount.owner) {
-                  <div>
-                    <a [routerLink]="['/profile', appAccount.owner.id, 'view']">{{ appAccount.owner.id }}</a>
-                  </div>
-                }
+                {{ appAccount.relatedUser?.login }}
               </td>
               <td>
                 @for (type of appAccount.types; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/app-account-type', type.id, 'view']">{{ type.id }}</a
+                    <a class="form-control-static" [routerLink]="['/app-account-type', type.id, 'view']">{{ type.type }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
@@ -125,7 +121,7 @@
               <td>
                 @for (provider of appAccount.providers; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/provider', provider.id, 'view']">{{ provider.id }}</a
+                    <a class="form-control-static" [routerLink]="['/provider', provider.id, 'view']">{{ provider.name }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }

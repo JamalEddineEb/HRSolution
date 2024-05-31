@@ -97,19 +97,19 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="candidate.id">
+            <th scope="col" jhiSortBy="candidate.lastName">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.contract.candidate">Candidate</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="recruiter.id">
+            <th scope="col" jhiSortBy="recruiter.lastName">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.contract.recruiter">Recruiter</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="employer.id">
+            <th scope="col" jhiSortBy="employer.lastName">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.contract.employer">Employer</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -159,21 +159,21 @@
               <td>
                 @if (contract.candidate) {
                   <div>
-                    <a [routerLink]="['/candidate', contract.candidate.id, 'view']">{{ contract.candidate.id }}</a>
+                    <a [routerLink]="['/candidate', contract.candidate.id, 'view']">{{ contract.candidate.lastName }}</a>
                   </div>
                 }
               </td>
               <td>
                 @if (contract.recruiter) {
                   <div>
-                    <a [routerLink]="['/recruiter', contract.recruiter.id, 'view']">{{ contract.recruiter.id }}</a>
+                    <a [routerLink]="['/recruiter', contract.recruiter.id, 'view']">{{ contract.recruiter.lastName }}</a>
                   </div>
                 }
               </td>
               <td>
                 @if (contract.employer) {
                   <div>
-                    <a [routerLink]="['/employer', contract.employer.id, 'view']">{{ contract.employer.id }}</a>
+                    <a [routerLink]="['/employer', contract.employer.id, 'view']">{{ contract.employer.lastName }}</a>
                   </div>
                 }
               </td>

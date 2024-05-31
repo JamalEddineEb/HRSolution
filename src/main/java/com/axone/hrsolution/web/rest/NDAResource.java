@@ -145,12 +145,17 @@ public class NDAResource {
     /**
      * {@code GET  /ndas} : get all the nDAS.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of nDAS in body.
      */
     @GetMapping("")
-    public List<NDA> getAllNDAS() {
+    public List<NDA> getAllNDAS(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all NDAS");
-        return nDARepository.findAll();
+        if (eagerload) {
+            return nDARepository.findAllWithEagerRelationships();
+        } else {
+            return nDARepository.findAll();
+        }
     }
 
     /**
@@ -162,7 +167,7 @@ public class NDAResource {
     @GetMapping("/{id}")
     public ResponseEntity<NDA> getNDA(@PathVariable("id") Long id) {
         log.debug("REST request to get NDA : {}", id);
-        Optional<NDA> nDA = nDARepository.findById(id);
+        Optional<NDA> nDA = nDARepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(nDA);
     }
 

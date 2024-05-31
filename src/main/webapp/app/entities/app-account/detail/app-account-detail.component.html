@@ -31,19 +31,15 @@
           <dd>
             <span>{{ appAccount()!.cvv }}</span>
           </dd>
-          <dt><span jhiTranslate="hrSolutionApp.appAccount.owner">Owner</span></dt>
+          <dt><span jhiTranslate="hrSolutionApp.appAccount.relatedUser">Related User</span></dt>
           <dd>
-            @if (appAccount()!.owner) {
-              <div>
-                <a [routerLink]="['/profile', appAccount()!.owner?.id, 'view']">{{ appAccount()!.owner?.id }}</a>
-              </div>
-            }
+            <span>{{ appAccount()!.relatedUser?.login }}</span>
           </dd>
           <dt><span jhiTranslate="hrSolutionApp.appAccount.type">Type</span></dt>
           <dd>
             @for (type of appAccount()!.types; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/app-account-type', type.id, 'view']">{{ type?.id }}</a
+                <a [routerLink]="['/app-account-type', type.id, 'view']">{{ type?.type }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
@@ -52,7 +48,7 @@
           <dd>
             @for (provider of appAccount()!.providers; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/provider', provider.id, 'view']">{{ provider?.id }}</a
+                <a [routerLink]="['/provider', provider.id, 'view']">{{ provider?.name }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }

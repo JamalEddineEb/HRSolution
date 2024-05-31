@@ -63,7 +63,7 @@ public class NDA implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties(
-        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
+        value = { "techCV", "interviewResults", "candidateResumes", "domains", "applications", "contract", "ndaStatuses" },
         allowSetters = true
     )
     private Candidate candidate;

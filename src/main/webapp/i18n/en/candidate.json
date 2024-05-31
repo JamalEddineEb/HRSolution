@@ -18,6 +18,8 @@
         "title": "Candidate"
       },
       "id": "ID",
+      "firstName": "First Name",
+      "lastName": "Last Name",
       "linkedinUrl": "Linkedin Url",
       "fullName": "Full Name",
       "yearsOfExperience": "Years Of Experience",
@@ -28,7 +30,7 @@
       "rate": "Rate",
       "techCV": "Tech CV",
       "interviewResult": "Interview Result",
-      "candidateCV": "Candidate CV",
+      "candidateResume": "Candidate Resume",
       "domain": "Domain",
       "applications": "Applications",
       "contract": "Contract",

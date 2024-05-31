@@ -62,7 +62,7 @@ public class Contract implements Serializable {
     private Template template;
 
     @JsonIgnoreProperties(
-        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
+        value = { "techCV", "interviewResults", "candidateResumes", "domains", "applications", "contract", "ndaStatuses" },
         allowSetters = true
     )
     @OneToOne(fetch = FetchType.LAZY)

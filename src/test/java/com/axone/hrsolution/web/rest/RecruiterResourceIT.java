@@ -10,13 +10,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.axone.hrsolution.IntegrationTest;
 import com.axone.hrsolution.domain.Domain;
-import com.axone.hrsolution.domain.Profile;
 import com.axone.hrsolution.domain.Recruiter;
+import com.axone.hrsolution.domain.User;
 import com.axone.hrsolution.domain.Wallet;
+import com.axone.hrsolution.domain.enumeration.UserRole;
+import com.axone.hrsolution.domain.enumeration.UserStatus;
 import com.axone.hrsolution.repository.RecruiterRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
@@ -41,6 +44,29 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @WithMockUser
 class RecruiterResourceIT {
+
+    private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
+
+    private static final byte[] DEFAULT_PROFILE_IMAGE = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_PROFILE_IMAGE = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_PROFILE_IMAGE_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_PROFILE_IMAGE_CONTENT_TYPE = "image/png";
+
+    private static final String DEFAULT_ADDRESS = "AAAAAAAAAA";
+    private static final String UPDATED_ADDRESS = "BBBBBBBBBB";
+
+    private static final UserRole DEFAULT_ROLE = UserRole.ADMIN;
+    private static final UserRole UPDATED_ROLE = UserRole.RECRUITER;
+
+    private static final UserStatus DEFAULT_STATUS = UserStatus.ACTIVE;
+    private static final UserStatus UPDATED_STATUS = UserStatus.DEACTIVATED;
+
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_LABEL = "AAAAAAAAAA";
     private static final String UPDATED_LABEL = "BBBBBBBBBB";
@@ -85,20 +111,23 @@ class RecruiterResourceIT {
      */
     public static Recruiter createEntity(EntityManager em) {
         Recruiter recruiter = new Recruiter()
+            .firstName(DEFAULT_FIRST_NAME)
+            .lastName(DEFAULT_LAST_NAME)
+            .profileImage(DEFAULT_PROFILE_IMAGE)
+            .profileImageContentType(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE)
+            .address(DEFAULT_ADDRESS)
+            .role(DEFAULT_ROLE)
+            .status(DEFAULT_STATUS)
+            .name(DEFAULT_NAME)
             .label(DEFAULT_LABEL)
             .linkedinUrl(DEFAULT_LINKEDIN_URL)
             .approvedExperience(DEFAULT_APPROVED_EXPERIENCE)
             .score(DEFAULT_SCORE);
         // Add required entity
-        Profile profile;
-        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
-            profile = ProfileResourceIT.createEntity(em);
-            em.persist(profile);
-            em.flush();
-        } else {
-            profile = TestUtil.findAll(em, Profile.class).get(0);
-        }
-        recruiter.setRelatedUser(profile);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        recruiter.setRelatedUser(user);
         // Add required entity
         Wallet wallet;
         if (TestUtil.findAll(em, Wallet.class).isEmpty()) {
@@ -130,20 +159,23 @@ class RecruiterResourceIT {
      */
     public static Recruiter createUpdatedEntity(EntityManager em) {
         Recruiter recruiter = new Recruiter()
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
+            .profileImage(UPDATED_PROFILE_IMAGE)
+            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE)
+            .address(UPDATED_ADDRESS)
+            .role(UPDATED_ROLE)
+            .status(UPDATED_STATUS)
+            .name(UPDATED_NAME)
             .label(UPDATED_LABEL)
             .linkedinUrl(UPDATED_LINKEDIN_URL)
             .approvedExperience(UPDATED_APPROVED_EXPERIENCE)
             .score(UPDATED_SCORE);
         // Add required entity
-        Profile profile;
-        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
-            profile = ProfileResourceIT.createUpdatedEntity(em);
-            em.persist(profile);
-            em.flush();
-        } else {
-            profile = TestUtil.findAll(em, Profile.class).get(0);
-        }
-        recruiter.setRelatedUser(profile);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        recruiter.setRelatedUser(user);
         // Add required entity
         Wallet wallet;
         if (TestUtil.findAll(em, Wallet.class).isEmpty()) {
@@ -211,6 +243,38 @@ class RecruiterResourceIT {
 
     @Test
     @Transactional
+    void checkRoleIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        recruiter.setRole(null);
+
+        // Create the Recruiter, which fails.
+
+        restRecruiterMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(recruiter)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkStatusIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        recruiter.setStatus(null);
+
+        // Create the Recruiter, which fails.
+
+        restRecruiterMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(recruiter)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkLabelIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
@@ -253,6 +317,14 @@ class RecruiterResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(recruiter.getId().intValue())))
+            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME)))
+            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME)))
+            .andExpect(jsonPath("$.[*].profileImageContentType").value(hasItem(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].profileImage").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_PROFILE_IMAGE))))
+            .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS)))
+            .andExpect(jsonPath("$.[*].role").value(hasItem(DEFAULT_ROLE.toString())))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)))
             .andExpect(jsonPath("$.[*].linkedinUrl").value(hasItem(DEFAULT_LINKEDIN_URL)))
             .andExpect(jsonPath("$.[*].approvedExperience").value(hasItem(DEFAULT_APPROVED_EXPERIENCE.booleanValue())))
@@ -288,6 +360,14 @@ class RecruiterResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(recruiter.getId().intValue()))
+            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME))
+            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME))
+            .andExpect(jsonPath("$.profileImageContentType").value(DEFAULT_PROFILE_IMAGE_CONTENT_TYPE))
+            .andExpect(jsonPath("$.profileImage").value(Base64.getEncoder().encodeToString(DEFAULT_PROFILE_IMAGE)))
+            .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS))
+            .andExpect(jsonPath("$.role").value(DEFAULT_ROLE.toString()))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.label").value(DEFAULT_LABEL))
             .andExpect(jsonPath("$.linkedinUrl").value(DEFAULT_LINKEDIN_URL))
             .andExpect(jsonPath("$.approvedExperience").value(DEFAULT_APPROVED_EXPERIENCE.booleanValue()))
@@ -314,6 +394,14 @@ class RecruiterResourceIT {
         // Disconnect from session so that the updates on updatedRecruiter are not directly saved in db
         em.detach(updatedRecruiter);
         updatedRecruiter
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
+            .profileImage(UPDATED_PROFILE_IMAGE)
+            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE)
+            .address(UPDATED_ADDRESS)
+            .role(UPDATED_ROLE)
+            .status(UPDATED_STATUS)
+            .name(UPDATED_NAME)
             .label(UPDATED_LABEL)
             .linkedinUrl(UPDATED_LINKEDIN_URL)
             .approvedExperience(UPDATED_APPROVED_EXPERIENCE)
@@ -395,7 +483,11 @@ class RecruiterResourceIT {
         Recruiter partialUpdatedRecruiter = new Recruiter();
         partialUpdatedRecruiter.setId(recruiter.getId());
 
-        partialUpdatedRecruiter.approvedExperience(UPDATED_APPROVED_EXPERIENCE);
+        partialUpdatedRecruiter
+            .profileImage(UPDATED_PROFILE_IMAGE)
+            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE)
+            .role(UPDATED_ROLE)
+            .linkedinUrl(UPDATED_LINKEDIN_URL);
 
         restRecruiterMockMvc
             .perform(
@@ -427,6 +519,14 @@ class RecruiterResourceIT {
         partialUpdatedRecruiter.setId(recruiter.getId());
 
         partialUpdatedRecruiter
+            .firstName(UPDATED_FIRST_NAME)
+            .lastName(UPDATED_LAST_NAME)
+            .profileImage(UPDATED_PROFILE_IMAGE)
+            .profileImageContentType(UPDATED_PROFILE_IMAGE_CONTENT_TYPE)
+            .address(UPDATED_ADDRESS)
+            .role(UPDATED_ROLE)
+            .status(UPDATED_STATUS)
+            .name(UPDATED_NAME)
             .label(UPDATED_LABEL)
             .linkedinUrl(UPDATED_LINKEDIN_URL)
             .approvedExperience(UPDATED_APPROVED_EXPERIENCE)

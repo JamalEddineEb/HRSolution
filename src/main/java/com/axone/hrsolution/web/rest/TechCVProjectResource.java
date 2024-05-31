@@ -2,6 +2,7 @@ package com.axone.hrsolution.web.rest;
 
 import com.axone.hrsolution.domain.TechCVProject;
 import com.axone.hrsolution.repository.TechCVProjectRepository;
+import com.axone.hrsolution.service.ProcessService;
 import com.axone.hrsolution.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -12,6 +13,7 @@ import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -174,5 +176,18 @@ public class TechCVProjectResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @RestController
+    public static class ProcessController {
+
+        @Autowired
+        private ProcessService processService;
+
+        @GetMapping("/start-process")
+        public String startProcess() {
+            processService.startProcess();
+            return "Process started";
+        }
     }
 }

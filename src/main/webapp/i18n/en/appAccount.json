@@ -22,7 +22,7 @@
       "cardNumber": "Card Number",
       "endDate": "End Date",
       "cvv": "Cvv",
-      "owner": "Owner",
+      "relatedUser": "Related User",
       "type": "Type",
       "provider": "Provider",
       "relatedWallet": "Related Wallet",

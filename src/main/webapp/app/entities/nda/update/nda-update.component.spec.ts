@@ -57,10 +57,10 @@ describe('NDA Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Employer query and add missing value', () => {
       const nDA: INDA = { id: 456 };
-      const employer: IEmployer = { id: 1621 };
+      const employer: IEmployer = { id: 1655 };
       nDA.employer = employer;
 
-      const employerCollection: IEmployer[] = [{ id: 11243 }];
+      const employerCollection: IEmployer[] = [{ id: 19815 }];
       jest.spyOn(employerService, 'query').mockReturnValue(of(new HttpResponse({ body: employerCollection })));
       const additionalEmployers = [employer];
       const expectedCollection: IEmployer[] = [...additionalEmployers, ...employerCollection];
@@ -79,10 +79,10 @@ describe('NDA Management Update Component', () => {
 
     it('Should call Recruiter query and add missing value', () => {
       const nDA: INDA = { id: 456 };
-      const mediator: IRecruiter = { id: 25382 };
+      const mediator: IRecruiter = { id: 11818 };
       nDA.mediator = mediator;
 
-      const recruiterCollection: IRecruiter[] = [{ id: 8350 }];
+      const recruiterCollection: IRecruiter[] = [{ id: 24082 }];
       jest.spyOn(recruiterService, 'query').mockReturnValue(of(new HttpResponse({ body: recruiterCollection })));
       const additionalRecruiters = [mediator];
       const expectedCollection: IRecruiter[] = [...additionalRecruiters, ...recruiterCollection];
@@ -123,9 +123,9 @@ describe('NDA Management Update Component', () => {
 
     it('Should update editForm', () => {
       const nDA: INDA = { id: 456 };
-      const employer: IEmployer = { id: 30319 };
+      const employer: IEmployer = { id: 8998 };
       nDA.employer = employer;
-      const mediator: IRecruiter = { id: 4092 };
+      const mediator: IRecruiter = { id: 26672 };
       nDA.mediator = mediator;
       const candidate: ICandidate = { id: 27080 };
       nDA.candidate = candidate;

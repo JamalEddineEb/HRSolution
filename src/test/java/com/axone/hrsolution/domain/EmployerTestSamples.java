@@ -10,14 +10,20 @@ public class EmployerTestSamples {
     private static final AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
 
     public static Employer getEmployerSample1() {
-        return new Employer().id(1L).label("label1").linkedinUrl("linkedinUrl1");
+        return new Employer().id(1L).firstName("firstName1").lastName("lastName1").address("address1").name("name1").label("label1");
     }
 
     public static Employer getEmployerSample2() {
-        return new Employer().id(2L).label("label2").linkedinUrl("linkedinUrl2");
+        return new Employer().id(2L).firstName("firstName2").lastName("lastName2").address("address2").name("name2").label("label2");
     }
 
     public static Employer getEmployerRandomSampleGenerator() {
-        return new Employer().id(longCount.incrementAndGet()).label(UUID.randomUUID().toString()).linkedinUrl(UUID.randomUUID().toString());
+        return new Employer()
+            .id(longCount.incrementAndGet())
+            .firstName(UUID.randomUUID().toString())
+            .lastName(UUID.randomUUID().toString())
+            .address(UUID.randomUUID().toString())
+            .name(UUID.randomUUID().toString())
+            .label(UUID.randomUUID().toString());
     }
 }

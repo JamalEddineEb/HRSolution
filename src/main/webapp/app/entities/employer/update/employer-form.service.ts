@@ -18,9 +18,15 @@ type EmployerFormDefaults = Pick<NewEmployer, 'id'>;
 
 type EmployerFormGroupContent = {
   id: FormControl<IEmployer['id'] | NewEmployer['id']>;
+  firstName: FormControl<IEmployer['firstName']>;
+  lastName: FormControl<IEmployer['lastName']>;
+  profileImage: FormControl<IEmployer['profileImage']>;
+  profileImageContentType: FormControl<IEmployer['profileImageContentType']>;
+  address: FormControl<IEmployer['address']>;
+  role: FormControl<IEmployer['role']>;
+  status: FormControl<IEmployer['status']>;
+  name: FormControl<IEmployer['name']>;
   label: FormControl<IEmployer['label']>;
-  linkedinUrl: FormControl<IEmployer['linkedinUrl']>;
-  score: FormControl<IEmployer['score']>;
   relatedUser: FormControl<IEmployer['relatedUser']>;
   wallet: FormControl<IEmployer['wallet']>;
 };
@@ -42,11 +48,21 @@ export class EmployerFormService {
           validators: [Validators.required],
         },
       ),
+      firstName: new FormControl(employerRawValue.firstName),
+      lastName: new FormControl(employerRawValue.lastName),
+      profileImage: new FormControl(employerRawValue.profileImage),
+      profileImageContentType: new FormControl(employerRawValue.profileImageContentType),
+      address: new FormControl(employerRawValue.address),
+      role: new FormControl(employerRawValue.role, {
+        validators: [Validators.required],
+      }),
+      status: new FormControl(employerRawValue.status, {
+        validators: [Validators.required],
+      }),
+      name: new FormControl(employerRawValue.name),
       label: new FormControl(employerRawValue.label, {
         validators: [Validators.required],
       }),
-      linkedinUrl: new FormControl(employerRawValue.linkedinUrl),
-      score: new FormControl(employerRawValue.score),
       relatedUser: new FormControl(employerRawValue.relatedUser, {
         validators: [Validators.required],
       }),

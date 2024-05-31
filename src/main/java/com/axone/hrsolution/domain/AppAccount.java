@@ -39,11 +39,10 @@ public class AppAccount implements Serializable {
     @Column(name = "cvv")
     private Integer cvv;
 
-    @JsonIgnoreProperties(value = { "internalUser", "recruiter", "employer", "admin", "account" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
     @JoinColumn(unique = true)
-    private Profile owner;
+    private User relatedUser;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @NotNull
@@ -147,16 +146,16 @@ public class AppAccount implements Serializable {
         this.cvv = cvv;
     }
 
-    public Profile getOwner() {
-        return this.owner;
+    public User getRelatedUser() {
+        return this.relatedUser;
     }
 
-    public void setOwner(Profile profile) {
-        this.owner = profile;
+    public void setRelatedUser(User user) {
+        this.relatedUser = user;
     }
 
-    public AppAccount owner(Profile profile) {
-        this.setOwner(profile);
+    public AppAccount relatedUser(User user) {
+        this.setRelatedUser(user);
         return this;
     }
 

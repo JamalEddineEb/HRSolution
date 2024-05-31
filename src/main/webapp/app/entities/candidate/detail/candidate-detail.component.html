@@ -15,6 +15,14 @@
           <dd>
             <span>{{ candidate()!.id }}</span>
           </dd>
+          <dt><span jhiTranslate="hrSolutionApp.candidate.firstName">First Name</span></dt>
+          <dd>
+            <span>{{ candidate()!.firstName }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.candidate.lastName">Last Name</span></dt>
+          <dd>
+            <span>{{ candidate()!.lastName }}</span>
+          </dd>
           <dt><span jhiTranslate="hrSolutionApp.candidate.linkedinUrl">Linkedin Url</span></dt>
           <dd>
             <span>{{ candidate()!.linkedinUrl }}</span>
@@ -51,7 +59,7 @@
           <dd>
             @if (candidate()!.techCV) {
               <div>
-                <a [routerLink]="['/technical-cv', candidate()!.techCV?.id, 'view']">{{ candidate()!.techCV?.id }}</a>
+                <a [routerLink]="['/technical-cv', candidate()!.techCV?.id, 'view']">{{ candidate()!.techCV?.name }}</a>
               </div>
             }
           </dd>
@@ -59,7 +67,7 @@
           <dd>
             @for (domain of candidate()!.domains; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/domain', domain.id, 'view']">{{ domain?.id }}</a
+                <a [routerLink]="['/domain', domain.id, 'view']">{{ domain?.name }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
@@ -68,7 +76,7 @@
           <dd>
             @for (applications of candidate()!.applications; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/application', applications.id, 'view']">{{ applications?.id }}</a
+                <a [routerLink]="['/application', applications.id, 'view']">{{ applications?.title }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }

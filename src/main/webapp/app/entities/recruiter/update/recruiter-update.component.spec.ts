@@ -5,8 +5,8 @@ import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subject, from } from 'rxjs';
 
-import { IProfile } from 'app/entities/profile/profile.model';
-import { ProfileService } from 'app/entities/profile/service/profile.service';
+import { IUser } from 'app/entities/user/user.model';
+import { UserService } from 'app/entities/user/service/user.service';
 import { IWallet } from 'app/entities/wallet/wallet.model';
 import { WalletService } from 'app/entities/wallet/service/wallet.service';
 import { IApplication } from 'app/entities/application/application.model';
@@ -25,7 +25,7 @@ describe('Recruiter Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let recruiterFormService: RecruiterFormService;
   let recruiterService: RecruiterService;
-  let profileService: ProfileService;
+  let userService: UserService;
   let walletService: WalletService;
   let applicationService: ApplicationService;
   let domainService: DomainService;
@@ -50,7 +50,7 @@ describe('Recruiter Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     recruiterFormService = TestBed.inject(RecruiterFormService);
     recruiterService = TestBed.inject(RecruiterService);
-    profileService = TestBed.inject(ProfileService);
+    userService = TestBed.inject(UserService);
     walletService = TestBed.inject(WalletService);
     applicationService = TestBed.inject(ApplicationService);
     domainService = TestBed.inject(DomainService);
@@ -59,22 +59,26 @@ describe('Recruiter Management Update Component', () => {
   });
 
   describe('ngOnInit', () => {
-    it('Should call relatedUser query and add missing value', () => {
+    it('Should call User query and add missing value', () => {
       const recruiter: IRecruiter = { id: 456 };
-      const relatedUser: IProfile = { id: 18574 };
+      const relatedUser: IUser = { id: 2092 };
       recruiter.relatedUser = relatedUser;
 
-      const relatedUserCollection: IProfile[] = [{ id: 21596 }];
-      jest.spyOn(profileService, 'query').mockReturnValue(of(new HttpResponse({ body: relatedUserCollection })));
-      const expectedCollection: IProfile[] = [relatedUser, ...relatedUserCollection];
-      jest.spyOn(profileService, 'addProfileToCollectionIfMissing').mockReturnValue(expectedCollection);
+      const userCollection: IUser[] = [{ id: 14958 }];
+      jest.spyOn(userService, 'query').mockReturnValue(of(new HttpResponse({ body: userCollection })));
+      const additionalUsers = [relatedUser];
+      const expectedCollection: IUser[] = [...additionalUsers, ...userCollection];
+      jest.spyOn(userService, 'addUserToCollectionIfMissing').mockReturnValue(expectedCollection);
 
       activatedRoute.data = of({ recruiter });
       comp.ngOnInit();
 
-      expect(profileService.query).toHaveBeenCalled();
-      expect(profileService.addProfileToCollectionIfMissing).toHaveBeenCalledWith(relatedUserCollection, relatedUser);
-      expect(comp.relatedUsersCollection).toEqual(expectedCollection);
+      expect(userService.query).toHaveBeenCalled();
+      expect(userService.addUserToCollectionIfMissing).toHaveBeenCalledWith(
+        userCollection,
+        ...additionalUsers.map(expect.objectContaining),
+      );
+      expect(comp.usersSharedCollection).toEqual(expectedCollection);
     });
 
     it('Should call wallet query and add missing value', () => {
@@ -141,7 +145,7 @@ describe('Recruiter Management Update Component', () => {
 
     it('Should update editForm', () => {
       const recruiter: IRecruiter = { id: 456 };
-      const relatedUser: IProfile = { id: 30914 };
+      const relatedUser: IUser = { id: 4209 };
       recruiter.relatedUser = relatedUser;
       const wallet: IWallet = { id: 28749 };
       recruiter.wallet = wallet;
@@ -153,7 +157,7 @@ describe('Recruiter Management Update Component', () => {
       activatedRoute.data = of({ recruiter });
       comp.ngOnInit();
 
-      expect(comp.relatedUsersCollection).toContain(relatedUser);
+      expect(comp.usersSharedCollection).toContain(relatedUser);
       expect(comp.walletsCollection).toContain(wallet);
       expect(comp.applicationsSharedCollection).toContain(applications);
       expect(comp.domainsSharedCollection).toContain(operationalDomain);
@@ -230,13 +234,13 @@ describe('Recruiter Management Update Component', () => {
   });
 
   describe('Compare relationships', () => {
-    describe('compareProfile', () => {
-      it('Should forward to profileService', () => {
+    describe('compareUser', () => {
+      it('Should forward to userService', () => {
         const entity = { id: 123 };
         const entity2 = { id: 456 };
-        jest.spyOn(profileService, 'compareProfile');
-        comp.compareProfile(entity, entity2);
-        expect(profileService.compareProfile).toHaveBeenCalledWith(entity, entity2);
+        jest.spyOn(userService, 'compareUser');
+        comp.compareUser(entity, entity2);
+        expect(userService.compareUser).toHaveBeenCalledWith(entity, entity2);
       });
     });
 

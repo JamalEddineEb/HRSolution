@@ -20,7 +20,7 @@ describe('Resume Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            cv: expect.any(Object),
+            resume: expect.any(Object),
             owner: expect.any(Object),
           }),
         );
@@ -32,7 +32,7 @@ describe('Resume Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            cv: expect.any(Object),
+            resume: expect.any(Object),
             owner: expect.any(Object),
           }),
         );

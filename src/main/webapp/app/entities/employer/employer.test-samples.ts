@@ -1,26 +1,40 @@
 import { IEmployer, NewEmployer } from './employer.model';
 
 export const sampleWithRequiredData: IEmployer = {
-  id: 4704,
-  label: 'expensive',
+  id: 30533,
+  role: 'RECRUITER',
+  status: 'BANNED',
+  label: 'please prune whoa',
 };
 
 export const sampleWithPartialData: IEmployer = {
-  id: 1865,
-  label: 'prune whoa',
-  linkedinUrl: 'tear hence',
-  score: 15096.24,
+  id: 19808,
+  lastName: 'Treutel',
+  profileImage: '../fake-data/blob/hipster.png',
+  profileImageContentType: 'unknown',
+  address: 'initialize retest',
+  role: 'EMPLOYER',
+  status: 'DEACTIVATED',
+  label: 'whose provided',
 };
 
 export const sampleWithFullData: IEmployer = {
-  id: 3273,
-  label: 'parallel grammar',
-  linkedinUrl: 'provided cautiously fright',
-  score: 21290.54,
+  id: 10333,
+  firstName: 'Carley',
+  lastName: 'Mante',
+  profileImage: '../fake-data/blob/hipster.png',
+  profileImageContentType: 'unknown',
+  address: 'happily',
+  role: 'ADMIN',
+  status: 'DEACTIVATED',
+  name: 'hence speedily',
+  label: 'eek',
 };
 
 export const sampleWithNewData: NewEmployer = {
-  label: 'now hence eek',
+  role: 'EMPLOYER',
+  status: 'DEACTIVATED',
+  label: 'nervous',
   id: null,
 };
 

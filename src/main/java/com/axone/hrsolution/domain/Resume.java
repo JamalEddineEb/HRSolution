@@ -24,16 +24,16 @@ public class Resume implements Serializable {
     private Long id;
 
     @Lob
-    @Column(name = "cv", nullable = false)
-    private byte[] cv;
+    @Column(name = "resume", nullable = false)
+    private byte[] resume;
 
     @NotNull
-    @Column(name = "cv_content_type", nullable = false)
-    private String cvContentType;
+    @Column(name = "resume_content_type", nullable = false)
+    private String resumeContentType;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
-        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
+        value = { "techCV", "interviewResults", "candidateResumes", "domains", "applications", "contract", "ndaStatuses" },
         allowSetters = true
     )
     private Candidate owner;
@@ -53,30 +53,30 @@ public class Resume implements Serializable {
         this.id = id;
     }
 
-    public byte[] getCv() {
-        return this.cv;
+    public byte[] getResume() {
+        return this.resume;
     }
 
-    public Resume cv(byte[] cv) {
-        this.setCv(cv);
+    public Resume resume(byte[] resume) {
+        this.setResume(resume);
         return this;
     }
 
-    public void setCv(byte[] cv) {
-        this.cv = cv;
+    public void setResume(byte[] resume) {
+        this.resume = resume;
     }
 
-    public String getCvContentType() {
-        return this.cvContentType;
+    public String getResumeContentType() {
+        return this.resumeContentType;
     }
 
-    public Resume cvContentType(String cvContentType) {
-        this.cvContentType = cvContentType;
+    public Resume resumeContentType(String resumeContentType) {
+        this.resumeContentType = resumeContentType;
         return this;
     }
 
-    public void setCvContentType(String cvContentType) {
-        this.cvContentType = cvContentType;
+    public void setResumeContentType(String resumeContentType) {
+        this.resumeContentType = resumeContentType;
     }
 
     public Candidate getOwner() {
@@ -116,8 +116,8 @@ public class Resume implements Serializable {
     public String toString() {
         return "Resume{" +
             "id=" + getId() +
-            ", cv='" + getCv() + "'" +
-            ", cvContentType='" + getCvContentType() + "'" +
+            ", resume='" + getResume() + "'" +
+            ", resumeContentType='" + getResumeContentType() + "'" +
             "}";
     }
 }

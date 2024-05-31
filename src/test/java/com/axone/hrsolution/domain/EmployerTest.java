@@ -6,7 +6,6 @@ import static com.axone.hrsolution.domain.ContractTestSamples.*;
 import static com.axone.hrsolution.domain.DomainTestSamples.*;
 import static com.axone.hrsolution.domain.EmployerTestSamples.*;
 import static com.axone.hrsolution.domain.NDATestSamples.*;
-import static com.axone.hrsolution.domain.ProfileTestSamples.*;
 import static com.axone.hrsolution.domain.TemplateTestSamples.*;
 import static com.axone.hrsolution.domain.WalletTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,18 +29,6 @@ class EmployerTest {
 
         employer2 = getEmployerSample2();
         assertThat(employer1).isNotEqualTo(employer2);
-    }
-
-    @Test
-    void relatedUserTest() throws Exception {
-        Employer employer = getEmployerRandomSampleGenerator();
-        Profile profileBack = getProfileRandomSampleGenerator();
-
-        employer.setRelatedUser(profileBack);
-        assertThat(employer.getRelatedUser()).isEqualTo(profileBack);
-
-        employer.relatedUser(null);
-        assertThat(employer.getRelatedUser()).isNull();
     }
 
     @Test

@@ -77,7 +77,7 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="owner.id">
+            <th scope="col" jhiSortBy="owner.lastName">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.template.owner">Owner</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -117,7 +117,7 @@
               <td>
                 @if (template.owner) {
                   <div>
-                    <a [routerLink]="['/employer', template.owner.id, 'view']">{{ template.owner.id }}</a>
+                    <a [routerLink]="['/employer', template.owner.id, 'view']">{{ template.owner.lastName }}</a>
                   </div>
                 }
               </td>

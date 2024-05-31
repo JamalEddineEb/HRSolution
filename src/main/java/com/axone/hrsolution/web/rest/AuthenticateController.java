@@ -3,6 +3,7 @@ package com.axone.hrsolution.web.rest;
 import static com.axone.hrsolution.security.SecurityUtils.AUTHORITIES_KEY;
 import static com.axone.hrsolution.security.SecurityUtils.JWT_ALGORITHM;
 
+import com.axone.hrsolution.service.ProcessService;
 import com.axone.hrsolution.web.rest.vm.LoginVM;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,10 +46,14 @@ public class AuthenticateController {
     @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds-for-remember-me:0}")
     private long tokenValidityInSecondsForRememberMe;
 
+    private final ProcessService processService;
+
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    @Autowired
+    public AuthenticateController(JwtEncoder jwtEncoder, ProcessService processService, AuthenticationManagerBuilder authenticationManagerBuilder) {
         this.jwtEncoder = jwtEncoder;
+        this.processService = processService;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
     }
 
@@ -57,7 +63,7 @@ public class AuthenticateController {
             loginVM.getUsername(),
             loginVM.getPassword()
         );
-
+        processService.startProcess();
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = this.createToken(authentication, loginVM.isRememberMe());

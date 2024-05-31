@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,14 +18,26 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CandidateRepository extends CandidateRepositoryWithBagRelationships, JpaRepository<Candidate, Long> {
     default Optional<Candidate> findOneWithEagerRelationships(Long id) {
-        return this.fetchBagRelationships(this.findById(id));
+        return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
     }
 
     default List<Candidate> findAllWithEagerRelationships() {
-        return this.fetchBagRelationships(this.findAll());
+        return this.fetchBagRelationships(this.findAllWithToOneRelationships());
     }
 
     default Page<Candidate> findAllWithEagerRelationships(Pageable pageable) {
-        return this.fetchBagRelationships(this.findAll(pageable));
+        return this.fetchBagRelationships(this.findAllWithToOneRelationships(pageable));
     }
+
+    @Query(
+        value = "select candidate from Candidate candidate left join fetch candidate.techCV",
+        countQuery = "select count(candidate) from Candidate candidate"
+    )
+    Page<Candidate> findAllWithToOneRelationships(Pageable pageable);
+
+    @Query("select candidate from Candidate candidate left join fetch candidate.techCV")
+    List<Candidate> findAllWithToOneRelationships();
+
+    @Query("select candidate from Candidate candidate left join fetch candidate.techCV where candidate.id =:id")
+    Optional<Candidate> findOneWithToOneRelationships(@Param("id") Long id);
 }

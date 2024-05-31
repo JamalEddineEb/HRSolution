@@ -2,14 +2,14 @@ import NavbarItem from 'app/layouts/navbar/navbar-item.model';
 
 export const EntityNavbarItems: NavbarItem[] = [
   {
-    name: 'Profile',
-    route: '/profile',
-    translationKey: 'global.menu.entities.profile',
-  },
-  {
     name: 'Recruiter',
     route: '/recruiter',
     translationKey: 'global.menu.entities.recruiter',
+  },
+  {
+    name: 'Employer',
+    route: '/employer',
+    translationKey: 'global.menu.entities.employer',
   },
   {
     name: 'Candidate',
@@ -70,11 +70,6 @@ export const EntityNavbarItems: NavbarItem[] = [
     name: 'TechCVAltActivities',
     route: '/tech-cv-alt-activities',
     translationKey: 'global.menu.entities.techCVAltActivities',
-  },
-  {
-    name: 'Employer',
-    route: '/employer',
-    translationKey: 'global.menu.entities.employer',
   },
   {
     name: 'Request',

@@ -1,5 +1,7 @@
 package com.axone.hrsolution.domain;
 
+import com.axone.hrsolution.domain.enumeration.UserRole;
+import com.axone.hrsolution.domain.enumeration.UserStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -25,21 +27,43 @@ public class Employer implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Lob
+    @Column(name = "profile_image")
+    private byte[] profileImage;
+
+    @Column(name = "profile_image_content_type")
+    private String profileImageContentType;
+
+    @Column(name = "address")
+    private String address;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private UserRole role;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private UserStatus status;
+
+    @Column(name = "name")
+    private String name;
+
     @NotNull
     @Column(name = "label", nullable = false)
     private String label;
 
-    @Column(name = "linkedin_url")
-    private String linkedinUrl;
-
-    @Column(name = "score")
-    private Float score;
-
-    @JsonIgnoreProperties(value = { "internalUser", "recruiter", "employer", "admin", "account" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
     @JoinColumn(unique = true)
-    private Profile relatedUser;
+    private User relatedUser;
 
     @JsonIgnoreProperties(value = { "relatedToAccount", "recruiter", "employer", "admin" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -54,7 +78,7 @@ public class Employer implements Serializable {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "ifEmployer")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "owner", "types", "providers", "relatedWallet", "ifEmployer" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "relatedUser", "types", "providers", "relatedWallet", "ifEmployer" }, allowSetters = true)
     private Set<AppAccount> paymentAccounts = new HashSet<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "employer")
@@ -106,6 +130,110 @@ public class Employer implements Serializable {
         this.id = id;
     }
 
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public Employer firstName(String firstName) {
+        this.setFirstName(firstName);
+        return this;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public Employer lastName(String lastName) {
+        this.setLastName(lastName);
+        return this;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public byte[] getProfileImage() {
+        return this.profileImage;
+    }
+
+    public Employer profileImage(byte[] profileImage) {
+        this.setProfileImage(profileImage);
+        return this;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getProfileImageContentType() {
+        return this.profileImageContentType;
+    }
+
+    public Employer profileImageContentType(String profileImageContentType) {
+        this.profileImageContentType = profileImageContentType;
+        return this;
+    }
+
+    public void setProfileImageContentType(String profileImageContentType) {
+        this.profileImageContentType = profileImageContentType;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public Employer address(String address) {
+        this.setAddress(address);
+        return this;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public UserRole getRole() {
+        return this.role;
+    }
+
+    public Employer role(UserRole role) {
+        this.setRole(role);
+        return this;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public UserStatus getStatus() {
+        return this.status;
+    }
+
+    public Employer status(UserStatus status) {
+        this.setStatus(status);
+        return this;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Employer name(String name) {
+        this.setName(name);
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getLabel() {
         return this.label;
     }
@@ -119,42 +247,16 @@ public class Employer implements Serializable {
         this.label = label;
     }
 
-    public String getLinkedinUrl() {
-        return this.linkedinUrl;
-    }
-
-    public Employer linkedinUrl(String linkedinUrl) {
-        this.setLinkedinUrl(linkedinUrl);
-        return this;
-    }
-
-    public void setLinkedinUrl(String linkedinUrl) {
-        this.linkedinUrl = linkedinUrl;
-    }
-
-    public Float getScore() {
-        return this.score;
-    }
-
-    public Employer score(Float score) {
-        this.setScore(score);
-        return this;
-    }
-
-    public void setScore(Float score) {
-        this.score = score;
-    }
-
-    public Profile getRelatedUser() {
+    public User getRelatedUser() {
         return this.relatedUser;
     }
 
-    public void setRelatedUser(Profile profile) {
-        this.relatedUser = profile;
+    public void setRelatedUser(User user) {
+        this.relatedUser = user;
     }
 
-    public Employer relatedUser(Profile profile) {
-        this.setRelatedUser(profile);
+    public Employer relatedUser(User user) {
+        this.setRelatedUser(user);
         return this;
     }
 
@@ -381,9 +483,15 @@ public class Employer implements Serializable {
     public String toString() {
         return "Employer{" +
             "id=" + getId() +
+            ", firstName='" + getFirstName() + "'" +
+            ", lastName='" + getLastName() + "'" +
+            ", profileImage='" + getProfileImage() + "'" +
+            ", profileImageContentType='" + getProfileImageContentType() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", role='" + getRole() + "'" +
+            ", status='" + getStatus() + "'" +
+            ", name='" + getName() + "'" +
             ", label='" + getLabel() + "'" +
-            ", linkedinUrl='" + getLinkedinUrl() + "'" +
-            ", score=" + getScore() +
             "}";
     }
 }

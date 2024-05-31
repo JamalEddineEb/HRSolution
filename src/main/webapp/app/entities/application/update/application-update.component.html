@@ -239,7 +239,7 @@
             [compareWith]="compareContractType"
           >
             @for (contractTypeOption of contractTypesSharedCollection; track $index) {
-              <option [ngValue]="contractTypeOption">{{ contractTypeOption.id }}</option>
+              <option [ngValue]="contractTypeOption">{{ contractTypeOption.name }}</option>
             }
           </select>
         </div>
@@ -265,7 +265,7 @@
             [compareWith]="compareTemplate"
           >
             @for (templateOption of templatesSharedCollection; track $index) {
-              <option [ngValue]="templateOption">{{ templateOption.id }}</option>
+              <option [ngValue]="templateOption">{{ templateOption.label }}</option>
             }
           </select>
         </div>
@@ -282,7 +282,7 @@
             [compareWith]="compareCriteria"
           >
             @for (criteriaOption of criteriaSharedCollection; track $index) {
-              <option [ngValue]="criteriaOption">{{ criteriaOption.id }}</option>
+              <option [ngValue]="criteriaOption">{{ criteriaOption.name }}</option>
             }
           </select>
         </div>
@@ -306,7 +306,7 @@
             [compareWith]="compareDomain"
           >
             @for (domainOption of domainsSharedCollection; track $index) {
-              <option [ngValue]="domainOption">{{ domainOption.id }}</option>
+              <option [ngValue]="domainOption">{{ domainOption.name }}</option>
             }
           </select>
         </div>
@@ -332,7 +332,7 @@
               <option [ngValue]="null" selected></option>
             }
             @for (employerOption of employersSharedCollection; track $index) {
-              <option [ngValue]="employerOption">{{ employerOption.id }}</option>
+              <option [ngValue]="employerOption">{{ employerOption.lastName }}</option>
             }
           </select>
         </div>
@@ -356,7 +356,7 @@
             [compareWith]="compareRecruiter"
           >
             @for (recruiterOption of recruitersSharedCollection; track $index) {
-              <option [ngValue]="recruiterOption">{{ recruiterOption.id }}</option>
+              <option [ngValue]="recruiterOption">{{ recruiterOption.lastName }}</option>
             }
           </select>
         </div>
@@ -373,7 +373,7 @@
             [compareWith]="compareCandidate"
           >
             @for (candidateOption of candidatesSharedCollection; track $index) {
-              <option [ngValue]="candidateOption">{{ candidateOption.id }}</option>
+              <option [ngValue]="candidateOption">{{ candidateOption.lastName }}</option>
             }
           </select>
         </div>

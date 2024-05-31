@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,14 +18,26 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AppAccountRepository extends AppAccountRepositoryWithBagRelationships, JpaRepository<AppAccount, Long> {
     default Optional<AppAccount> findOneWithEagerRelationships(Long id) {
-        return this.fetchBagRelationships(this.findById(id));
+        return this.fetchBagRelationships(this.findOneWithToOneRelationships(id));
     }
 
     default List<AppAccount> findAllWithEagerRelationships() {
-        return this.fetchBagRelationships(this.findAll());
+        return this.fetchBagRelationships(this.findAllWithToOneRelationships());
     }
 
     default Page<AppAccount> findAllWithEagerRelationships(Pageable pageable) {
-        return this.fetchBagRelationships(this.findAll(pageable));
+        return this.fetchBagRelationships(this.findAllWithToOneRelationships(pageable));
     }
+
+    @Query(
+        value = "select appAccount from AppAccount appAccount left join fetch appAccount.relatedUser",
+        countQuery = "select count(appAccount) from AppAccount appAccount"
+    )
+    Page<AppAccount> findAllWithToOneRelationships(Pageable pageable);
+
+    @Query("select appAccount from AppAccount appAccount left join fetch appAccount.relatedUser")
+    List<AppAccount> findAllWithToOneRelationships();
+
+    @Query("select appAccount from AppAccount appAccount left join fetch appAccount.relatedUser where appAccount.id =:id")
+    Optional<AppAccount> findOneWithToOneRelationships(@Param("id") Long id);
 }

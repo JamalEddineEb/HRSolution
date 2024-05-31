@@ -2,25 +2,25 @@ import { IResume, NewResume } from './resume.model';
 
 export const sampleWithRequiredData: IResume = {
   id: 4478,
-  cv: '../fake-data/blob/hipster.png',
-  cvContentType: 'unknown',
+  resume: '../fake-data/blob/hipster.png',
+  resumeContentType: 'unknown',
 };
 
 export const sampleWithPartialData: IResume = {
   id: 31318,
-  cv: '../fake-data/blob/hipster.png',
-  cvContentType: 'unknown',
+  resume: '../fake-data/blob/hipster.png',
+  resumeContentType: 'unknown',
 };
 
 export const sampleWithFullData: IResume = {
   id: 21737,
-  cv: '../fake-data/blob/hipster.png',
-  cvContentType: 'unknown',
+  resume: '../fake-data/blob/hipster.png',
+  resumeContentType: 'unknown',
 };
 
 export const sampleWithNewData: NewResume = {
-  cv: '../fake-data/blob/hipster.png',
-  cvContentType: 'unknown',
+  resume: '../fake-data/blob/hipster.png',
+  resumeContentType: 'unknown',
   id: null,
 };
 

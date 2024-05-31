@@ -22,7 +22,7 @@ type AppAccountFormGroupContent = {
   cardNumber: FormControl<IAppAccount['cardNumber']>;
   endDate: FormControl<IAppAccount['endDate']>;
   cvv: FormControl<IAppAccount['cvv']>;
-  owner: FormControl<IAppAccount['owner']>;
+  relatedUser: FormControl<IAppAccount['relatedUser']>;
   types: FormControl<IAppAccount['types']>;
   providers: FormControl<IAppAccount['providers']>;
   ifEmployer: FormControl<IAppAccount['ifEmployer']>;
@@ -51,7 +51,7 @@ export class AppAccountFormService {
       cardNumber: new FormControl(appAccountRawValue.cardNumber),
       endDate: new FormControl(appAccountRawValue.endDate),
       cvv: new FormControl(appAccountRawValue.cvv),
-      owner: new FormControl(appAccountRawValue.owner, {
+      relatedUser: new FormControl(appAccountRawValue.relatedUser, {
         validators: [Validators.required],
       }),
       types: new FormControl(appAccountRawValue.types ?? []),

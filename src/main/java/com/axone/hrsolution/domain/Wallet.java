@@ -33,7 +33,7 @@ public class Wallet implements Serializable {
     @Column(name = "status", nullable = false)
     private WalletStatus status;
 
-    @JsonIgnoreProperties(value = { "owner", "types", "providers", "relatedWallet", "ifEmployer" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "relatedUser", "types", "providers", "relatedWallet", "ifEmployer" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private AppAccount relatedToAccount;

@@ -161,10 +161,10 @@ describe('Application Management Update Component', () => {
 
     it('Should call Employer query and add missing value', () => {
       const application: IApplication = { id: 456 };
-      const employer: IEmployer = { id: 28231 };
+      const employer: IEmployer = { id: 12791 };
       application.employer = employer;
 
-      const employerCollection: IEmployer[] = [{ id: 11938 }];
+      const employerCollection: IEmployer[] = [{ id: 5163 }];
       jest.spyOn(employerService, 'query').mockReturnValue(of(new HttpResponse({ body: employerCollection })));
       const additionalEmployers = [employer];
       const expectedCollection: IEmployer[] = [...additionalEmployers, ...employerCollection];
@@ -183,10 +183,10 @@ describe('Application Management Update Component', () => {
 
     it('Should call Recruiter query and add missing value', () => {
       const application: IApplication = { id: 456 };
-      const recruiters: IRecruiter[] = [{ id: 19540 }];
+      const recruiters: IRecruiter[] = [{ id: 20606 }];
       application.recruiters = recruiters;
 
-      const recruiterCollection: IRecruiter[] = [{ id: 15599 }];
+      const recruiterCollection: IRecruiter[] = [{ id: 20371 }];
       jest.spyOn(recruiterService, 'query').mockReturnValue(of(new HttpResponse({ body: recruiterCollection })));
       const additionalRecruiters = [...recruiters];
       const expectedCollection: IRecruiter[] = [...additionalRecruiters, ...recruiterCollection];
@@ -235,9 +235,9 @@ describe('Application Management Update Component', () => {
       application.criteria = [criteria];
       const domain: IDomain = { id: 26070 };
       application.domains = [domain];
-      const employer: IEmployer = { id: 3910 };
+      const employer: IEmployer = { id: 30450 };
       application.employer = employer;
-      const recruiters: IRecruiter = { id: 23907 };
+      const recruiters: IRecruiter = { id: 3811 };
       application.recruiters = [recruiters];
       const candidates: ICandidate = { id: 17544 };
       application.candidates = [candidates];

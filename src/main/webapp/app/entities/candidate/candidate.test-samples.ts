@@ -1,23 +1,25 @@
 import { ICandidate, NewCandidate } from './candidate.model';
 
 export const sampleWithRequiredData: ICandidate = {
-  id: 29709,
-  fullName: 'along interestingly ha',
-  yearsOfExperience: 16823,
-  hasContract: false,
+  id: 13161,
+  fullName: 'clam even',
+  yearsOfExperience: 15330,
+  hasContract: true,
   hired: false,
 };
 
 export const sampleWithPartialData: ICandidate = {
-  id: 11171,
-  fullName: 'who recap delightfully',
-  yearsOfExperience: 27939,
+  id: 32293,
+  fullName: 'gosh supervise messy',
+  yearsOfExperience: 10477,
   hasContract: true,
   hired: true,
 };
 
 export const sampleWithFullData: ICandidate = {
-  id: 11415,
+  id: 27939,
+  firstName: 'Gabe',
+  lastName: 'Heidenreich',
   linkedinUrl: 'forenenst downfall',
   fullName: 'froth dovetail nervously',
   yearsOfExperience: 18203,

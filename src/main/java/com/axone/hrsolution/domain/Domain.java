@@ -40,7 +40,7 @@ public class Domain implements Serializable {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "domains")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(
-        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
+        value = { "techCV", "interviewResults", "candidateResumes", "domains", "applications", "contract", "ndaStatuses" },
         allowSetters = true
     )
     private Set<Candidate> candidates = new HashSet<>();

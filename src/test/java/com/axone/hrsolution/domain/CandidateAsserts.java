@@ -47,6 +47,8 @@ public class CandidateAsserts {
     public static void assertCandidateUpdatableFieldsEquals(Candidate expected, Candidate actual) {
         assertThat(expected)
             .as("Verify Candidate relevant properties")
+            .satisfies(e -> assertThat(e.getFirstName()).as("check firstName").isEqualTo(actual.getFirstName()))
+            .satisfies(e -> assertThat(e.getLastName()).as("check lastName").isEqualTo(actual.getLastName()))
             .satisfies(e -> assertThat(e.getLinkedinUrl()).as("check linkedinUrl").isEqualTo(actual.getLinkedinUrl()))
             .satisfies(e -> assertThat(e.getFullName()).as("check fullName").isEqualTo(actual.getFullName()))
             .satisfies(e -> assertThat(e.getYearsOfExperience()).as("check yearsOfExperience").isEqualTo(actual.getYearsOfExperience()))

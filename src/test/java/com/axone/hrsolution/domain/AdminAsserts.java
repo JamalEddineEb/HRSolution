@@ -59,7 +59,6 @@ public class AdminAsserts {
     public static void assertAdminUpdatableRelationshipsEquals(Admin expected, Admin actual) {
         assertThat(expected)
             .as("Verify Admin relationships")
-            .satisfies(e -> assertThat(e.getRelatedUser()).as("check relatedUser").isEqualTo(actual.getRelatedUser()))
             .satisfies(e -> assertThat(e.getSystemWallet()).as("check systemWallet").isEqualTo(actual.getSystemWallet()));
     }
 }

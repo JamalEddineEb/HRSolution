@@ -79,7 +79,7 @@ public class TechnicalCV implements Serializable {
     private Set<TechCVAltActivities> altActivities = new HashSet<>();
 
     @JsonIgnoreProperties(
-        value = { "techCV", "interviewResults", "candidateCVS", "domains", "applications", "contract", "ndaStatuses" },
+        value = { "techCV", "interviewResults", "candidateResumes", "domains", "applications", "contract", "ndaStatuses" },
         allowSetters = true
     )
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "techCV")

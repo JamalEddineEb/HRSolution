@@ -34,7 +34,7 @@ public class Provider implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "providers")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "owner", "types", "providers", "relatedWallet", "ifEmployer" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "relatedUser", "types", "providers", "relatedWallet", "ifEmployer" }, allowSetters = true)
     private Set<AppAccount> appAccounts = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

@@ -59,7 +59,7 @@
           <dd>
             @if (contract()!.candidate) {
               <div>
-                <a [routerLink]="['/candidate', contract()!.candidate?.id, 'view']">{{ contract()!.candidate?.id }}</a>
+                <a [routerLink]="['/candidate', contract()!.candidate?.id, 'view']">{{ contract()!.candidate?.lastName }}</a>
               </div>
             }
           </dd>
@@ -67,7 +67,7 @@
           <dd>
             @if (contract()!.recruiter) {
               <div>
-                <a [routerLink]="['/recruiter', contract()!.recruiter?.id, 'view']">{{ contract()!.recruiter?.id }}</a>
+                <a [routerLink]="['/recruiter', contract()!.recruiter?.id, 'view']">{{ contract()!.recruiter?.lastName }}</a>
               </div>
             }
           </dd>
@@ -75,7 +75,7 @@
           <dd>
             @if (contract()!.employer) {
               <div>
-                <a [routerLink]="['/employer', contract()!.employer?.id, 'view']">{{ contract()!.employer?.id }}</a>
+                <a [routerLink]="['/employer', contract()!.employer?.id, 'view']">{{ contract()!.employer?.lastName }}</a>
               </div>
             }
           </dd>

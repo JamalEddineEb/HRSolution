@@ -118,7 +118,7 @@
               <option [ngValue]="null" selected></option>
             }
             @for (employerOption of employersSharedCollection; track $index) {
-              <option [ngValue]="employerOption">{{ employerOption.id }}</option>
+              <option [ngValue]="employerOption">{{ employerOption.lastName }}</option>
             }
           </select>
         </div>
@@ -144,7 +144,7 @@
               <option [ngValue]="null" selected></option>
             }
             @for (recruiterOption of recruitersSharedCollection; track $index) {
-              <option [ngValue]="recruiterOption">{{ recruiterOption.id }}</option>
+              <option [ngValue]="recruiterOption">{{ recruiterOption.lastName }}</option>
             }
           </select>
         </div>
@@ -170,7 +170,7 @@
               <option [ngValue]="null" selected></option>
             }
             @for (candidateOption of candidatesSharedCollection; track $index) {
-              <option [ngValue]="candidateOption">{{ candidateOption.id }}</option>
+              <option [ngValue]="candidateOption">{{ candidateOption.lastName }}</option>
             }
           </select>
         </div>

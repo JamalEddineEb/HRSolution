@@ -20,6 +20,13 @@ describe('Recruiter Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            firstName: expect.any(Object),
+            lastName: expect.any(Object),
+            profileImage: expect.any(Object),
+            address: expect.any(Object),
+            role: expect.any(Object),
+            status: expect.any(Object),
+            name: expect.any(Object),
             label: expect.any(Object),
             linkedinUrl: expect.any(Object),
             approvedExperience: expect.any(Object),
@@ -38,6 +45,13 @@ describe('Recruiter Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            firstName: expect.any(Object),
+            lastName: expect.any(Object),
+            profileImage: expect.any(Object),
+            address: expect.any(Object),
+            role: expect.any(Object),
+            status: expect.any(Object),
+            name: expect.any(Object),
             label: expect.any(Object),
             linkedinUrl: expect.any(Object),
             approvedExperience: expect.any(Object),

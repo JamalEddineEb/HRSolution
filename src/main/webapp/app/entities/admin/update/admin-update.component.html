@@ -42,13 +42,13 @@
             data-cy="relatedUser"
             name="relatedUser"
             formControlName="relatedUser"
-            [compareWith]="compareProfile"
+            [compareWith]="compareUser"
           >
-            @if (editForm.get(['relatedUser'])!.value == null) {
+            @if (!editForm.get('relatedUser')!.value) {
               <option [ngValue]="null" selected></option>
             }
-            @for (profileOption of relatedUsersCollection; track $index) {
-              <option [ngValue]="profileOption">{{ profileOption.id }}</option>
+            @for (userOption of usersSharedCollection; track $index) {
+              <option [ngValue]="userOption">{{ userOption.login }}</option>
             }
           </select>
         </div>
@@ -74,7 +74,7 @@
               <option [ngValue]="null" selected></option>
             }
             @for (walletOption of systemWalletsCollection; track $index) {
-              <option [ngValue]="walletOption">{{ walletOption.id }}</option>
+              <option [ngValue]="walletOption">{{ walletOption.balance }}</option>
             }
           </select>
         </div>

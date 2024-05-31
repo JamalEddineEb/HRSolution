@@ -42,6 +42,20 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="firstName">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.candidate.firstName">First Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="lastName">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.candidate.lastName">Last Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="linkedinUrl">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.candidate.linkedinUrl">Linkedin Url</span>
@@ -98,19 +112,19 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="techCV.id">
+            <th scope="col" jhiSortBy="techCV.name">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.candidate.techCV">Tech CV</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="domain.id">
+            <th scope="col" jhiSortBy="domain.name">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.candidate.domain">Domain</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="applications.id">
+            <th scope="col" jhiSortBy="applications.title">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.candidate.applications">Applications</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -125,6 +139,8 @@
               <td>
                 <a [routerLink]="['/candidate', candidate.id, 'view']">{{ candidate.id }}</a>
               </td>
+              <td>{{ candidate.firstName }}</td>
+              <td>{{ candidate.lastName }}</td>
               <td>{{ candidate.linkedinUrl }}</td>
               <td>{{ candidate.fullName }}</td>
               <td>{{ candidate.yearsOfExperience }}</td>
@@ -136,14 +152,14 @@
               <td>
                 @if (candidate.techCV) {
                   <div>
-                    <a [routerLink]="['/technical-cv', candidate.techCV.id, 'view']">{{ candidate.techCV.id }}</a>
+                    <a [routerLink]="['/technical-cv', candidate.techCV.id, 'view']">{{ candidate.techCV.name }}</a>
                   </div>
                 }
               </td>
               <td>
                 @for (domain of candidate.domains; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/domain', domain.id, 'view']">{{ domain.id }}</a
+                    <a class="form-control-static" [routerLink]="['/domain', domain.id, 'view']">{{ domain.name }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
@@ -151,7 +167,7 @@
               <td>
                 @for (applications of candidate.applications; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/application', applications.id, 'view']">{{ applications.id }}</a
+                    <a class="form-control-static" [routerLink]="['/application', applications.id, 'view']">{{ applications.title }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }

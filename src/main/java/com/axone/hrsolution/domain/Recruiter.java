@@ -1,5 +1,7 @@
 package com.axone.hrsolution.domain;
 
+import com.axone.hrsolution.domain.enumeration.UserRole;
+import com.axone.hrsolution.domain.enumeration.UserStatus;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -25,6 +27,35 @@ public class Recruiter implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Lob
+    @Column(name = "profile_image")
+    private byte[] profileImage;
+
+    @Column(name = "profile_image_content_type")
+    private String profileImageContentType;
+
+    @Column(name = "address")
+    private String address;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private UserRole role;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private UserStatus status;
+
+    @Column(name = "name")
+    private String name;
+
     @NotNull
     @Column(name = "label", nullable = false)
     private String label;
@@ -39,11 +70,10 @@ public class Recruiter implements Serializable {
     @Column(name = "score")
     private Float score;
 
-    @JsonIgnoreProperties(value = { "internalUser", "recruiter", "employer", "admin", "account" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
     @JoinColumn(unique = true)
-    private Profile relatedUser;
+    private User relatedUser;
 
     @JsonIgnoreProperties(value = { "relatedToAccount", "recruiter", "employer", "admin" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY, optional = false)
@@ -116,6 +146,110 @@ public class Recruiter implements Serializable {
         this.id = id;
     }
 
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public Recruiter firstName(String firstName) {
+        this.setFirstName(firstName);
+        return this;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public Recruiter lastName(String lastName) {
+        this.setLastName(lastName);
+        return this;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public byte[] getProfileImage() {
+        return this.profileImage;
+    }
+
+    public Recruiter profileImage(byte[] profileImage) {
+        this.setProfileImage(profileImage);
+        return this;
+    }
+
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public String getProfileImageContentType() {
+        return this.profileImageContentType;
+    }
+
+    public Recruiter profileImageContentType(String profileImageContentType) {
+        this.profileImageContentType = profileImageContentType;
+        return this;
+    }
+
+    public void setProfileImageContentType(String profileImageContentType) {
+        this.profileImageContentType = profileImageContentType;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public Recruiter address(String address) {
+        this.setAddress(address);
+        return this;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public UserRole getRole() {
+        return this.role;
+    }
+
+    public Recruiter role(UserRole role) {
+        this.setRole(role);
+        return this;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public UserStatus getStatus() {
+        return this.status;
+    }
+
+    public Recruiter status(UserStatus status) {
+        this.setStatus(status);
+        return this;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public Recruiter name(String name) {
+        this.setName(name);
+        return this;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getLabel() {
         return this.label;
     }
@@ -168,16 +302,16 @@ public class Recruiter implements Serializable {
         this.score = score;
     }
 
-    public Profile getRelatedUser() {
+    public User getRelatedUser() {
         return this.relatedUser;
     }
 
-    public void setRelatedUser(Profile profile) {
-        this.relatedUser = profile;
+    public void setRelatedUser(User user) {
+        this.relatedUser = user;
     }
 
-    public Recruiter relatedUser(Profile profile) {
-        this.setRelatedUser(profile);
+    public Recruiter relatedUser(User user) {
+        this.setRelatedUser(user);
         return this;
     }
 
@@ -357,6 +491,14 @@ public class Recruiter implements Serializable {
     public String toString() {
         return "Recruiter{" +
             "id=" + getId() +
+            ", firstName='" + getFirstName() + "'" +
+            ", lastName='" + getLastName() + "'" +
+            ", profileImage='" + getProfileImage() + "'" +
+            ", profileImageContentType='" + getProfileImageContentType() + "'" +
+            ", address='" + getAddress() + "'" +
+            ", role='" + getRole() + "'" +
+            ", status='" + getStatus() + "'" +
+            ", name='" + getName() + "'" +
             ", label='" + getLabel() + "'" +
             ", linkedinUrl='" + getLinkedinUrl() + "'" +
             ", approvedExperience='" + getApprovedExperience() + "'" +

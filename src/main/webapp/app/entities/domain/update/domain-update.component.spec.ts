@@ -61,10 +61,10 @@ describe('Domain Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Recruiter query and add missing value', () => {
       const domain: IDomain = { id: 456 };
-      const recruiters: IRecruiter[] = [{ id: 2171 }];
+      const recruiters: IRecruiter[] = [{ id: 13734 }];
       domain.recruiters = recruiters;
 
-      const recruiterCollection: IRecruiter[] = [{ id: 32314 }];
+      const recruiterCollection: IRecruiter[] = [{ id: 24856 }];
       jest.spyOn(recruiterService, 'query').mockReturnValue(of(new HttpResponse({ body: recruiterCollection })));
       const additionalRecruiters = [...recruiters];
       const expectedCollection: IRecruiter[] = [...additionalRecruiters, ...recruiterCollection];
@@ -127,10 +127,10 @@ describe('Domain Management Update Component', () => {
 
     it('Should call Employer query and add missing value', () => {
       const domain: IDomain = { id: 456 };
-      const employer: IEmployer = { id: 19886 };
+      const employer: IEmployer = { id: 25016 };
       domain.employer = employer;
 
-      const employerCollection: IEmployer[] = [{ id: 17024 }];
+      const employerCollection: IEmployer[] = [{ id: 11469 }];
       jest.spyOn(employerService, 'query').mockReturnValue(of(new HttpResponse({ body: employerCollection })));
       const additionalEmployers = [employer];
       const expectedCollection: IEmployer[] = [...additionalEmployers, ...employerCollection];
@@ -149,13 +149,13 @@ describe('Domain Management Update Component', () => {
 
     it('Should update editForm', () => {
       const domain: IDomain = { id: 456 };
-      const recruiter: IRecruiter = { id: 13145 };
+      const recruiter: IRecruiter = { id: 31828 };
       domain.recruiters = [recruiter];
       const candidate: ICandidate = { id: 25653 };
       domain.candidates = [candidate];
       const application: IApplication = { id: 15788 };
       domain.applications = [application];
-      const employer: IEmployer = { id: 13336 };
+      const employer: IEmployer = { id: 23367 };
       domain.employer = employer;
 
       activatedRoute.data = of({ domain });

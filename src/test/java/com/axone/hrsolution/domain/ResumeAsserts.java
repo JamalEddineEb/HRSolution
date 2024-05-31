@@ -47,8 +47,8 @@ public class ResumeAsserts {
     public static void assertResumeUpdatableFieldsEquals(Resume expected, Resume actual) {
         assertThat(expected)
             .as("Verify Resume relevant properties")
-            .satisfies(e -> assertThat(e.getCv()).as("check cv").isEqualTo(actual.getCv()))
-            .satisfies(e -> assertThat(e.getCvContentType()).as("check cv contenty type").isEqualTo(actual.getCvContentType()));
+            .satisfies(e -> assertThat(e.getResume()).as("check resume").isEqualTo(actual.getResume()))
+            .satisfies(e -> assertThat(e.getResumeContentType()).as("check resume contenty type").isEqualTo(actual.getResumeContentType()));
     }
 
     /**

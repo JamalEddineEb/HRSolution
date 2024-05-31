@@ -156,11 +156,15 @@ public class TemplateResource {
     /**
      * {@code GET  /templates} : get all the templates.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @param filter the filter of the request.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of templates in body.
      */
     @GetMapping("")
-    public List<Template> getAllTemplates(@RequestParam(name = "filter", required = false) String filter) {
+    public List<Template> getAllTemplates(
+        @RequestParam(name = "filter", required = false) String filter,
+        @RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload
+    ) {
         if ("contract-is-null".equals(filter)) {
             log.debug("REST request to get all Templates where contract is null");
             return StreamSupport.stream(templateRepository.findAll().spliterator(), false)
@@ -168,7 +172,11 @@ public class TemplateResource {
                 .toList();
         }
         log.debug("REST request to get all Templates");
-        return templateRepository.findAll();
+        if (eagerload) {
+            return templateRepository.findAllWithEagerRelationships();
+        } else {
+            return templateRepository.findAll();
+        }
     }
 
     /**
@@ -180,7 +188,7 @@ public class TemplateResource {
     @GetMapping("/{id}")
     public ResponseEntity<Template> getTemplate(@PathVariable("id") Long id) {
         log.debug("REST request to get Template : {}", id);
-        Optional<Template> template = templateRepository.findById(id);
+        Optional<Template> template = templateRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(template);
     }
 

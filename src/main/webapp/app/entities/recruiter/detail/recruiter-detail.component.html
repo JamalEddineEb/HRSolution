@@ -15,6 +15,49 @@
           <dd>
             <span>{{ recruiter()!.id }}</span>
           </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.firstName">First Name</span></dt>
+          <dd>
+            <span>{{ recruiter()!.firstName }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.lastName">Last Name</span></dt>
+          <dd>
+            <span>{{ recruiter()!.lastName }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.profileImage">Profile Image</span></dt>
+          <dd>
+            @if (recruiter()!.profileImage) {
+              <div>
+                <a (click)="openFile(recruiter()!.profileImage ?? '', recruiter()!.profileImageContentType)">
+                  <img
+                    [src]="'data:' + recruiter()!.profileImageContentType + ';base64,' + recruiter()!.profileImage"
+                    style="max-width: 100%"
+                    alt="recruiter"
+                  />
+                </a>
+                {{ recruiter()!.profileImageContentType }}, {{ byteSize(recruiter()!.profileImage ?? '') }}
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.address">Address</span></dt>
+          <dd>
+            <span>{{ recruiter()!.address }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.role">Role</span></dt>
+          <dd>
+            <span [jhiTranslate]="'hrSolutionApp.UserRole.' + (recruiter()!.role ?? 'null')">{{
+              { null: '', ADMIN: 'ADMIN', RECRUITER: 'RECRUITER', EMPLOYER: 'EMPLOYER' }[recruiter()!.role ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.status">Status</span></dt>
+          <dd>
+            <span [jhiTranslate]="'hrSolutionApp.UserStatus.' + (recruiter()!.status ?? 'null')">{{
+              { null: '', ACTIVE: 'ACTIVE', DEACTIVATED: 'DEACTIVATED', BANNED: 'BANNED' }[recruiter()!.status ?? 'null']
+            }}</span>
+          </dd>
+          <dt><span jhiTranslate="hrSolutionApp.recruiter.name">Name</span></dt>
+          <dd>
+            <span>{{ recruiter()!.name }}</span>
+          </dd>
           <dt><span jhiTranslate="hrSolutionApp.recruiter.label">Label</span></dt>
           <dd>
             <span>{{ recruiter()!.label }}</span>
@@ -33,17 +76,13 @@
           </dd>
           <dt><span jhiTranslate="hrSolutionApp.recruiter.relatedUser">Related User</span></dt>
           <dd>
-            @if (recruiter()!.relatedUser) {
-              <div>
-                <a [routerLink]="['/profile', recruiter()!.relatedUser?.id, 'view']">{{ recruiter()!.relatedUser?.id }}</a>
-              </div>
-            }
+            <span>{{ recruiter()!.relatedUser?.login }}</span>
           </dd>
           <dt><span jhiTranslate="hrSolutionApp.recruiter.wallet">Wallet</span></dt>
           <dd>
             @if (recruiter()!.wallet) {
               <div>
-                <a [routerLink]="['/wallet', recruiter()!.wallet?.id, 'view']">{{ recruiter()!.wallet?.id }}</a>
+                <a [routerLink]="['/wallet', recruiter()!.wallet?.id, 'view']">{{ recruiter()!.wallet?.balance }}</a>
               </div>
             }
           </dd>
@@ -51,7 +90,7 @@
           <dd>
             @for (applications of recruiter()!.applications; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/application', applications.id, 'view']">{{ applications?.id }}</a
+                <a [routerLink]="['/application', applications.id, 'view']">{{ applications?.title }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
@@ -60,7 +99,7 @@
           <dd>
             @for (operationalDomain of recruiter()!.operationalDomains; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/domain', operationalDomain.id, 'view']">{{ operationalDomain?.id }}</a
+                <a [routerLink]="['/domain', operationalDomain.id, 'view']">{{ operationalDomain?.name }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }

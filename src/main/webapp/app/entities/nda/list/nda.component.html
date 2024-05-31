@@ -63,19 +63,19 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="employer.id">
+            <th scope="col" jhiSortBy="employer.lastName">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.nDA.employer">Employer</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="mediator.id">
+            <th scope="col" jhiSortBy="mediator.lastName">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.nDA.mediator">Mediator</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="candidate.id">
+            <th scope="col" jhiSortBy="candidate.lastName">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.nDA.candidate">Candidate</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -105,21 +105,21 @@
               <td>
                 @if (nDA.employer) {
                   <div>
-                    <a [routerLink]="['/employer', nDA.employer.id, 'view']">{{ nDA.employer.id }}</a>
+                    <a [routerLink]="['/employer', nDA.employer.id, 'view']">{{ nDA.employer.lastName }}</a>
                   </div>
                 }
               </td>
               <td>
                 @if (nDA.mediator) {
                   <div>
-                    <a [routerLink]="['/recruiter', nDA.mediator.id, 'view']">{{ nDA.mediator.id }}</a>
+                    <a [routerLink]="['/recruiter', nDA.mediator.id, 'view']">{{ nDA.mediator.lastName }}</a>
                   </div>
                 }
               </td>
               <td>
                 @if (nDA.candidate) {
                   <div>
-                    <a [routerLink]="['/candidate', nDA.candidate.id, 'view']">{{ nDA.candidate.id }}</a>
+                    <a [routerLink]="['/candidate', nDA.candidate.id, 'view']">{{ nDA.candidate.lastName }}</a>
                   </div>
                 }
               </td>

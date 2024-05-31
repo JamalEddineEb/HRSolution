@@ -7,14 +7,14 @@ const routes: Routes = [
     loadChildren: () => import('./admin/authority/authority.routes'),
   },
   {
-    path: 'profile',
-    data: { pageTitle: 'hrSolutionApp.profile.home.title' },
-    loadChildren: () => import('./profile/profile.routes'),
-  },
-  {
     path: 'recruiter',
     data: { pageTitle: 'hrSolutionApp.recruiter.home.title' },
     loadChildren: () => import('./recruiter/recruiter.routes'),
+  },
+  {
+    path: 'employer',
+    data: { pageTitle: 'hrSolutionApp.employer.home.title' },
+    loadChildren: () => import('./employer/employer.routes'),
   },
   {
     path: 'candidate',
@@ -75,11 +75,6 @@ const routes: Routes = [
     path: 'tech-cv-alt-activities',
     data: { pageTitle: 'hrSolutionApp.techCVAltActivities.home.title' },
     loadChildren: () => import('./tech-cv-alt-activities/tech-cv-alt-activities.routes'),
-  },
-  {
-    path: 'employer',
-    data: { pageTitle: 'hrSolutionApp.employer.home.title' },
-    loadChildren: () => import('./employer/employer.routes'),
   },
   {
     path: 'request',

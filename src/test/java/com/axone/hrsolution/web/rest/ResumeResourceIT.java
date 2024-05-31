@@ -32,10 +32,10 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ResumeResourceIT {
 
-    private static final byte[] DEFAULT_CV = TestUtil.createByteArray(1, "0");
-    private static final byte[] UPDATED_CV = TestUtil.createByteArray(1, "1");
-    private static final String DEFAULT_CV_CONTENT_TYPE = "image/jpg";
-    private static final String UPDATED_CV_CONTENT_TYPE = "image/png";
+    private static final byte[] DEFAULT_RESUME = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_RESUME = TestUtil.createByteArray(1, "1");
+    private static final String DEFAULT_RESUME_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_RESUME_CONTENT_TYPE = "image/png";
 
     private static final String ENTITY_API_URL = "/api/resumes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -64,7 +64,7 @@ class ResumeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Resume createEntity(EntityManager em) {
-        Resume resume = new Resume().cv(DEFAULT_CV).cvContentType(DEFAULT_CV_CONTENT_TYPE);
+        Resume resume = new Resume().resume(DEFAULT_RESUME).resumeContentType(DEFAULT_RESUME_CONTENT_TYPE);
         return resume;
     }
 
@@ -75,7 +75,7 @@ class ResumeResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Resume createUpdatedEntity(EntityManager em) {
-        Resume resume = new Resume().cv(UPDATED_CV).cvContentType(UPDATED_CV_CONTENT_TYPE);
+        Resume resume = new Resume().resume(UPDATED_RESUME).resumeContentType(UPDATED_RESUME_CONTENT_TYPE);
         return resume;
     }
 
@@ -133,8 +133,8 @@ class ResumeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(resume.getId().intValue())))
-            .andExpect(jsonPath("$.[*].cvContentType").value(hasItem(DEFAULT_CV_CONTENT_TYPE)))
-            .andExpect(jsonPath("$.[*].cv").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_CV))));
+            .andExpect(jsonPath("$.[*].resumeContentType").value(hasItem(DEFAULT_RESUME_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].resume").value(hasItem(Base64.getEncoder().encodeToString(DEFAULT_RESUME))));
     }
 
     @Test
@@ -149,8 +149,8 @@ class ResumeResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(resume.getId().intValue()))
-            .andExpect(jsonPath("$.cvContentType").value(DEFAULT_CV_CONTENT_TYPE))
-            .andExpect(jsonPath("$.cv").value(Base64.getEncoder().encodeToString(DEFAULT_CV)));
+            .andExpect(jsonPath("$.resumeContentType").value(DEFAULT_RESUME_CONTENT_TYPE))
+            .andExpect(jsonPath("$.resume").value(Base64.getEncoder().encodeToString(DEFAULT_RESUME)));
     }
 
     @Test
@@ -172,7 +172,7 @@ class ResumeResourceIT {
         Resume updatedResume = resumeRepository.findById(resume.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedResume are not directly saved in db
         em.detach(updatedResume);
-        updatedResume.cv(UPDATED_CV).cvContentType(UPDATED_CV_CONTENT_TYPE);
+        updatedResume.resume(UPDATED_RESUME).resumeContentType(UPDATED_RESUME_CONTENT_TYPE);
 
         restResumeMockMvc
             .perform(
@@ -248,7 +248,7 @@ class ResumeResourceIT {
         Resume partialUpdatedResume = new Resume();
         partialUpdatedResume.setId(resume.getId());
 
-        partialUpdatedResume.cv(UPDATED_CV).cvContentType(UPDATED_CV_CONTENT_TYPE);
+        partialUpdatedResume.resume(UPDATED_RESUME).resumeContentType(UPDATED_RESUME_CONTENT_TYPE);
 
         restResumeMockMvc
             .perform(
@@ -276,7 +276,7 @@ class ResumeResourceIT {
         Resume partialUpdatedResume = new Resume();
         partialUpdatedResume.setId(resume.getId());
 
-        partialUpdatedResume.cv(UPDATED_CV).cvContentType(UPDATED_CV_CONTENT_TYPE);
+        partialUpdatedResume.resume(UPDATED_RESUME).resumeContentType(UPDATED_RESUME_CONTENT_TYPE);
 
         restResumeMockMvc
             .perform(

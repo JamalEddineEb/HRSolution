@@ -46,7 +46,7 @@
           <dd>
             @if (template()!.owner) {
               <div>
-                <a [routerLink]="['/employer', template()!.owner?.id, 'view']">{{ template()!.owner?.id }}</a>
+                <a [routerLink]="['/employer', template()!.owner?.id, 'view']">{{ template()!.owner?.lastName }}</a>
               </div>
             }
           </dd>

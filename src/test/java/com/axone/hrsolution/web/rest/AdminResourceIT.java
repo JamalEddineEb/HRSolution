@@ -4,22 +4,29 @@ import static com.axone.hrsolution.domain.AdminAsserts.*;
 import static com.axone.hrsolution.web.rest.TestUtil.createUpdateProxyForBean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.axone.hrsolution.IntegrationTest;
 import com.axone.hrsolution.domain.Admin;
-import com.axone.hrsolution.domain.Profile;
+import com.axone.hrsolution.domain.User;
 import com.axone.hrsolution.domain.Wallet;
 import com.axone.hrsolution.repository.AdminRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -29,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link AdminResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class AdminResourceIT {
@@ -48,6 +56,9 @@ class AdminResourceIT {
     @Autowired
     private AdminRepository adminRepository;
 
+    @Mock
+    private AdminRepository adminRepositoryMock;
+
     @Autowired
     private EntityManager em;
 
@@ -65,15 +76,10 @@ class AdminResourceIT {
     public static Admin createEntity(EntityManager em) {
         Admin admin = new Admin().systemName(DEFAULT_SYSTEM_NAME);
         // Add required entity
-        Profile profile;
-        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
-            profile = ProfileResourceIT.createEntity(em);
-            em.persist(profile);
-            em.flush();
-        } else {
-            profile = TestUtil.findAll(em, Profile.class).get(0);
-        }
-        admin.setRelatedUser(profile);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        admin.setRelatedUser(user);
         // Add required entity
         Wallet wallet;
         if (TestUtil.findAll(em, Wallet.class).isEmpty()) {
@@ -96,15 +102,10 @@ class AdminResourceIT {
     public static Admin createUpdatedEntity(EntityManager em) {
         Admin admin = new Admin().systemName(UPDATED_SYSTEM_NAME);
         // Add required entity
-        Profile profile;
-        if (TestUtil.findAll(em, Profile.class).isEmpty()) {
-            profile = ProfileResourceIT.createUpdatedEntity(em);
-            em.persist(profile);
-            em.flush();
-        } else {
-            profile = TestUtil.findAll(em, Profile.class).get(0);
-        }
-        admin.setRelatedUser(profile);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        admin.setRelatedUser(user);
         // Add required entity
         Wallet wallet;
         if (TestUtil.findAll(em, Wallet.class).isEmpty()) {
@@ -189,6 +190,23 @@ class AdminResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(admin.getId().intValue())))
             .andExpect(jsonPath("$.[*].systemName").value(hasItem(DEFAULT_SYSTEM_NAME)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllAdminsWithEagerRelationshipsIsEnabled() throws Exception {
+        when(adminRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restAdminMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(adminRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllAdminsWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(adminRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restAdminMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(adminRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test

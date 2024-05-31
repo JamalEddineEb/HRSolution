@@ -4,6 +4,8 @@ import { IApplication } from 'app/entities/application/application.model';
 
 export interface ICandidate {
   id: number;
+  firstName?: string | null;
+  lastName?: string | null;
   linkedinUrl?: string | null;
   fullName?: string | null;
   yearsOfExperience?: number | null;

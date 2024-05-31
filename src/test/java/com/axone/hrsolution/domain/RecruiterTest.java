@@ -4,7 +4,6 @@ import static com.axone.hrsolution.domain.ApplicationTestSamples.*;
 import static com.axone.hrsolution.domain.ContractTestSamples.*;
 import static com.axone.hrsolution.domain.DomainTestSamples.*;
 import static com.axone.hrsolution.domain.NDATestSamples.*;
-import static com.axone.hrsolution.domain.ProfileTestSamples.*;
 import static com.axone.hrsolution.domain.RecruiterTestSamples.*;
 import static com.axone.hrsolution.domain.RequestTestSamples.*;
 import static com.axone.hrsolution.domain.WalletTestSamples.*;
@@ -29,18 +28,6 @@ class RecruiterTest {
 
         recruiter2 = getRecruiterSample2();
         assertThat(recruiter1).isNotEqualTo(recruiter2);
-    }
-
-    @Test
-    void relatedUserTest() throws Exception {
-        Recruiter recruiter = getRecruiterRandomSampleGenerator();
-        Profile profileBack = getProfileRandomSampleGenerator();
-
-        recruiter.setRelatedUser(profileBack);
-        assertThat(recruiter.getRelatedUser()).isEqualTo(profileBack);
-
-        recruiter.relatedUser(null);
-        assertThat(recruiter.getRelatedUser()).isNull();
     }
 
     @Test

@@ -42,9 +42,9 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="cv">
+            <th scope="col" jhiSortBy="resume">
               <div class="d-flex">
-                <span jhiTranslate="hrSolutionApp.resume.cv">Cv</span>
+                <span jhiTranslate="hrSolutionApp.resume.resume">Resume</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -65,9 +65,9 @@
                 <a [routerLink]="['/resume', resume.id, 'view']">{{ resume.id }}</a>
               </td>
               <td>
-                @if (resume.cv) {
-                  <a (click)="openFile(resume.cv, resume.cvContentType)" jhiTranslate="entity.action.open">Open</a>
-                  <span>{{ resume.cvContentType }}, {{ byteSize(resume.cv) }}</span>
+                @if (resume.resume) {
+                  <a (click)="openFile(resume.resume, resume.resumeContentType)" jhiTranslate="entity.action.open">Open</a>
+                  <span>{{ resume.resumeContentType }}, {{ byteSize(resume.resume) }}</span>
                 }
               </td>
               <td>

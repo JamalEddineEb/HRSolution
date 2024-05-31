@@ -55,7 +55,7 @@
           <dd>
             @for (type of appTest()!.types; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/app-test-type', type.id, 'view']">{{ type?.id }}</a
+                <a [routerLink]="['/app-test-type', type.id, 'view']">{{ type?.type }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }

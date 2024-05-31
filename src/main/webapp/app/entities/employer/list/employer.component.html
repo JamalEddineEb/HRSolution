@@ -42,6 +42,55 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="firstName">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.employer.firstName">First Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="lastName">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.employer.lastName">Last Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="profileImage">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.employer.profileImage">Profile Image</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="address">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.employer.address">Address</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="role">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.employer.role">Role</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="status">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.employer.status">Status</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="name">
+              <div class="d-flex">
+                <span jhiTranslate="hrSolutionApp.employer.name">Name</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="label">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.employer.label">Label</span>
@@ -49,27 +98,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="linkedinUrl">
-              <div class="d-flex">
-                <span jhiTranslate="hrSolutionApp.employer.linkedinUrl">Linkedin Url</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="score">
-              <div class="d-flex">
-                <span jhiTranslate="hrSolutionApp.employer.score">Score</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="relatedUser.id">
+            <th scope="col" jhiSortBy="relatedUser.login">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.employer.relatedUser">Related User</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="wallet.id">
+            <th scope="col" jhiSortBy="wallet.balance">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.employer.wallet">Wallet</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -84,20 +119,36 @@
               <td>
                 <a [routerLink]="['/employer', employer.id, 'view']">{{ employer.id }}</a>
               </td>
-              <td>{{ employer.label }}</td>
-              <td>{{ employer.linkedinUrl }}</td>
-              <td>{{ employer.score }}</td>
+              <td>{{ employer.firstName }}</td>
+              <td>{{ employer.lastName }}</td>
               <td>
-                @if (employer.relatedUser) {
-                  <div>
-                    <a [routerLink]="['/profile', employer.relatedUser.id, 'view']">{{ employer.relatedUser.id }}</a>
-                  </div>
+                @if (employer.profileImage) {
+                  <a (click)="openFile(employer.profileImage, employer.profileImageContentType)">
+                    <img
+                      [src]="'data:' + employer.profileImageContentType + ';base64,' + employer.profileImage"
+                      style="max-height: 30px"
+                      alt="employer"
+                    />
+                  </a>
+                  <span>{{ employer.profileImageContentType }}, {{ byteSize(employer.profileImage) }}</span>
                 }
+              </td>
+              <td>{{ employer.address }}</td>
+              <td [jhiTranslate]="'hrSolutionApp.UserRole.' + (employer.role ?? 'null')">
+                {{ { null: '', ADMIN: 'ADMIN', RECRUITER: 'RECRUITER', EMPLOYER: 'EMPLOYER' }[employer.role ?? 'null'] }}
+              </td>
+              <td [jhiTranslate]="'hrSolutionApp.UserStatus.' + (employer.status ?? 'null')">
+                {{ { null: '', ACTIVE: 'ACTIVE', DEACTIVATED: 'DEACTIVATED', BANNED: 'BANNED' }[employer.status ?? 'null'] }}
+              </td>
+              <td>{{ employer.name }}</td>
+              <td>{{ employer.label }}</td>
+              <td>
+                {{ employer.relatedUser?.login }}
               </td>
               <td>
                 @if (employer.wallet) {
                   <div>
-                    <a [routerLink]="['/wallet', employer.wallet.id, 'view']">{{ employer.wallet.id }}</a>
+                    <a [routerLink]="['/wallet', employer.wallet.id, 'view']">{{ employer.wallet.balance }}</a>
                   </div>
                 }
               </td>

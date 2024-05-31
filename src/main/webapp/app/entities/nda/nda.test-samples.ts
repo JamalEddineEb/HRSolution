@@ -7,7 +7,7 @@ export const sampleWithRequiredData: INDA = {
   document: '../fake-data/blob/hipster.png',
   documentContentType: 'unknown',
   status: 'REJECTED',
-  period: dayjs('2024-05-20'),
+  period: dayjs('2024-05-24'),
 };
 
 export const sampleWithPartialData: INDA = {
@@ -15,7 +15,7 @@ export const sampleWithPartialData: INDA = {
   document: '../fake-data/blob/hipster.png',
   documentContentType: 'unknown',
   status: 'REJECTED',
-  period: dayjs('2024-05-20'),
+  period: dayjs('2024-05-24'),
 };
 
 export const sampleWithFullData: INDA = {
@@ -23,14 +23,14 @@ export const sampleWithFullData: INDA = {
   document: '../fake-data/blob/hipster.png',
   documentContentType: 'unknown',
   status: 'SIGNED',
-  period: dayjs('2024-05-20'),
+  period: dayjs('2024-05-24'),
 };
 
 export const sampleWithNewData: NewNDA = {
   document: '../fake-data/blob/hipster.png',
   documentContentType: 'unknown',
   status: 'PROCESSING',
-  period: dayjs('2024-05-19'),
+  period: dayjs('2024-05-23'),
   id: null,
 };
 

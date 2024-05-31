@@ -25,6 +25,12 @@ public class Candidate implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
     @Column(name = "linkedin_url")
     private String linkedinUrl;
 
@@ -80,7 +86,7 @@ public class Candidate implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "owner" }, allowSetters = true)
-    private Set<Resume> candidateCVS = new HashSet<>();
+    private Set<Resume> candidateResumes = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @NotNull
@@ -139,6 +145,32 @@ public class Candidate implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public Candidate firstName(String firstName) {
+        this.setFirstName(firstName);
+        return this;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public Candidate lastName(String lastName) {
+        this.setLastName(lastName);
+        return this;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getLinkedinUrl() {
@@ -289,33 +321,33 @@ public class Candidate implements Serializable {
         return this;
     }
 
-    public Set<Resume> getCandidateCVS() {
-        return this.candidateCVS;
+    public Set<Resume> getCandidateResumes() {
+        return this.candidateResumes;
     }
 
-    public void setCandidateCVS(Set<Resume> resumes) {
-        if (this.candidateCVS != null) {
-            this.candidateCVS.forEach(i -> i.setOwner(null));
+    public void setCandidateResumes(Set<Resume> resumes) {
+        if (this.candidateResumes != null) {
+            this.candidateResumes.forEach(i -> i.setOwner(null));
         }
         if (resumes != null) {
             resumes.forEach(i -> i.setOwner(this));
         }
-        this.candidateCVS = resumes;
+        this.candidateResumes = resumes;
     }
 
-    public Candidate candidateCVS(Set<Resume> resumes) {
-        this.setCandidateCVS(resumes);
+    public Candidate candidateResumes(Set<Resume> resumes) {
+        this.setCandidateResumes(resumes);
         return this;
     }
 
-    public Candidate addCandidateCV(Resume resume) {
-        this.candidateCVS.add(resume);
+    public Candidate addCandidateResume(Resume resume) {
+        this.candidateResumes.add(resume);
         resume.setOwner(this);
         return this;
     }
 
-    public Candidate removeCandidateCV(Resume resume) {
-        this.candidateCVS.remove(resume);
+    public Candidate removeCandidateResume(Resume resume) {
+        this.candidateResumes.remove(resume);
         resume.setOwner(null);
         return this;
     }
@@ -440,6 +472,8 @@ public class Candidate implements Serializable {
     public String toString() {
         return "Candidate{" +
             "id=" + getId() +
+            ", firstName='" + getFirstName() + "'" +
+            ", lastName='" + getLastName() + "'" +
             ", linkedinUrl='" + getLinkedinUrl() + "'" +
             ", fullName='" + getFullName() + "'" +
             ", yearsOfExperience=" + getYearsOfExperience() +

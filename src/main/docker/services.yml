@@ -3,5 +3,7 @@ name: hrsolution
 services:
   mysql:
     extends:
-      file: ./mysql.yml
-      service: mysql
+      file:
+        ./mysql.yml
+      service:
+        mysql

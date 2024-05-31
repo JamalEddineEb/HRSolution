@@ -18,6 +18,13 @@
         "title": "Recruiter"
       },
       "id": "ID",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "profileImage": "Profile Image",
+      "address": "Address",
+      "role": "Role",
+      "status": "Status",
+      "name": "Name",
       "label": "Label",
       "linkedinUrl": "Linkedin Url",
       "approvedExperience": "Approved Experience",

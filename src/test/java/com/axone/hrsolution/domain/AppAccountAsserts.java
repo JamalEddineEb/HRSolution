@@ -62,7 +62,6 @@ public class AppAccountAsserts {
     public static void assertAppAccountUpdatableRelationshipsEquals(AppAccount expected, AppAccount actual) {
         assertThat(expected)
             .as("Verify AppAccount relationships")
-            .satisfies(e -> assertThat(e.getOwner()).as("check owner").isEqualTo(actual.getOwner()))
             .satisfies(e -> assertThat(e.getTypes()).as("check types").isEqualTo(actual.getTypes()))
             .satisfies(e -> assertThat(e.getProviders()).as("check providers").isEqualTo(actual.getProviders()))
             .satisfies(e -> assertThat(e.getIfEmployer()).as("check ifEmployer").isEqualTo(actual.getIfEmployer()));

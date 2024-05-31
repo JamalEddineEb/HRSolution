@@ -18,6 +18,14 @@ type RecruiterFormDefaults = Pick<NewRecruiter, 'id' | 'approvedExperience' | 'a
 
 type RecruiterFormGroupContent = {
   id: FormControl<IRecruiter['id'] | NewRecruiter['id']>;
+  firstName: FormControl<IRecruiter['firstName']>;
+  lastName: FormControl<IRecruiter['lastName']>;
+  profileImage: FormControl<IRecruiter['profileImage']>;
+  profileImageContentType: FormControl<IRecruiter['profileImageContentType']>;
+  address: FormControl<IRecruiter['address']>;
+  role: FormControl<IRecruiter['role']>;
+  status: FormControl<IRecruiter['status']>;
+  name: FormControl<IRecruiter['name']>;
   label: FormControl<IRecruiter['label']>;
   linkedinUrl: FormControl<IRecruiter['linkedinUrl']>;
   approvedExperience: FormControl<IRecruiter['approvedExperience']>;
@@ -45,6 +53,18 @@ export class RecruiterFormService {
           validators: [Validators.required],
         },
       ),
+      firstName: new FormControl(recruiterRawValue.firstName),
+      lastName: new FormControl(recruiterRawValue.lastName),
+      profileImage: new FormControl(recruiterRawValue.profileImage),
+      profileImageContentType: new FormControl(recruiterRawValue.profileImageContentType),
+      address: new FormControl(recruiterRawValue.address),
+      role: new FormControl(recruiterRawValue.role, {
+        validators: [Validators.required],
+      }),
+      status: new FormControl(recruiterRawValue.status, {
+        validators: [Validators.required],
+      }),
+      name: new FormControl(recruiterRawValue.name),
       label: new FormControl(recruiterRawValue.label, {
         validators: [Validators.required],
       }),

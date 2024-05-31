@@ -47,9 +47,20 @@ public class EmployerAsserts {
     public static void assertEmployerUpdatableFieldsEquals(Employer expected, Employer actual) {
         assertThat(expected)
             .as("Verify Employer relevant properties")
-            .satisfies(e -> assertThat(e.getLabel()).as("check label").isEqualTo(actual.getLabel()))
-            .satisfies(e -> assertThat(e.getLinkedinUrl()).as("check linkedinUrl").isEqualTo(actual.getLinkedinUrl()))
-            .satisfies(e -> assertThat(e.getScore()).as("check score").isEqualTo(actual.getScore()));
+            .satisfies(e -> assertThat(e.getFirstName()).as("check firstName").isEqualTo(actual.getFirstName()))
+            .satisfies(e -> assertThat(e.getLastName()).as("check lastName").isEqualTo(actual.getLastName()))
+            .satisfies(e -> assertThat(e.getProfileImage()).as("check profileImage").isEqualTo(actual.getProfileImage()))
+            .satisfies(
+                e ->
+                    assertThat(e.getProfileImageContentType())
+                        .as("check profileImage contenty type")
+                        .isEqualTo(actual.getProfileImageContentType())
+            )
+            .satisfies(e -> assertThat(e.getAddress()).as("check address").isEqualTo(actual.getAddress()))
+            .satisfies(e -> assertThat(e.getRole()).as("check role").isEqualTo(actual.getRole()))
+            .satisfies(e -> assertThat(e.getStatus()).as("check status").isEqualTo(actual.getStatus()))
+            .satisfies(e -> assertThat(e.getName()).as("check name").isEqualTo(actual.getName()))
+            .satisfies(e -> assertThat(e.getLabel()).as("check label").isEqualTo(actual.getLabel()));
     }
 
     /**
@@ -61,7 +72,6 @@ public class EmployerAsserts {
     public static void assertEmployerUpdatableRelationshipsEquals(Employer expected, Employer actual) {
         assertThat(expected)
             .as("Verify Employer relationships")
-            .satisfies(e -> assertThat(e.getRelatedUser()).as("check relatedUser").isEqualTo(actual.getRelatedUser()))
             .satisfies(e -> assertThat(e.getWallet()).as("check wallet").isEqualTo(actual.getWallet()));
     }
 }

@@ -2,8 +2,8 @@ import { ICandidate } from 'app/entities/candidate/candidate.model';
 
 export interface IResume {
   id: number;
-  cv?: string | null;
-  cvContentType?: string | null;
+  resume?: string | null;
+  resumeContentType?: string | null;
   owner?: ICandidate | null;
 }
 

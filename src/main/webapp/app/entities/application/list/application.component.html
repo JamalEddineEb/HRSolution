@@ -126,43 +126,43 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="contractType.id">
+            <th scope="col" jhiSortBy="contractType.name">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.application.contractType">Contract Type</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="contractTemplate.id">
+            <th scope="col" jhiSortBy="contractTemplate.label">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.application.contractTemplate">Contract Template</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="criteria.id">
+            <th scope="col" jhiSortBy="criteria.name">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.application.criteria">Criteria</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="domain.id">
+            <th scope="col" jhiSortBy="domain.name">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.application.domain">Domain</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="employer.id">
+            <th scope="col" jhiSortBy="employer.lastName">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.application.employer">Employer</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="recruiters.id">
+            <th scope="col" jhiSortBy="recruiters.lastName">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.application.recruiters">Recruiters</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="candidates.id">
+            <th scope="col" jhiSortBy="candidates.lastName">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.application.candidates">Candidates</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -196,7 +196,7 @@
               <td>
                 @for (contractType of application.contractTypes; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/contract-type', contractType.id, 'view']">{{ contractType.id }}</a
+                    <a class="form-control-static" [routerLink]="['/contract-type', contractType.id, 'view']">{{ contractType.name }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
@@ -204,7 +204,7 @@
               <td>
                 @for (contractTemplate of application.contractTemplates; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/template', contractTemplate.id, 'view']">{{ contractTemplate.id }}</a
+                    <a class="form-control-static" [routerLink]="['/template', contractTemplate.id, 'view']">{{ contractTemplate.label }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
@@ -212,7 +212,7 @@
               <td>
                 @for (criteria of application.criteria; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/criteria', criteria.id, 'view']">{{ criteria.id }}</a
+                    <a class="form-control-static" [routerLink]="['/criteria', criteria.id, 'view']">{{ criteria.name }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
@@ -220,7 +220,7 @@
               <td>
                 @for (domain of application.domains; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/domain', domain.id, 'view']">{{ domain.id }}</a
+                    <a class="form-control-static" [routerLink]="['/domain', domain.id, 'view']">{{ domain.name }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
@@ -228,14 +228,14 @@
               <td>
                 @if (application.employer) {
                   <div>
-                    <a [routerLink]="['/employer', application.employer.id, 'view']">{{ application.employer.id }}</a>
+                    <a [routerLink]="['/employer', application.employer.id, 'view']">{{ application.employer.lastName }}</a>
                   </div>
                 }
               </td>
               <td>
                 @for (recruiters of application.recruiters; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/recruiter', recruiters.id, 'view']">{{ recruiters.id }}</a
+                    <a class="form-control-static" [routerLink]="['/recruiter', recruiters.id, 'view']">{{ recruiters.lastName }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }
@@ -243,7 +243,7 @@
               <td>
                 @for (candidates of application.candidates; track $index; let last = $last) {
                   <span>
-                    <a class="form-control-static" [routerLink]="['/candidate', candidates.id, 'view']">{{ candidates.id }}</a
+                    <a class="form-control-static" [routerLink]="['/candidate', candidates.id, 'view']">{{ candidates.lastName }}</a
                     >{{ last ? '' : ', ' }}
                   </span>
                 }

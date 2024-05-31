@@ -18,6 +18,8 @@ type CandidateFormDefaults = Pick<NewCandidate, 'id' | 'hasContract' | 'hired' |
 
 type CandidateFormGroupContent = {
   id: FormControl<ICandidate['id'] | NewCandidate['id']>;
+  firstName: FormControl<ICandidate['firstName']>;
+  lastName: FormControl<ICandidate['lastName']>;
   linkedinUrl: FormControl<ICandidate['linkedinUrl']>;
   fullName: FormControl<ICandidate['fullName']>;
   yearsOfExperience: FormControl<ICandidate['yearsOfExperience']>;
@@ -48,6 +50,8 @@ export class CandidateFormService {
           validators: [Validators.required],
         },
       ),
+      firstName: new FormControl(candidateRawValue.firstName),
+      lastName: new FormControl(candidateRawValue.lastName),
       linkedinUrl: new FormControl(candidateRawValue.linkedinUrl),
       fullName: new FormControl(candidateRawValue.fullName, {
         validators: [Validators.required],

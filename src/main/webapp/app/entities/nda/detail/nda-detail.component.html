@@ -38,7 +38,7 @@
           <dd>
             @if (nDA()!.employer) {
               <div>
-                <a [routerLink]="['/employer', nDA()!.employer?.id, 'view']">{{ nDA()!.employer?.id }}</a>
+                <a [routerLink]="['/employer', nDA()!.employer?.id, 'view']">{{ nDA()!.employer?.lastName }}</a>
               </div>
             }
           </dd>
@@ -46,7 +46,7 @@
           <dd>
             @if (nDA()!.mediator) {
               <div>
-                <a [routerLink]="['/recruiter', nDA()!.mediator?.id, 'view']">{{ nDA()!.mediator?.id }}</a>
+                <a [routerLink]="['/recruiter', nDA()!.mediator?.id, 'view']">{{ nDA()!.mediator?.lastName }}</a>
               </div>
             }
           </dd>
@@ -54,7 +54,7 @@
           <dd>
             @if (nDA()!.candidate) {
               <div>
-                <a [routerLink]="['/candidate', nDA()!.candidate?.id, 'view']">{{ nDA()!.candidate?.id }}</a>
+                <a [routerLink]="['/candidate', nDA()!.candidate?.id, 'view']">{{ nDA()!.candidate?.lastName }}</a>
               </div>
             }
           </dd>

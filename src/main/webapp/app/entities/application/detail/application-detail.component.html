@@ -69,7 +69,7 @@
           <dd>
             @for (contractType of application()!.contractTypes; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/contract-type', contractType.id, 'view']">{{ contractType?.id }}</a
+                <a [routerLink]="['/contract-type', contractType.id, 'view']">{{ contractType?.name }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
@@ -78,7 +78,7 @@
           <dd>
             @for (contractTemplate of application()!.contractTemplates; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/template', contractTemplate.id, 'view']">{{ contractTemplate?.id }}</a
+                <a [routerLink]="['/template', contractTemplate.id, 'view']">{{ contractTemplate?.label }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
@@ -87,7 +87,7 @@
           <dd>
             @for (criteria of application()!.criteria; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/criteria', criteria.id, 'view']">{{ criteria?.id }}</a
+                <a [routerLink]="['/criteria', criteria.id, 'view']">{{ criteria?.name }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
@@ -96,7 +96,7 @@
           <dd>
             @for (domain of application()!.domains; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/domain', domain.id, 'view']">{{ domain?.id }}</a
+                <a [routerLink]="['/domain', domain.id, 'view']">{{ domain?.name }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
@@ -105,7 +105,7 @@
           <dd>
             @if (application()!.employer) {
               <div>
-                <a [routerLink]="['/employer', application()!.employer?.id, 'view']">{{ application()!.employer?.id }}</a>
+                <a [routerLink]="['/employer', application()!.employer?.id, 'view']">{{ application()!.employer?.lastName }}</a>
               </div>
             }
           </dd>
@@ -113,7 +113,7 @@
           <dd>
             @for (recruiters of application()!.recruiters; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/recruiter', recruiters.id, 'view']">{{ recruiters?.id }}</a
+                <a [routerLink]="['/recruiter', recruiters.id, 'view']">{{ recruiters?.lastName }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }
@@ -122,7 +122,7 @@
           <dd>
             @for (candidates of application()!.candidates; track $index; let last = $last) {
               <span>
-                <a [routerLink]="['/candidate', candidates.id, 'view']">{{ candidates?.id }}</a
+                <a [routerLink]="['/candidate', candidates.id, 'view']">{{ candidates?.lastName }}</a
                 >{{ last ? '' : ', ' }}
               </span>
             }

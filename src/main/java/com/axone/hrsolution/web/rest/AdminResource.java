@@ -138,12 +138,17 @@ public class AdminResource {
     /**
      * {@code GET  /admins} : get all the admins.
      *
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of admins in body.
      */
     @GetMapping("")
-    public List<Admin> getAllAdmins() {
+    public List<Admin> getAllAdmins(@RequestParam(name = "eagerload", required = false, defaultValue = "true") boolean eagerload) {
         log.debug("REST request to get all Admins");
-        return adminRepository.findAll();
+        if (eagerload) {
+            return adminRepository.findAllWithEagerRelationships();
+        } else {
+            return adminRepository.findAll();
+        }
     }
 
     /**
@@ -155,7 +160,7 @@ public class AdminResource {
     @GetMapping("/{id}")
     public ResponseEntity<Admin> getAdmin(@PathVariable("id") Long id) {
         log.debug("REST request to get Admin : {}", id);
-        Optional<Admin> admin = adminRepository.findById(id);
+        Optional<Admin> admin = adminRepository.findOneWithEagerRelationships(id);
         return ResponseUtil.wrapOrNotFound(admin);
     }
 

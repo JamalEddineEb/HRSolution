@@ -109,7 +109,7 @@
             [compareWith]="compareAppTestType"
           >
             @for (appTestTypeOption of appTestTypesSharedCollection; track $index) {
-              <option [ngValue]="appTestTypeOption">{{ appTestTypeOption.id }}</option>
+              <option [ngValue]="appTestTypeOption">{{ appTestTypeOption.type }}</option>
             }
           </select>
         </div>

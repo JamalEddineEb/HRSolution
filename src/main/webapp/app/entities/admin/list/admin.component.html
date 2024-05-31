@@ -49,13 +49,13 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="relatedUser.id">
+            <th scope="col" jhiSortBy="relatedUser.login">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.admin.relatedUser">Related User</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="systemWallet.id">
+            <th scope="col" jhiSortBy="systemWallet.balance">
               <div class="d-flex">
                 <span jhiTranslate="hrSolutionApp.admin.systemWallet">System Wallet</span>
                 <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -72,16 +72,12 @@
               </td>
               <td>{{ admin.systemName }}</td>
               <td>
-                @if (admin.relatedUser) {
-                  <div>
-                    <a [routerLink]="['/profile', admin.relatedUser.id, 'view']">{{ admin.relatedUser.id }}</a>
-                  </div>
-                }
+                {{ admin.relatedUser?.login }}
               </td>
               <td>
                 @if (admin.systemWallet) {
                   <div>
-                    <a [routerLink]="['/wallet', admin.systemWallet.id, 'view']">{{ admin.systemWallet.id }}</a>
+                    <a [routerLink]="['/wallet', admin.systemWallet.id, 'view']">{{ admin.systemWallet.balance }}</a>
                   </div>
                 }
               </td>

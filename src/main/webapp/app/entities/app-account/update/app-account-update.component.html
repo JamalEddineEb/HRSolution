@@ -79,19 +79,26 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_owner" jhiTranslate="hrSolutionApp.appAccount.owner">Owner</label>
-          <select class="form-control" id="field_owner" data-cy="owner" name="owner" formControlName="owner" [compareWith]="compareProfile">
-            @if (editForm.get(['owner'])!.value == null) {
+          <label class="form-label" for="field_relatedUser" jhiTranslate="hrSolutionApp.appAccount.relatedUser">Related User</label>
+          <select
+            class="form-control"
+            id="field_relatedUser"
+            data-cy="relatedUser"
+            name="relatedUser"
+            formControlName="relatedUser"
+            [compareWith]="compareUser"
+          >
+            @if (!editForm.get('relatedUser')!.value) {
               <option [ngValue]="null" selected></option>
             }
-            @for (profileOption of ownersCollection; track $index) {
-              <option [ngValue]="profileOption">{{ profileOption.id }}</option>
+            @for (userOption of usersSharedCollection; track $index) {
+              <option [ngValue]="userOption">{{ userOption.login }}</option>
             }
           </select>
         </div>
-        @if (editForm.get(['owner'])!.invalid && (editForm.get(['owner'])!.dirty || editForm.get(['owner'])!.touched)) {
+        @if (editForm.get(['relatedUser'])!.invalid && (editForm.get(['relatedUser'])!.dirty || editForm.get(['relatedUser'])!.touched)) {
           <div>
-            @if (editForm.get(['owner'])?.errors?.required) {
+            @if (editForm.get(['relatedUser'])?.errors?.required) {
               <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
             }
           </div>
@@ -109,7 +116,7 @@
             [compareWith]="compareAppAccountType"
           >
             @for (appAccountTypeOption of appAccountTypesSharedCollection; track $index) {
-              <option [ngValue]="appAccountTypeOption">{{ appAccountTypeOption.id }}</option>
+              <option [ngValue]="appAccountTypeOption">{{ appAccountTypeOption.type }}</option>
             }
           </select>
         </div>
@@ -133,7 +140,7 @@
             [compareWith]="compareProvider"
           >
             @for (providerOption of providersSharedCollection; track $index) {
-              <option [ngValue]="providerOption">{{ providerOption.id }}</option>
+              <option [ngValue]="providerOption">{{ providerOption.name }}</option>
             }
           </select>
         </div>
