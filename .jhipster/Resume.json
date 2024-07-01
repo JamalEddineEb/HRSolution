@@ -1,11 +1,11 @@
 {
   "annotations": {
-    "changelogDate": "20240520144507"
+    "changelogDate": "20240524145224"
   },
   "applications": ["HRSolution"],
   "fields": [
     {
-      "fieldName": "cv",
+      "fieldName": "resume",
       "fieldType": "byte[]",
       "fieldTypeBlobContent": "any",
       "fieldValidateRules": ["required"]
@@ -18,7 +18,7 @@
         "onDelete": "CASCADE"
       },
       "otherEntityName": "candidate",
-      "otherEntityRelationshipName": "candidateCV",
+      "otherEntityRelationshipName": "candidateResume",
       "relationshipName": "owner",
       "relationshipSide": "right",
       "relationshipType": "many-to-one"

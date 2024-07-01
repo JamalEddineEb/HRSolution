@@ -1,9 +1,42 @@
 {
   "annotations": {
-    "changelogDate": "20240520144307"
+    "changelogDate": "20240524144924"
   },
   "applications": ["HRSolution"],
   "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "profileImage",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "address",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "role",
+      "fieldType": "UserRole",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ADMIN,RECRUITER,EMPLOYER"
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "UserStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ACTIVE,DEACTIVATED,BANNED"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
     {
       "fieldName": "label",
       "fieldType": "String",
@@ -30,18 +63,19 @@
         "onDelete": "CASCADE",
         "onUpdate": "CASCADE"
       },
-      "otherEntityField": "id",
-      "otherEntityName": "profile",
-      "otherEntityRelationshipName": "recruiter",
+      "otherEntityField": "login",
+      "otherEntityName": "user",
       "relationshipName": "relatedUser",
       "relationshipSide": "left",
       "relationshipType": "one-to-one",
-      "relationshipValidateRules": "required"
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
     },
     {
       "options": {
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "balance",
       "otherEntityName": "wallet",
       "relationshipName": "wallet",
       "relationshipSide": "left",
@@ -59,6 +93,7 @@
       "options": {
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "title",
       "otherEntityName": "application",
       "otherEntityRelationshipName": "recruiters",
       "relationshipName": "applications",
@@ -69,6 +104,7 @@
       "options": {
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "name",
       "otherEntityName": "domain",
       "relationshipName": "operationalDomain",
       "relationshipSide": "left",

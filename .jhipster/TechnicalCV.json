@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240520144707"
+    "changelogDate": "20240524145424"
   },
   "applications": ["HRSolution"],
   "entityTableName": "technical_cv",

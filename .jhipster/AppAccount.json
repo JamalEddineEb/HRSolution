@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240520150507"
+    "changelogDate": "20240524151124"
   },
   "applications": ["HRSolution"],
   "fields": [
@@ -29,17 +29,19 @@
         "onDelete": "CASCADE",
         "onUpdate": "CASCADE"
       },
-      "otherEntityName": "profile",
-      "otherEntityRelationshipName": "account",
-      "relationshipName": "owner",
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "relatedUser",
       "relationshipSide": "left",
       "relationshipType": "one-to-one",
-      "relationshipValidateRules": "required"
+      "relationshipValidateRules": "required",
+      "relationshipWithBuiltInEntity": true
     },
     {
       "options": {
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "type",
       "otherEntityName": "appAccountType",
       "relationshipName": "type",
       "relationshipSide": "left",
@@ -50,6 +52,7 @@
       "options": {
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "name",
       "otherEntityName": "provider",
       "relationshipName": "provider",
       "relationshipSide": "left",

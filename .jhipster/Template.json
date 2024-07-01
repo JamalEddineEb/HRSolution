@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240520150207"
+    "changelogDate": "20240524150824"
   },
   "applications": ["HRSolution"],
   "fields": [
@@ -47,6 +47,7 @@
       "options": {
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "lastName",
       "otherEntityName": "employer",
       "otherEntityRelationshipName": "template",
       "relationshipName": "owner",

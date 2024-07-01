@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20240520144607"
+    "changelogDate": "20240524145324"
   },
   "applications": ["HRSolution"],
   "fields": [
@@ -29,6 +29,7 @@
         "onDelete": "CASCADE",
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "lastName",
       "otherEntityName": "employer",
       "otherEntityRelationshipName": "ndaStatus",
       "relationshipName": "employer",
@@ -41,6 +42,7 @@
         "onDelete": "CASCADE",
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "lastName",
       "otherEntityName": "recruiter",
       "otherEntityRelationshipName": "ndaStatus",
       "relationshipName": "mediator",
@@ -53,6 +55,7 @@
         "onDelete": "CASCADE",
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "lastName",
       "otherEntityName": "candidate",
       "otherEntityRelationshipName": "ndaStatus",
       "relationshipName": "candidate",

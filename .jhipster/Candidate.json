@@ -1,9 +1,17 @@
 {
   "annotations": {
-    "changelogDate": "20240520144407"
+    "changelogDate": "20240524145124"
   },
   "applications": ["HRSolution"],
   "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String"
+    },
     {
       "fieldName": "linkedinUrl",
       "fieldType": "String"
@@ -47,6 +55,7 @@
       "options": {
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "name",
       "otherEntityName": "technicalCV",
       "otherEntityRelationshipName": "candidate",
       "relationshipName": "techCV",
@@ -68,9 +77,10 @@
       "options": {
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "resume",
       "otherEntityName": "resume",
       "otherEntityRelationshipName": "owner",
-      "relationshipName": "candidateCV",
+      "relationshipName": "candidateResume",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"
     },
@@ -78,6 +88,7 @@
       "options": {
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "name",
       "otherEntityName": "domain",
       "relationshipName": "domain",
       "relationshipSide": "left",
@@ -88,6 +99,7 @@
       "options": {
         "onUpdate": "CASCADE"
       },
+      "otherEntityField": "title",
       "otherEntityName": "application",
       "otherEntityRelationshipName": "candidates",
       "relationshipName": "applications",
